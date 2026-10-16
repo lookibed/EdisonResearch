@@ -107,6 +107,27 @@ class Branches:
         self.graph = IdeaGraph()
         self.pending = deque([0])
         self._rng = rng_for("frontier", seed)
+        self._expanded: set[int] = set()
+
+    def update_primitives(self, primitives: Primitives):
+        """New entities also grow children of previously expanded ideas.
+
+        Only identifiers are used; no learned properties or scores enter this method.
+        Existing branches cannot be removed through a catalog update.
+        """
+        old_nodes, old_transforms = set(self.primitives.nodes), set(self.primitives.transforms)
+        if not old_nodes.issubset(primitives.nodes) or not old_transforms.issubset(primitives.transforms):
+            raise ValueError("Catalog updates must be additive")
+        nodes = set(primitives.nodes) - old_nodes
+        transforms = set(primitives.transforms) - old_transforms
+        self.primitives = primitives
+        for idea_id in sorted(self._expanded):
+            c = self.graph.nodes[idea_id].construction
+            for proposal in self.generator.expand(c, primitives):
+                if ((proposal.operation == 'append_node' and proposal.construction.path[-1] in nodes)
+                        or (proposal.operation == 'append_transform'
+                            and proposal.construction.transforms[-1] in transforms)):
+                    self.suggest(idea_id, proposal)
 
     def suggest(self, parent: int, proposal: Proposal) -> tuple[Idea, bool]:
         """Register an external idea without removing any existing branch."""
@@ -130,4 +151,5 @@ class Branches:
             child, is_new = self.graph.register(idea.id, proposal)
             if is_new:
                 self.pending.append(child.id)
+        self._expanded.add(idea.id)
         return idea

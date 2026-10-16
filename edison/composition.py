@@ -1,7 +1,8 @@
 """Private evaluator for paths and nested transforms built from primitives."""
 from dataclasses import dataclass
 from .ideas import Construction, Primitives
-from .world import Measurement, World, decode, encode, rng_for
+from .world import Measurement, World, rng_for
+from .transforms import BitTransform, IdentityTransform, HammingTransform, valid_bits
 
 
 @dataclass(frozen=True)
@@ -24,6 +25,7 @@ class CompositionWorld:
         a, b, identity, hamming = tokens
         self.primitives = Primitives(tuple(sorted((a, b))), tuple(sorted((identity, hamming))))
         self._transforms = {identity: "identity", hamming: "hamming"}
+        self._adapters = {identity: IdentityTransform(), hamming: HammingTransform()}
         self._links = {(left, right): (rng.uniform(.22, .30), False)
                        for left in ("source", a, b) for right in (a, b, "sink")}
         direct = ("source", "sink")
@@ -47,6 +49,15 @@ class CompositionWorld:
             self._links[a, "sink"] = (.02, True)
             self.max_cost = 4.0
 
+    def register_transform(self, token: str, adapter: BitTransform):
+        """Trusted provider extension; executable adapters are never supplied by an LLM."""
+        if not token or token in self.primitives.nodes or token in self._adapters:
+            raise ValueError("Entity token must be new")
+        self._adapters[token] = adapter
+        self._transforms[token] = "external"
+        self.primitives = Primitives(self.primitives.nodes,
+                                     tuple(sorted(self.primitives.transforms + (token,))))
+
     def validate(self, c: Construction) -> None:
         if not isinstance(c, Construction):
             raise ValueError("Expected Construction")
@@ -64,10 +75,11 @@ class CompositionWorld:
         length = 4
         layers = []
         for token in c.transforms:
-            mode = self._transforms[token]
-            layers.append((mode, length))
-            if mode == "hamming":
-                length = ((length + 3) // 4) * 7
+            adapter = self._adapters[token]
+            layers.append((adapter, length))
+            length = adapter.encoded_length(length)
+            if type(length) is not int or length < 0:
+                return Outcome(None, 'invalid_adapter_output', 0)
         path = ("source",) + c.path + ("sink",)
         links = [self._links[left, right] for left, right in zip(path, path[1:])]
         required = messages * length * c.repetitions * len(links)
@@ -79,11 +91,10 @@ class CompositionWorld:
         for _ in range(messages):
             original = [source.randrange(2) for _ in range(4)]
             packet = list(original)
-            for mode, _ in layers:
-                if mode == "hamming":
-                    packet += [0] * (-len(packet) % 4)
-                    packet = [bit for i in range(0, len(packet), 4)
-                              for bit in encode(packet[i:i + 4], mode)]
+            for adapter, input_length in layers:
+                packet = adapter.encode(packet)
+                if not valid_bits(packet) or len(packet) != adapter.encoded_length(input_length):
+                    return Outcome(None, 'invalid_adapter_output', required)
             received = []
             for bit in packet:
                 votes = 0
@@ -93,10 +104,10 @@ class CompositionWorld:
                         transmitted ^= int(inverted) ^ int(noise.random() < probability)
                     votes += transmitted ^ int(c.flip)
                 received.append(int(votes > c.repetitions // 2))
-            for mode, original_length in reversed(layers):
-                if mode == "hamming":
-                    received = [bit for i in range(0, len(received), 7)
-                                for bit in decode(received[i:i + 7], mode)][:original_length]
+            for adapter, original_length in reversed(layers):
+                received = adapter.decode(received, original_length)
+                if not valid_bits(received) or len(received) != original_length:
+                    return Outcome(None, 'invalid_adapter_output', required)
             errors += sum(a != b for a, b in zip(original, received))
         return Outcome(Measurement(errors, messages * 4,
                                    len(links) * c.repetitions * length / 4), None, required)

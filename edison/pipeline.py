@@ -11,19 +11,39 @@ import time
 from .evaluator import EvaluatorProcess
 from .ideas import Branches
 from .proposer import CommandProposer, ProposalFailure, request_for
+from .scientist import KnowledgeBase, Scientist
+from .stalker import Stalker
 
 
 def run(profile: str, seed: int, budget: int, proposer=None, model_calls: int = 4,
-        probe_messages: int = 512, holdout_messages: int = 8192) -> dict:
+        probe_messages: int = 512, holdout_messages: int = 8192,
+        discovery: bool = False, discovery_interval: int = 2, scientist_budget: int = 512,
+        knowledge_report: dict | None = None) -> dict:
     if model_calls < 0:
         raise ValueError("Model call limit must be nonnegative")
-    with EvaluatorProcess(profile, seed, budget, probe_messages, holdout_messages) as evaluator:
+    if discovery_interval <= 0:
+        raise ValueError('Discovery interval must be positive')
+    with EvaluatorProcess(profile, seed, budget, probe_messages, holdout_messages,
+                          discovery=discovery, scientist_budget=scientist_budget) as evaluator:
         branches = Branches(evaluator.primitives)
+        initial_catalog = asdict(evaluator.primitives)
+        stalker = Stalker(evaluator) if discovery else None
+        knowledge = KnowledgeBase.from_report(knowledge_report) if knowledge_report is not None else None
+        scientist = Scientist(evaluator.probe_entity, knowledge) if discovery else None
         priority = deque()
         expanded = set()
         events = []
         tested = []
         for step in range(budget):
+            if stalker is not None and step % discovery_interval == 0:
+                if stalker.finished:
+                    stalker.refresh()
+                found = stalker.poll()
+                for event in stalker.events:
+                    event.setdefault('before_trial', step + 1)
+                branches.update_primitives(evaluator.primitives)
+                for entity in found:
+                    scientist.study(entity)
             while priority and priority[0] in expanded:
                 priority.popleft()
             # At least every other turn belongs to the structural FIFO queue.
@@ -60,6 +80,12 @@ def run(profile: str, seed: int, budget: int, proposer=None, model_calls: int = 
         assert len(report["observations"]) == len(tested)
         for idea_id, observation in zip(tested, report["observations"]):
             observation["idea_id"] = idea_id
+            if scientist is not None:
+                # Retrospective links; no property values are sent to the generator.
+                c = branches.graph.nodes[idea_id].construction
+                contexts = {(e['id'], e['source'], e['revision']) for e in stalker.entities.values()
+                            if e['status'] == 'active'}
+                observation['component_fact_refs'] = scientist.knowledge.references_for(c, contexts)
         succeeded = sum(e["status"] == "ok" for e in events)
         generator_status = ("disabled" if proposer is None else "not_called" if not events
                             else "ok" if succeeded == len(events) else "failed" if not succeeded
@@ -78,6 +104,17 @@ def run(profile: str, seed: int, budget: int, proposer=None, model_calls: int = 
                       "pending": list(branches.pending), "priority_pending": list(priority),
                       "duplicate_proposals": branches.graph.duplicate_proposals},
         })
+        if stalker is not None:
+            report['protocol'] = 'discovery-v1'
+            report['discovery'] = {
+                'initial_catalog': initial_catalog, 'final_catalog': asdict(evaluator.primitives),
+                'interval': discovery_interval, 'scan_complete': stalker.finished,
+                'scan_calls': stalker.scan_calls,
+                'events': stalker.events, 'entities': list(stalker.entities.values()),
+                'knowledge': scientist.knowledge.report(),
+                'knowledge_sent_to_generator': False,
+                'knowledge_loaded': knowledge_report is not None,
+            }
         return report
 
 
@@ -89,9 +126,16 @@ def main():
     parser.add_argument("--budget", type=int, default=96)
     parser.add_argument("--provider", choices=("none", "openrouter"), default="none")
     parser.add_argument("--model-calls", type=int, default=4)
+    parser.add_argument('--discover', action='store_true', help='Start empty; discover and study entities')
+    parser.add_argument('--discovery-interval', type=int, default=2)
+    parser.add_argument('--scientist-budget', type=int, default=512)
+    parser.add_argument('--knowledge-in', help='Reuse a component knowledge JSON file')
+    parser.add_argument('--knowledge-out', help='Save component knowledge separately')
     args = parser.parse_args()
-    if args.budget <= 0 or args.model_calls < 0:
+    if args.budget <= 0 or args.model_calls < 0 or args.discovery_interval <= 0 or args.scientist_budget < 0:
         parser.error("Budget must be positive; model calls must be nonnegative")
+    if (args.knowledge_in or args.knowledge_out) and not args.discover:
+        parser.error('Knowledge files require --discover')
     proposer = None
     if args.provider == "openrouter":
         if not os.environ.get("OPENROUTER_API_KEY"):
@@ -99,7 +143,12 @@ def main():
         # Isolated Python startup ignores user-site modules and PYTHONPATH.
         command = [sys.executable, "-I", str(Path(__file__).with_name("openrouter.py").resolve())]
         proposer = CommandProposer(command)
-    report = run(args.profile, args.seed, args.budget, proposer, args.model_calls)
+    report = run(args.profile, args.seed, args.budget, proposer, args.model_calls,
+                 discovery=args.discover, discovery_interval=args.discovery_interval,
+                 scientist_budget=args.scientist_budget,
+                 knowledge_report=json.loads(Path(args.knowledge_in).read_text()) if args.knowledge_in else None)
+    if args.knowledge_out:
+        Path(args.knowledge_out).write_text(json.dumps(report['discovery']['knowledge'], indent=2) + '\n')
     report["provider"] = args.provider
     if args.provider == "openrouter":
         from .openrouter import DEFAULT_MODEL

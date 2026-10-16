@@ -1,0 +1,175 @@
+{
+  "date": "2026-10-17",
+  "tests_passed": 43,
+  "local_discovery_run": {
+    "profile": "combined",
+    "seed": 0,
+    "combination_budget": 192,
+    "combination_experiments": 192,
+    "task_success": true,
+    "holdout": {
+      "bit_errors": 419,
+      "bits": 32768,
+      "cost": 3.5
+    },
+    "initial_catalog": {
+      "nodes": [],
+      "transforms": []
+    },
+    "discovery_events": [
+      {
+        "before_trial": 1,
+        "entity_id": "pd8144501ace00454",
+        "kind": "node",
+        "status": "active"
+      },
+      {
+        "before_trial": 3,
+        "entity_id": "p6617a04734d1ecc0",
+        "kind": "node",
+        "status": "active"
+      },
+      {
+        "before_trial": 5,
+        "entity_id": "p2812fb45822e691e",
+        "kind": "transform",
+        "status": "active"
+      },
+      {
+        "before_trial": 7,
+        "entity_id": "p5be3022c054d7449",
+        "kind": "transform",
+        "status": "active"
+      }
+    ],
+    "component_accounting": {
+      "unique_probes": 218,
+      "budget": 512,
+      "duplicate_probes": 0,
+      "processed_bits": 5334
+    },
+    "facts": 14,
+    "model_calls_succeeded": 0,
+    "model_calls_attempted": 0,
+    "model_new_ideas_tested": 0,
+    "knowledge_sent_to_generator": false
+  },
+  "openrouter_discovery_run": {
+    "profile": "combined",
+    "seed": 0,
+    "combination_budget": 192,
+    "combination_experiments": 192,
+    "task_success": true,
+    "holdout": {
+      "bit_errors": 467,
+      "bits": 32768,
+      "cost": 3.5
+    },
+    "initial_catalog": {
+      "nodes": [],
+      "transforms": []
+    },
+    "discovery_events": [
+      {
+        "before_trial": 1,
+        "entity_id": "pd8144501ace00454",
+        "kind": "node",
+        "status": "active"
+      },
+      {
+        "before_trial": 3,
+        "entity_id": "p6617a04734d1ecc0",
+        "kind": "node",
+        "status": "active"
+      },
+      {
+        "before_trial": 5,
+        "entity_id": "p2812fb45822e691e",
+        "kind": "transform",
+        "status": "active"
+      },
+      {
+        "before_trial": 7,
+        "entity_id": "p5be3022c054d7449",
+        "kind": "transform",
+        "status": "active"
+      }
+    ],
+    "component_accounting": {
+      "unique_probes": 218,
+      "budget": 512,
+      "duplicate_probes": 0,
+      "processed_bits": 5334
+    },
+    "facts": 14,
+    "model_calls_succeeded": 4,
+    "model_calls_attempted": 4,
+    "model_new_ideas_tested": 10,
+    "knowledge_sent_to_generator": false
+  },
+  "second_profile_smoke": {
+    "profile": "coding",
+    "seed": 1,
+    "combination_budget": 96,
+    "combination_experiments": 96,
+    "task_success": true,
+    "holdout": {
+      "bit_errors": 407,
+      "bits": 32768,
+      "cost": 1.75
+    },
+    "initial_catalog": {
+      "nodes": [],
+      "transforms": []
+    },
+    "discovery_events": [
+      {
+        "before_trial": 1,
+        "entity_id": "p9ff01cafafef0ac1",
+        "kind": "node",
+        "status": "active"
+      },
+      {
+        "before_trial": 3,
+        "entity_id": "pa5552975d6141760",
+        "kind": "transform",
+        "status": "active"
+      },
+      {
+        "before_trial": 5,
+        "entity_id": "p5fc07cd2afafed19",
+        "kind": "node",
+        "status": "active"
+      },
+      {
+        "before_trial": 7,
+        "entity_id": "p699dbfd0791288e7",
+        "kind": "transform",
+        "status": "active"
+      }
+    ],
+    "component_accounting": {
+      "unique_probes": 218,
+      "budget": 512,
+      "duplicate_probes": 0,
+      "processed_bits": 5334
+    },
+    "facts": 14,
+    "model_calls_succeeded": 0,
+    "model_calls_attempted": 0,
+    "model_new_ideas_tested": 0,
+    "knowledge_sent_to_generator": false
+  },
+  "knowledge_reuse_check": {
+    "combination_experiments": 8,
+    "new_component_probes": 0,
+    "facts_retained": 14
+  },
+  "knowledge_file": "reports/discovery-knowledge.json",
+  "limitations": [
+    "Local finite information-field provider, not an Internet crawler.",
+    "Scientist uses fixed black-box experiment families, not LLM-designed studies.",
+    "Learned properties are stored and linked to outcomes, not fed to combination generation.",
+    "No search-speed, general discovery or zero-shot superiority claim."
+  ]
+}
