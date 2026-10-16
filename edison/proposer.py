@@ -104,6 +104,7 @@ class CommandProposer:
                         "OPENROUTER_API_KEY is not configured": "missing_api_key",
                         "OpenRouter connection failed": "provider_connection_failed",
                         "Invalid OpenRouter response": "invalid_provider_response",
+                        "OpenRouter response token limit": "provider_token_limit",
                     }.get(diagnostic, "proposal_command_failed"))
                     raise ProposalFailure(code)
                 stdout.seek(0)

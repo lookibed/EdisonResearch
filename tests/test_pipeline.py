@@ -126,6 +126,8 @@ class ProposerTests(unittest.TestCase):
         self.assertEqual(request.full_url, ENDPOINT)
         payload = json.loads(request.data)
         self.assertEqual(payload["model"], "test/model")
+        self.assertEqual(payload["max_tokens"], 4096)
+        self.assertEqual(payload["reasoning"], {"effort": "low"})
         self.assertEqual(len(payload["messages"]), 2)
         self.assertEqual(result["usage"]["total_tokens"], 10)
         self.assertEqual(parse_batch(result, self.primitives).proposals[0].construction.repetitions, 3)
@@ -135,6 +137,13 @@ class ProposerTests(unittest.TestCase):
         with patch.dict(os.environ, {"OPENROUTER_API_KEY": "test-only"}):
             with patch("edison.openrouter.urlopen", side_effect=error):
                 with self.assertRaisesRegex(RuntimeError, "^OpenRouter HTTP 401$"):
+                    generate(request_for(Construction(), self.primitives))
+
+    def test_reasoning_exhausting_output_budget_has_explicit_error(self):
+        response = {"choices": [{"finish_reason": "length", "message": {"content": None}}]}
+        with patch.dict(os.environ, {"OPENROUTER_API_KEY": "test-only"}):
+            with patch("edison.openrouter.urlopen", return_value=io.BytesIO(json.dumps(response).encode())):
+                with self.assertRaisesRegex(RuntimeError, "^OpenRouter response token limit$"):
                     generate(request_for(Construction(), self.primitives))
 
 

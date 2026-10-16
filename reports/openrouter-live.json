@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-16",
+  "provider": "openrouter",
+  "tests_passed": 31,
+  "initial_run": {
+    "profile": "combined",
+    "seed": 0,
+    "budget": 96,
+    "generator_status": "partial",
+    "model_calls_attempted": 4,
+    "model_calls_succeeded": 2,
+    "model_origin_tested": 6,
+    "unique_experiments": 96,
+    "success": true,
+    "holdout": {
+      "bit_errors": 467,
+      "bits": 32768,
+      "cost": 3.5
+    },
+    "target_ber": 0.025,
+    "max_cost": 4.0,
+    "selected_also_proposed_by_model": false,
+    "calls": [
+      {
+        "status": "error",
+        "error": "invalid_provider_response",
+        "elapsed_seconds": 10.052288,
+        "usage": {}
+      },
+      {
+        "status": "ok",
+        "error": null,
+        "elapsed_seconds": 3.275314,
+        "usage": {
+          "prompt_tokens": 476,
+          "completion_tokens": 811,
+          "total_tokens": 1287
+        }
+      },
+      {
+        "status": "ok",
+        "error": null,
+        "elapsed_seconds": 9.746766,
+        "usage": {
+          "prompt_tokens": 456,
+          "completion_tokens": 1058,
+          "total_tokens": 1514
+        }
+      },
+      {
+        "status": "error",
+        "error": "invalid_provider_response",
+        "elapsed_seconds": 5.382419,
+        "usage": {}
+      }
+    ]
+  },
+  "verified_after_token_budget_fix": {
+    "profile": "combined",
+    "seed": 0,
+    "budget": 96,
+    "generator_status": "ok",
+    "model_calls_attempted": 2,
+    "model_calls_succeeded": 2,
+    "model_origin_tested": 4,
+    "unique_experiments": 96,
+    "success": true,
+    "holdout": {
+      "bit_errors": 419,
+      "bits": 32768,
+      "cost": 3.5
+    },
+    "target_ber": 0.025,
+    "max_cost": 4.0,
+    "selected_also_proposed_by_model": false,
+    "calls": [
+      {
+        "status": "ok",
+        "error": null,
+        "elapsed_seconds": 5.382441,
+        "usage": {
+          "prompt_tokens": 446,
+          "completion_tokens": 914,
+          "total_tokens": 1360
+        }
+      },
+      {
+        "status": "ok",
+        "error": null,
+        "elapsed_seconds": 10.497283,
+        "usage": {
+          "prompt_tokens": 458,
+          "completion_tokens": 1552,
+          "total_tokens": 2010
+        }
+      }
+    ]
+  },
+  "verified_settings": {
+    "max_tokens": 4096,
+    "reasoning_effort": "low"
+  },
+  "limitations": [
+    "One combined world, seed 0; no statistical superiority claim.",
+    "The selected solutions were not proposed by the model.",
+    "Live integration verified; zero-shot discovery ability not established."
+  ]
+}

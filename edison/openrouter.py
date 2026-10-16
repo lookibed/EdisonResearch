@@ -26,7 +26,8 @@ def generate(request: dict) -> dict:
             {"role": "user", "content": json.dumps(request)},
         ],
         "response_format": {"type": "json_object"},
-        "max_tokens": 1200,
+        "max_tokens": 4096,
+        "reasoning": {"effort": "low"},
         "temperature": 0.8,
     }
     http_request = Request(ENDPOINT, data=json.dumps(payload).encode(), headers={
@@ -38,7 +39,10 @@ def generate(request: dict) -> dict:
         if len(raw) > 1_048_576:
             raise RuntimeError("OpenRouter response is too large")
         data = json.loads(raw)
-        content = json.loads(data["choices"][0]["message"]["content"])
+        choice = data["choices"][0]
+        if choice.get("finish_reason") == "length":
+            raise RuntimeError("OpenRouter response token limit")
+        content = json.loads(choice["message"]["content"])
         if not isinstance(content, dict) or set(content) != {"constructions"}:
             raise ValueError("Unexpected generated object")
         usage = data.get("usage", {})
