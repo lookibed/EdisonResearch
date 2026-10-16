@@ -1,0 +1,2075 @@
+{
+  "profile": "combined",
+  "seed": 0,
+  "budget": 96,
+  "target_percent": 2.5,
+  "max_cost": 4.0,
+  "observations": [
+    {
+      "trial": 1,
+      "id": 0,
+      "construction": {
+        "path": [],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 29.98046875,
+      "errors": 614,
+      "bits": 2048,
+      "cost": 1.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 2,
+      "id": 7,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 37.841796875,
+      "errors": 775,
+      "bits": 2048,
+      "cost": 15.75,
+      "model": true,
+      "selected": false
+    },
+    {
+      "trial": 3,
+      "id": 1,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 95.947265625,
+      "errors": 1965,
+      "bits": 2048,
+      "cost": 2.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 4,
+      "id": 8,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 63.8671875,
+      "errors": 1308,
+      "bits": 2048,
+      "cost": 9.0,
+      "model": true,
+      "selected": false
+    },
+    {
+      "trial": 5,
+      "id": 2,
+      "construction": {
+        "path": [
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 40.33203125,
+      "errors": 826,
+      "bits": 2048,
+      "cost": 2.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 6,
+      "id": 9,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 5,
+        "flip": true
+      },
+      "ber": 87.841796875,
+      "errors": 1799,
+      "bits": 2048,
+      "cost": 8.75,
+      "model": true,
+      "selected": false
+    },
+    {
+      "trial": 7,
+      "id": 3,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 26.953125,
+      "errors": 552,
+      "bits": 2048,
+      "cost": 1.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 8,
+      "id": 25,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 99.365234375,
+      "errors": 2035,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": true,
+      "selected": false
+    },
+    {
+      "trial": 9,
+      "id": 4,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 29.6875,
+      "errors": 608,
+      "bits": 2048,
+      "cost": 1.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 10,
+      "id": 5,
+      "construction": {
+        "path": [],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 20.21484375,
+      "errors": 414,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 11,
+      "id": 6,
+      "construction": {
+        "path": [],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": true
+      },
+      "ber": 71.77734375,
+      "errors": 1470,
+      "bits": 2048,
+      "cost": 1.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 12,
+      "id": 10,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 63.818359375,
+      "errors": 1307,
+      "bits": 2048,
+      "cost": 21.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 13,
+      "id": 11,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 45.654296875,
+      "errors": 935,
+      "bits": 2048,
+      "cost": 21.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 14,
+      "id": 12,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 39.2578125,
+      "errors": 804,
+      "bits": 2048,
+      "cost": 31.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 15,
+      "id": 13,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 40.283203125,
+      "errors": 825,
+      "bits": 2048,
+      "cost": 15.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 16,
+      "id": 14,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 34.375,
+      "errors": 704,
+      "bits": 2048,
+      "cost": 26.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 17,
+      "id": 15,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 61.42578125,
+      "errors": 1258,
+      "bits": 2048,
+      "cost": 15.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 18,
+      "id": 16,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 100.0,
+      "errors": 2048,
+      "bits": 2048,
+      "cost": 10.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 19,
+      "id": 17,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 36.5234375,
+      "errors": 748,
+      "bits": 2048,
+      "cost": 9.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 20,
+      "id": 18,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 42.919921875,
+      "errors": 879,
+      "bits": 2048,
+      "cost": 5.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 21,
+      "id": 19,
+      "construction": {
+        "path": [
+          "A",
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 74.853515625,
+      "errors": 1533,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 22,
+      "id": 20,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 42.041015625,
+      "errors": 861,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 23,
+      "id": 21,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 98.681640625,
+      "errors": 2021,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 24,
+      "id": 22,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 95.654296875,
+      "errors": 1959,
+      "bits": 2048,
+      "cost": 2.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 25,
+      "id": 23,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 99.4140625,
+      "errors": 2036,
+      "bits": 2048,
+      "cost": 6.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 26,
+      "id": 24,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": true
+      },
+      "ber": 3.564453125,
+      "errors": 73,
+      "bits": 2048,
+      "cost": 2.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 27,
+      "id": 26,
+      "construction": {
+        "path": [
+          "B",
+          "A",
+          "A"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 56.8359375,
+      "errors": 1164,
+      "bits": 2048,
+      "cost": 12.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 28,
+      "id": 27,
+      "construction": {
+        "path": [
+          "B",
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 46.923828125,
+      "errors": 961,
+      "bits": 2048,
+      "cost": 12.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 29,
+      "id": 28,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "I",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 61.81640625,
+      "errors": 1266,
+      "bits": 2048,
+      "cost": 15.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 30,
+      "id": 29,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "I",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 65.869140625,
+      "errors": 1349,
+      "bits": 2048,
+      "cost": 9.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 31,
+      "id": 30,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 69.82421875,
+      "errors": 1430,
+      "bits": 2048,
+      "cost": 15.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 32,
+      "id": 31,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 36.03515625,
+      "errors": 738,
+      "bits": 2048,
+      "cost": 9.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 33,
+      "id": 32,
+      "construction": {
+        "path": [
+          "B"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 37.646484375,
+      "errors": 771,
+      "bits": 2048,
+      "cost": 6.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 34,
+      "id": 33,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 63.8671875,
+      "errors": 1308,
+      "bits": 2048,
+      "cost": 9.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 35,
+      "id": 34,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 60.64453125,
+      "errors": 1242,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 36,
+      "id": 35,
+      "construction": {
+        "path": [
+          "B",
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 62.20703125,
+      "errors": 1274,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 37,
+      "id": 36,
+      "construction": {
+        "path": [
+          "B",
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 43.84765625,
+      "errors": 898,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 38,
+      "id": 37,
+      "construction": {
+        "path": [
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 45.556640625,
+      "errors": 933,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 39,
+      "id": 38,
+      "construction": {
+        "path": [
+          "B"
+        ],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 38.8671875,
+      "errors": 796,
+      "bits": 2048,
+      "cost": 2.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 40,
+      "id": 39,
+      "construction": {
+        "path": [
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 34.521484375,
+      "errors": 707,
+      "bits": 2048,
+      "cost": 6.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 41,
+      "id": 40,
+      "construction": {
+        "path": [
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": true
+      },
+      "ber": 57.91015625,
+      "errors": 1186,
+      "bits": 2048,
+      "cost": 2.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 42,
+      "id": 41,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 5,
+        "flip": true
+      },
+      "ber": 0.0,
+      "errors": 0,
+      "bits": 2048,
+      "cost": 17.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 43,
+      "id": 42,
+      "construction": {
+        "path": [
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 5,
+        "flip": true
+      },
+      "ber": 64.697265625,
+      "errors": 1325,
+      "bits": 2048,
+      "cost": 17.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 44,
+      "id": 43,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "I",
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": true
+      },
+      "ber": 90.673828125,
+      "errors": 1857,
+      "bits": 2048,
+      "cost": 17.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 45,
+      "id": 44,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "I",
+          "I"
+        ],
+        "repetitions": 5,
+        "flip": true
+      },
+      "ber": 89.6484375,
+      "errors": 1836,
+      "bits": 2048,
+      "cost": 8.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 46,
+      "id": 45,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 7,
+        "flip": true
+      },
+      "ber": 93.5546875,
+      "errors": 1916,
+      "bits": 2048,
+      "cost": 12.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 47,
+      "id": 46,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 9.814453125,
+      "errors": 201,
+      "bits": 2048,
+      "cost": 8.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 48,
+      "id": 47,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": true
+      },
+      "ber": 88.28125,
+      "errors": 1808,
+      "bits": 2048,
+      "cost": 8.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 49,
+      "id": 48,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 80.56640625,
+      "errors": 1650,
+      "bits": 2048,
+      "cost": 5.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 50,
+      "id": 49,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 28.7109375,
+      "errors": 588,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 51,
+      "id": 50,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 29.00390625,
+      "errors": 594,
+      "bits": 2048,
+      "cost": 1.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 52,
+      "id": 51,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 17.48046875,
+      "errors": 358,
+      "bits": 2048,
+      "cost": 5.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 53,
+      "id": 52,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": true
+      },
+      "ber": 70.01953125,
+      "errors": 1434,
+      "bits": 2048,
+      "cost": 1.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 54,
+      "id": 53,
+      "construction": {
+        "path": [
+          "A",
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 71.6796875,
+      "errors": 1468,
+      "bits": 2048,
+      "cost": 5.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 55,
+      "id": 54,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 42.08984375,
+      "errors": 862,
+      "bits": 2048,
+      "cost": 5.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 56,
+      "id": 55,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I",
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 99.658203125,
+      "errors": 2041,
+      "bits": 2048,
+      "cost": 7.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 57,
+      "id": 56,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 99.072265625,
+      "errors": 2029,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 58,
+      "id": 57,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 99.90234375,
+      "errors": 2046,
+      "bits": 2048,
+      "cost": 10.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 59,
+      "id": 58,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": true
+      },
+      "ber": 1.07421875,
+      "errors": 22,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": false,
+      "selected": true
+    },
+    {
+      "trial": 60,
+      "id": 59,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "I",
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 30.76171875,
+      "errors": 630,
+      "bits": 2048,
+      "cost": 1.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 61,
+      "id": 60,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "I",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 28.3203125,
+      "errors": 580,
+      "bits": 2048,
+      "cost": 1.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 62,
+      "id": 61,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 19.580078125,
+      "errors": 401,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 63,
+      "id": 62,
+      "construction": {
+        "path": [],
+        "transforms": [
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": true
+      },
+      "ber": 72.36328125,
+      "errors": 1482,
+      "bits": 2048,
+      "cost": 1.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 64,
+      "id": 63,
+      "construction": {
+        "path": [],
+        "transforms": [],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 14.0625,
+      "errors": 288,
+      "bits": 2048,
+      "cost": 5.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 65,
+      "id": 64,
+      "construction": {
+        "path": [],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 81.103515625,
+      "errors": 1661,
+      "bits": 2048,
+      "cost": 3.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 66,
+      "id": 65,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A",
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 54.345703125,
+      "errors": 1113,
+      "bits": 2048,
+      "cost": 26.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 67,
+      "id": 66,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 45.80078125,
+      "errors": 938,
+      "bits": 2048,
+      "cost": 26.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 68,
+      "id": 67,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 63.4765625,
+      "errors": 1300,
+      "bits": 2048,
+      "cost": 42.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 69,
+      "id": 68,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 61.767578125,
+      "errors": 1265,
+      "bits": 2048,
+      "cost": 21.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 70,
+      "id": 69,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 66.748046875,
+      "errors": 1367,
+      "bits": 2048,
+      "cost": 35.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 71,
+      "id": 70,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 37.060546875,
+      "errors": 759,
+      "bits": 2048,
+      "cost": 21.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 72,
+      "id": 71,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 64.74609375,
+      "errors": 1326,
+      "bits": 2048,
+      "cost": 12.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 73,
+      "id": 72,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 57.275390625,
+      "errors": 1173,
+      "bits": 2048,
+      "cost": 7.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 74,
+      "id": 73,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B",
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 53.662109375,
+      "errors": 1099,
+      "bits": 2048,
+      "cost": 26.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 75,
+      "id": 74,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 47.509765625,
+      "errors": 973,
+      "bits": 2048,
+      "cost": 26.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 76,
+      "id": 75,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 44.775390625,
+      "errors": 917,
+      "bits": 2048,
+      "cost": 42.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 77,
+      "id": 76,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 44.873046875,
+      "errors": 919,
+      "bits": 2048,
+      "cost": 21.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 78,
+      "id": 77,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 40.869140625,
+      "errors": 837,
+      "bits": 2048,
+      "cost": 35.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 79,
+      "id": 78,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 53.857421875,
+      "errors": 1103,
+      "bits": 2048,
+      "cost": 21.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 80,
+      "id": 79,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 45.166015625,
+      "errors": 925,
+      "bits": 2048,
+      "cost": 12.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 81,
+      "id": 80,
+      "construction": {
+        "path": [
+          "A",
+          "B",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 46.38671875,
+      "errors": 950,
+      "bits": 2048,
+      "cost": 7.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 82,
+      "id": 81,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "H",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 41.40625,
+      "errors": 848,
+      "bits": 2048,
+      "cost": 63.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 83,
+      "id": 82,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "H",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 39.208984375,
+      "errors": 803,
+      "bits": 2048,
+      "cost": 31.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 84,
+      "id": 83,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 37.548828125,
+      "errors": 769,
+      "bits": 2048,
+      "cost": 52.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 85,
+      "id": 84,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 61.181640625,
+      "errors": 1253,
+      "bits": 2048,
+      "cost": 31.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 86,
+      "id": 85,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 100.0,
+      "errors": 2048,
+      "bits": 2048,
+      "cost": 21.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 87,
+      "id": 86,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "H"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 43.84765625,
+      "errors": 898,
+      "bits": 2048,
+      "cost": 10.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 88,
+      "id": 87,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I",
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 37.939453125,
+      "errors": 777,
+      "bits": 2048,
+      "cost": 31.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 89,
+      "id": 88,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": false
+      },
+      "ber": 37.451171875,
+      "errors": 767,
+      "bits": 2048,
+      "cost": 15.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 90,
+      "id": 89,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 34.9609375,
+      "errors": 716,
+      "bits": 2048,
+      "cost": 26.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 91,
+      "id": 90,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 61.03515625,
+      "errors": 1250,
+      "bits": 2048,
+      "cost": 15.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 92,
+      "id": 91,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 7,
+        "flip": false
+      },
+      "ber": 33.59375,
+      "errors": 688,
+      "bits": 2048,
+      "cost": 36.75,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 93,
+      "id": 92,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": true
+      },
+      "ber": 65.52734375,
+      "errors": 1342,
+      "bits": 2048,
+      "cost": 26.25,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 94,
+      "id": 93,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 100.0,
+      "errors": 2048,
+      "bits": 2048,
+      "cost": 17.5,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 95,
+      "id": 94,
+      "construction": {
+        "path": [
+          "A",
+          "B"
+        ],
+        "transforms": [],
+        "repetitions": 5,
+        "flip": false
+      },
+      "ber": 34.1796875,
+      "errors": 700,
+      "bits": 2048,
+      "cost": 15.0,
+      "model": false,
+      "selected": false
+    },
+    {
+      "trial": 96,
+      "id": 95,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H"
+        ],
+        "repetitions": 3,
+        "flip": true
+      },
+      "ber": 0.0,
+      "errors": 0,
+      "bits": 2048,
+      "cost": 10.5,
+      "model": false,
+      "selected": false
+    }
+  ],
+  "lineage": [
+    {
+      "trial": 1,
+      "id": 0,
+      "construction": {
+        "path": [],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 29.98046875,
+      "errors": 614,
+      "bits": 2048,
+      "cost": 1.0,
+      "model": false,
+      "selected": false,
+      "operation": "root"
+    },
+    {
+      "trial": 3,
+      "id": 1,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 95.947265625,
+      "errors": 1965,
+      "bits": 2048,
+      "cost": 2.0,
+      "model": false,
+      "selected": false,
+      "operation": "append_node"
+    },
+    {
+      "trial": 8,
+      "id": 25,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": false
+      },
+      "ber": 99.365234375,
+      "errors": 2035,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": true,
+      "selected": false,
+      "operation": "model_proposal"
+    },
+    {
+      "trial": 59,
+      "id": 58,
+      "construction": {
+        "path": [
+          "A"
+        ],
+        "transforms": [
+          "H",
+          "I"
+        ],
+        "repetitions": 1,
+        "flip": true
+      },
+      "ber": 1.07421875,
+      "errors": 22,
+      "bits": 2048,
+      "cost": 3.5,
+      "model": false,
+      "selected": true,
+      "operation": "toggle_flip"
+    }
+  ],
+  "selected_trial": 59,
+  "model_calls": 2,
+  "model_new_tested": 4,
+  "graph_nodes": 342,
+  "graph_edges": 805,
+  "pending": 246,
+  "holdout": {
+    "bit_errors": 419,
+    "bits": 32768,
+    "cost": 3.5
+  },
+  "holdout_percent": 1.2786865234375,
+  "first_pass_model": 59,
+  "first_pass_baseline": 45,
+  "baseline_holdout": {
+    "bit_errors": 467,
+    "bits": 32768,
+    "cost": 3.5
+  },
+  "model_trials": [
+    2,
+    4,
+    6,
+    8
+  ],
+  "selected_has_model_ancestor": true,
+  "selected_direct_model_proposal": false
+}
