@@ -1,0 +1,3103 @@
+{
+  "protocol": "research-scientist-v3",
+  "entity": {
+    "id": "object",
+    "source": "local-research-lab-v1",
+    "revision": "950d16009f533442d5e9",
+    "interface": "json-tools-v1"
+  },
+  "tools": [
+    {
+      "name": "encode",
+      "description": "Returns a wire bit vector as result.bits.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bits": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "bits"
+        ]
+      }
+    },
+    {
+      "name": "decode",
+      "description": "Returns a decoded bit vector as result.bits; invalid frames may be rejected.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bits": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "maxItems": 448
+          }
+        },
+        "required": [
+          "bits"
+        ]
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "request_sha256": "2c0338c672cd002d8566497dc994b652afaee8eeea4a42c8112406f40420b14a",
+      "request": {
+        "protocol": "research-scientist-v3",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "950d16009f533442d5e9",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "encode",
+            "description": "Returns a wire bit vector as result.bits.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          },
+          {
+            "name": "decode",
+            "description": "Returns a decoded bit vector as result.bits; invalid frames may be rejected.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 448
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 24,
+        "execution_limits": {
+          "max_program_tool_calls": 24,
+          "remaining_unique_tool_attempts": 24,
+          "suggested_unique_calls_this_round": 12,
+          "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+        },
+        "observations": [],
+        "tool_errors": [],
+        "previous_rounds": [],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "usage": {
+            "prompt_tokens": 1200,
+            "completion_tokens": 930,
+            "total_tokens": 2130
+          },
+          "response": {
+            "interpretations": [],
+            "question": "What transformation do encode and decode apply to bit vectors, and are they inverse operations?",
+            "experiment": "import json\n\nprobes = []\nfor bits in ([], [0], [1], [0,1], [1,0], [0,0], [1,1]):\n    r = call(\"encode\", {\"bits\": bits})\n    probes.append({\"tool\": \"encode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nfor bits in ([], [0], [1], [0,1], [1,0]):\n    r = call(\"decode\", {\"bits\": bits})\n    probes.append({\"tool\": \"decode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nemit(probes)",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "encode and decode are identity maps on bit vectors.",
+                "prediction": "encode([b...]) returns the same bits; decode([b...]) returns the same bits.",
+                "falsification": "Any output bits differing from input bits, or any length change, falsifies H1."
+              },
+              {
+                "id": "H2",
+                "statement": "encode appends a deterministic redundancy (e.g., parity/checksum) and decode removes or corrects it, so encode expands length and decode contracts length.",
+                "prediction": "encode outputs longer vectors than inputs; decode of encoded vectors recovers the original bits; decode of raw short vectors may reject or alter them.",
+                "falsification": "encode preserving length, or decode not recovering encode inputs, falsifies H2."
+              },
+              {
+                "id": "H3",
+                "statement": "encode and decode implement a fixed block code (e.g., repetition or Hamming) with block-size-dependent behavior, not a simple per-bit identity or append-only checksum.",
+                "prediction": "encode length is a function of input length (e.g., multiples of a block size); decode accepts only valid codewords and may correct single-bit errors.",
+                "falsification": "If encode length is not block-structured or decode accepts arbitrary raw vectors identically, H3 is disfavored."
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1200,
+              "completion_tokens": 930,
+              "total_tokens": 2130
+            }
+          },
+          "status": "accepted"
+        }
+      ],
+      "question": "What transformation do encode and decode apply to bit vectors, and are they inverse operations?",
+      "hypotheses": [
+        {
+          "id": "H1",
+          "statement": "encode and decode are identity maps on bit vectors.",
+          "prediction": "encode([b...]) returns the same bits; decode([b...]) returns the same bits.",
+          "falsification": "Any output bits differing from input bits, or any length change, falsifies H1."
+        },
+        {
+          "id": "H2",
+          "statement": "encode appends a deterministic redundancy (e.g., parity/checksum) and decode removes or corrects it, so encode expands length and decode contracts length.",
+          "prediction": "encode outputs longer vectors than inputs; decode of encoded vectors recovers the original bits; decode of raw short vectors may reject or alter them.",
+          "falsification": "encode preserving length, or decode not recovering encode inputs, falsifies H2."
+        },
+        {
+          "id": "H3",
+          "statement": "encode and decode implement a fixed block code (e.g., repetition or Hamming) with block-size-dependent behavior, not a simple per-bit identity or append-only checksum.",
+          "prediction": "encode length is a function of input length (e.g., multiples of a block size); decode accepts only valid codewords and may correct single-bit errors.",
+          "falsification": "If encode length is not block-structured or decode accepts arbitrary raw vectors identically, H3 is disfavored."
+        }
+      ],
+      "program": "import json\n\nprobes = []\nfor bits in ([], [0], [1], [0,1], [1,0], [0,0], [1,1]):\n    r = call(\"encode\", {\"bits\": bits})\n    probes.append({\"tool\": \"encode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nfor bits in ([], [0], [1], [0,1], [1,0]):\n    r = call(\"decode\", {\"bits\": bits})\n    probes.append({\"tool\": \"decode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nemit(probes)",
+      "execution_status": "ok",
+      "emissions": [
+        [
+          {
+            "tool": "encode",
+            "input": [],
+            "status": "ok",
+            "result": {
+              "bits": []
+            },
+            "evidence_id": "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              0,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              1,
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              0,
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              1,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b"
+          },
+          {
+            "tool": "decode",
+            "input": [],
+            "status": "ok",
+            "result": {
+              "bits": []
+            },
+            "evidence_id": "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878"
+          },
+          {
+            "tool": "decode",
+            "input": [
+              0
+            ],
+            "status": "tool_error",
+            "result": null,
+            "evidence_id": null
+          },
+          {
+            "tool": "decode",
+            "input": [
+              1
+            ],
+            "status": "tool_error",
+            "result": null,
+            "evidence_id": null
+          },
+          {
+            "tool": "decode",
+            "input": [
+              0,
+              1
+            ],
+            "status": "tool_error",
+            "result": null,
+            "evidence_id": null
+          },
+          {
+            "tool": "decode",
+            "input": [
+              1,
+              0
+            ],
+            "status": "tool_error",
+            "result": null,
+            "evidence_id": null
+          }
+        ]
+      ],
+      "diagnostic": null,
+      "usage": {
+        "prompt_tokens": 1200,
+        "completion_tokens": 930,
+        "total_tokens": 2130
+      },
+      "interpretations": []
+    },
+    {
+      "round": 2,
+      "request_sha256": "12f3f511db373a6515c76c69592e8fba16c037f94e70c3143bc0056f6f47d0e4",
+      "request": {
+        "protocol": "research-scientist-v3",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "950d16009f533442d5e9",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "encode",
+            "description": "Returns a wire bit vector as result.bits.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          },
+          {
+            "name": "decode",
+            "description": "Returns a decoded bit vector as result.bits; invalid frames may be rejected.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 448
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 12,
+        "execution_limits": {
+          "max_program_tool_calls": 24,
+          "remaining_unique_tool_attempts": 12,
+          "suggested_unique_calls_this_round": 12,
+          "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+        },
+        "observations": [
+          {
+            "id": "E1",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": []
+              }
+            },
+            "result": {
+              "bits": []
+            }
+          },
+          {
+            "id": "E2",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E3",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E4",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E5",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E6",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E7",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E8",
+            "tool_request": {
+              "tool": "decode",
+              "arguments": {
+                "bits": []
+              }
+            },
+            "result": {
+              "bits": []
+            }
+          }
+        ],
+        "tool_errors": [
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                0
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                0,
+                1
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                0
+              ]
+            },
+            "status": "tool_error"
+          }
+        ],
+        "previous_rounds": [
+          {
+            "question": "What transformation do encode and decode apply to bit vectors, and are they inverse operations?",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "encode and decode are identity maps on bit vectors.",
+                "prediction": "encode([b...]) returns the same bits; decode([b...]) returns the same bits.",
+                "falsification": "Any output bits differing from input bits, or any length change, falsifies H1."
+              },
+              {
+                "id": "H2",
+                "statement": "encode appends a deterministic redundancy (e.g., parity/checksum) and decode removes or corrects it, so encode expands length and decode contracts length.",
+                "prediction": "encode outputs longer vectors than inputs; decode of encoded vectors recovers the original bits; decode of raw short vectors may reject or alter them.",
+                "falsification": "encode preserving length, or decode not recovering encode inputs, falsifies H2."
+              },
+              {
+                "id": "H3",
+                "statement": "encode and decode implement a fixed block code (e.g., repetition or Hamming) with block-size-dependent behavior, not a simple per-bit identity or append-only checksum.",
+                "prediction": "encode length is a function of input length (e.g., multiples of a block size); decode accepts only valid codewords and may correct single-bit errors.",
+                "falsification": "If encode length is not block-structured or decode accepts arbitrary raw vectors identically, H3 is disfavored."
+              }
+            ],
+            "program": "import json\n\nprobes = []\nfor bits in ([], [0], [1], [0,1], [1,0], [0,0], [1,1]):\n    r = call(\"encode\", {\"bits\": bits})\n    probes.append({\"tool\": \"encode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nfor bits in ([], [0], [1], [0,1], [1,0]):\n    r = call(\"decode\", {\"bits\": bits})\n    probes.append({\"tool\": \"decode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nemit(probes)",
+            "execution_status": "ok",
+            "emissions": [
+              [
+                {
+                  "tool": "encode",
+                  "input": [],
+                  "status": "ok",
+                  "result": {
+                    "bits": []
+                  },
+                  "evidence_id": "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b"
+                },
+                {
+                  "tool": "encode",
+                  "input": [
+                    0
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "bits": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  "evidence_id": "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8"
+                },
+                {
+                  "tool": "encode",
+                  "input": [
+                    1
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "bits": [
+                      1,
+                      1,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  "evidence_id": "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4"
+                },
+                {
+                  "tool": "encode",
+                  "input": [
+                    0,
+                    1
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "bits": [
+                      1,
+                      0,
+                      0,
+                      1,
+                      1,
+                      0,
+                      0
+                    ]
+                  },
+                  "evidence_id": "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009"
+                },
+                {
+                  "tool": "encode",
+                  "input": [
+                    1,
+                    0
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "bits": [
+                      1,
+                      1,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  "evidence_id": "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88"
+                },
+                {
+                  "tool": "encode",
+                  "input": [
+                    0,
+                    0
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "bits": [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  "evidence_id": "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee"
+                },
+                {
+                  "tool": "encode",
+                  "input": [
+                    1,
+                    1
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "bits": [
+                      0,
+                      1,
+                      1,
+                      1,
+                      1,
+                      0,
+                      0
+                    ]
+                  },
+                  "evidence_id": "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b"
+                },
+                {
+                  "tool": "decode",
+                  "input": [],
+                  "status": "ok",
+                  "result": {
+                    "bits": []
+                  },
+                  "evidence_id": "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878"
+                },
+                {
+                  "tool": "decode",
+                  "input": [
+                    0
+                  ],
+                  "status": "tool_error",
+                  "result": null,
+                  "evidence_id": null
+                },
+                {
+                  "tool": "decode",
+                  "input": [
+                    1
+                  ],
+                  "status": "tool_error",
+                  "result": null,
+                  "evidence_id": null
+                },
+                {
+                  "tool": "decode",
+                  "input": [
+                    0,
+                    1
+                  ],
+                  "status": "tool_error",
+                  "result": null,
+                  "evidence_id": null
+                },
+                {
+                  "tool": "decode",
+                  "input": [
+                    1,
+                    0
+                  ],
+                  "status": "tool_error",
+                  "result": null,
+                  "evidence_id": null
+                }
+              ]
+            ],
+            "diagnostic": null
+          }
+        ],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "usage": {
+            "prompt_tokens": 3049,
+            "completion_tokens": 4557,
+            "total_tokens": 7606
+          },
+          "response": {
+            "interpretations": [
+              {
+                "claim": "encode maps an n-bit input to 7*ceil(n/4) bits, consistent with appending zero padding to a multiple of 4 bits and then applying a Hamming(7,4) block code (parity bits at positions 1,2,4; data at 3,5,6,7).",
+                "evidence_ids": [
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6",
+                  "E7"
+                ],
+                "scope": "Inputs of length 0, 1 and 2 bits only; the block structure for n>=3 is inferred, not measured.",
+                "uncertainties": [
+                  "Padding direction (trailing vs leading zeros) is inferred from [1,0] giving the same output as [1] and [0,0] the same as [0]; a leading-zero convention is not excluded by these data.",
+                  "The exact parity layout is one of several equivalent Hamming(7,4) conventions; only the data-bit placement is pinned by E3, E4, E7."
+                ]
+              },
+              {
+                "claim": "decode accepts the empty vector (E8) but rejects short non-empty vectors whose length is not a multiple of 7 (observed tool_errors for lengths 1 and 2), suggesting a block-length precondition.",
+                "evidence_ids": [
+                  "E8"
+                ],
+                "scope": "Lengths 0, 1 and 2 only; no valid 7-bit codeword has yet been fed to decode.",
+                "uncertainties": [
+                  "The rejection rule is inferred from unaliased tool_errors, so it is an execution observation without an evidence alias.",
+                  "Whether decode strips the zero padding or returns full 4-bit blocks is untested."
+                ]
+              }
+            ],
+            "question": "Is encode a zero-padded Hamming(7,4) encoder, and does decode invert it (with or without single-bit error correction)?",
+            "experiment": "probes = []\ntests = [\n    (\"encode\", [0,0,0,0]),\n    (\"encode\", [0,0,0,1]),\n    (\"encode\", [1,0,0,0,0]),\n    (\"decode\", [1,1,1,0,0,0,0]),\n    (\"decode\", [0,0,0,0,0,0,0]),\n    (\"decode\", [1,1,1,0,0,0,1]),\n    (\"decode\", [1,1,1,0,0,0,0,0,0,0,0,0,0,0]),\n    (\"decode\", [1,1,1,1,1,1,1]),\n]\nfor tool, bits in tests:\n    r = call(tool, {\"bits\": bits})\n    probes.append({\"tool\": tool, \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nemit(probes)",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "encode zero-pads to a multiple of 4 bits then applies Hamming(7,4); decode is the matching Hamming(7,4) decoder with single-bit error correction, emitting 4 bits per 7-bit block.",
+                "prediction": "decode([1,1,1,0,0,0,0]) = [1,0,0,0]; decode([1,1,1,0,0,0,1]) = [1,0,0,0] (error corrected); decode([0]*7) = [0,0,0,0]; decode of 14 bits returns 8 bits; encode([0,0,0,1]) = [1,1,0,1,0,0,1].",
+                "falsification": "decode of a valid codeword not returning the expected 4 data bits, or a single-bit error not being corrected, falsifies H1."
+              },
+              {
+                "id": "H2",
+                "statement": "encode is zero-padded Hamming(7,4) as in H1, but decode is a strict inverse with no error correction: it only maps valid codewords back and rejects or mis-decodes corrupted ones.",
+                "prediction": "decode([1,1,1,0,0,0,0]) = [1,0,0,0] but decode([1,1,1,0,0,0,1]) errors or returns bits other than [1,0,0,0].",
+                "falsification": "Successful correction of the single-bit-error codeword to [1,0,0,0] falsifies H2."
+              },
+              {
+                "id": "H3",
+                "statement": "encode is a linear (7,4) block code but not the standard Hamming(7,4) layout, so decode's valid-codeword output or error behavior differs from H1.",
+                "prediction": "decode([1,1,1,0,0,0,0]) returns something other than [1,0,0,0], or the single-error vector is decoded to a different value than the clean codeword.",
+                "falsification": "If decode([1,1,1,0,0,0,0]) = [1,0,0,0] and the single-bit error is corrected to the same value, H3 is disfavored."
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 3049,
+              "completion_tokens": 4557,
+              "total_tokens": 7606
+            }
+          },
+          "status": "accepted"
+        }
+      ],
+      "question": "Is encode a zero-padded Hamming(7,4) encoder, and does decode invert it (with or without single-bit error correction)?",
+      "hypotheses": [
+        {
+          "id": "H1",
+          "statement": "encode zero-pads to a multiple of 4 bits then applies Hamming(7,4); decode is the matching Hamming(7,4) decoder with single-bit error correction, emitting 4 bits per 7-bit block.",
+          "prediction": "decode([1,1,1,0,0,0,0]) = [1,0,0,0]; decode([1,1,1,0,0,0,1]) = [1,0,0,0] (error corrected); decode([0]*7) = [0,0,0,0]; decode of 14 bits returns 8 bits; encode([0,0,0,1]) = [1,1,0,1,0,0,1].",
+          "falsification": "decode of a valid codeword not returning the expected 4 data bits, or a single-bit error not being corrected, falsifies H1."
+        },
+        {
+          "id": "H2",
+          "statement": "encode is zero-padded Hamming(7,4) as in H1, but decode is a strict inverse with no error correction: it only maps valid codewords back and rejects or mis-decodes corrupted ones.",
+          "prediction": "decode([1,1,1,0,0,0,0]) = [1,0,0,0] but decode([1,1,1,0,0,0,1]) errors or returns bits other than [1,0,0,0].",
+          "falsification": "Successful correction of the single-bit-error codeword to [1,0,0,0] falsifies H2."
+        },
+        {
+          "id": "H3",
+          "statement": "encode is a linear (7,4) block code but not the standard Hamming(7,4) layout, so decode's valid-codeword output or error behavior differs from H1.",
+          "prediction": "decode([1,1,1,0,0,0,0]) returns something other than [1,0,0,0], or the single-error vector is decoded to a different value than the clean codeword.",
+          "falsification": "If decode([1,1,1,0,0,0,0]) = [1,0,0,0] and the single-bit error is corrected to the same value, H3 is disfavored."
+        }
+      ],
+      "program": "probes = []\ntests = [\n    (\"encode\", [0,0,0,0]),\n    (\"encode\", [0,0,0,1]),\n    (\"encode\", [1,0,0,0,0]),\n    (\"decode\", [1,1,1,0,0,0,0]),\n    (\"decode\", [0,0,0,0,0,0,0]),\n    (\"decode\", [1,1,1,0,0,0,1]),\n    (\"decode\", [1,1,1,0,0,0,0,0,0,0,0,0,0,0]),\n    (\"decode\", [1,1,1,1,1,1,1]),\n]\nfor tool, bits in tests:\n    r = call(tool, {\"bits\": bits})\n    probes.append({\"tool\": tool, \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nemit(probes)",
+      "execution_status": "ok",
+      "emissions": [
+        [
+          {
+            "tool": "encode",
+            "input": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "212babe9f73787bcf2b869d245604b37935a49d935292711cec300467aa6f77e"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1
+              ]
+            },
+            "evidence_id": "9b233e9d7414ab6b6cb1234f4fffffac610a3f6afede4738f1a0e7488a58b34c"
+          },
+          {
+            "tool": "encode",
+            "input": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "28e05ec6350884ecccf8c8477820d6c012d9f252e99318065523c2e56409d988"
+          },
+          {
+            "tool": "decode",
+            "input": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd"
+          },
+          {
+            "tool": "decode",
+            "input": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34"
+          },
+          {
+            "tool": "decode",
+            "input": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "519d2305149840dcd2bb601c366e5ba5c0a1f1143348f2cf036eebd3a17d5511"
+          },
+          {
+            "tool": "decode",
+            "input": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "evidence_id": "02396a8e54e9681c11c2a338697da653ecbb58a1a7e826506a6c15491723e24b"
+          },
+          {
+            "tool": "decode",
+            "input": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                1
+              ]
+            },
+            "evidence_id": "9a09c68c0b965796724dd1b4c32d99e0537e9ff95ccbd0f7075c0770c793de88"
+          }
+        ]
+      ],
+      "diagnostic": null,
+      "usage": {
+        "prompt_tokens": 3049,
+        "completion_tokens": 4557,
+        "total_tokens": 7606
+      },
+      "interpretations": [
+        {
+          "claim": "encode maps an n-bit input to 7*ceil(n/4) bits, consistent with appending zero padding to a multiple of 4 bits and then applying a Hamming(7,4) block code (parity bits at positions 1,2,4; data at 3,5,6,7).",
+          "evidence_ids": [
+            "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b",
+            "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8",
+            "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4",
+            "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009",
+            "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88",
+            "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee",
+            "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b"
+          ],
+          "scope": "Inputs of length 0, 1 and 2 bits only; the block structure for n>=3 is inferred, not measured.",
+          "uncertainties": [
+            "Padding direction (trailing vs leading zeros) is inferred from [1,0] giving the same output as [1] and [0,0] the same as [0]; a leading-zero convention is not excluded by these data.",
+            "The exact parity layout is one of several equivalent Hamming(7,4) conventions; only the data-bit placement is pinned by E3, E4, E7."
+          ],
+          "status": "llm_interpretation_unverified"
+        },
+        {
+          "claim": "decode accepts the empty vector (E8) but rejects short non-empty vectors whose length is not a multiple of 7 (observed tool_errors for lengths 1 and 2), suggesting a block-length precondition.",
+          "evidence_ids": [
+            "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878"
+          ],
+          "scope": "Lengths 0, 1 and 2 only; no valid 7-bit codeword has yet been fed to decode.",
+          "uncertainties": [
+            "The rejection rule is inferred from unaliased tool_errors, so it is an execution observation without an evidence alias.",
+            "Whether decode strips the zero padding or returns full 4-bit blocks is untested."
+          ],
+          "status": "llm_interpretation_unverified"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "ok",
+    "interpretations": [
+      {
+        "claim": "Observed regularity: encode zero-pads the input to a multiple of 4 bits and emits one 7-bit block per 4-bit block; for the tested blocks the mapping matches systematic Hamming(7,4) with parity bits at positions 1,2,4 and data bits at 3,5,6,7 (e.g., [0,0,0,1] -> [1,1,0,1,0,0,1]).",
+        "evidence_ids": [
+          "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b",
+          "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8",
+          "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4",
+          "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009",
+          "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88",
+          "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee",
+          "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b",
+          "212babe9f73787bcf2b869d245604b37935a49d935292711cec300467aa6f77e",
+          "9b233e9d7414ab6b6cb1234f4fffffac610a3f6afede4738f1a0e7488a58b34c",
+          "28e05ec6350884ecccf8c8477820d6c012d9f252e99318065523c2e56409d988"
+        ],
+        "scope": "Tested encode inputs of lengths 0, 1, 2, 4, and 5 bits.",
+        "uncertainties": [
+          "Explanatory: the Hamming(7,4) interpretation is inferred from finite examples, not proven universally.",
+          "Lengths 3, 6, 7, and longer inputs were not tested.",
+          "The exact zero-padding rule for all input lengths is not established."
+        ],
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "claim": "Observed regularity: decode maps valid 7-bit codewords back to 4 data bits and concatenates blocks; examples include 1110000 -> 1000, 0000000 -> 0000, 1110000 0000000 -> 10000000, and 1111111 -> 1111.",
+        "evidence_ids": [
+          "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878",
+          "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd",
+          "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34",
+          "02396a8e54e9681c11c2a338697da653ecbb58a1a7e826506a6c15491723e24b",
+          "9a09c68c0b965796724dd1b4c32d99e0537e9ff95ccbd0f7075c0770c793de88"
+        ],
+        "scope": "Tested decode inputs of lengths 0, 7, and 14 bits.",
+        "uncertainties": [
+          "Only a small subset of valid codewords was tested.",
+          "Whether decode is an exact inverse of encode for all valid inputs remains unverified."
+        ],
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "claim": "Observed regularity: decode corrected the single-bit corruption 1110001 to 1000, the same result as the clean codeword 1110000, which is consistent with single-bit error correction.",
+        "evidence_ids": [
+          "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd",
+          "519d2305149840dcd2bb601c366e5ba5c0a1f1143348f2cf036eebd3a17d5511"
+        ],
+        "scope": "One 7-bit block with one flipped bit at position 7.",
+        "uncertainties": [
+          "Only one error position was tested.",
+          "Errors in parity positions and multi-bit errors were not tested.",
+          "The correction rule cannot be distinguished from other decoding rules from this single case."
+        ],
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "claim": "Observed regularity: decode accepted empty, 7-bit, and 14-bit inputs, while unaliased tool_error observations show rejection for 1-bit and 2-bit inputs; this is consistent with a block decoder requiring lengths that are multiples of 7.",
+        "evidence_ids": [
+          "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878",
+          "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd",
+          "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34",
+          "519d2305149840dcd2bb601c366e5ba5c0a1f1143348f2cf036eebd3a17d5511",
+          "02396a8e54e9681c11c2a338697da653ecbb58a1a7e826506a6c15491723e24b"
+        ],
+        "scope": "Accepted lengths observed: 0, 7, 14; rejected lengths observed without aliases: 1, 2.",
+        "uncertainties": [
+          "Lengths 3-6 and 8-13 were not tested.",
+          "The rejection evidence for lengths 1 and 2 lacks supplied observation aliases.",
+          "The exact validity condition for decode frames is not established."
+        ],
+        "status": "llm_interpretation_unverified"
+      }
+    ],
+    "remaining_unknowns": [
+      "Whether encode zero-pads to a multiple of 4 for all input lengths, especially lengths 3, 6, and 7.",
+      "Whether decode corrects all single-bit errors, including errors in parity positions, and how it behaves for two-bit errors.",
+      "The exact set of decode-accepted lengths and whether invalid codewords are rejected or silently decoded.",
+      "Whether encode and decode are exact inverses for all valid inputs and whether there is a maximum length or truncation behavior."
+    ],
+    "suggested_next_question": "Does decode correct a single-bit error in a parity position, such as 0110000 or 1010000, to the same data as 1110000, and what does it return for a two-bit error such as 1010000? This would test the Hamming(7,4) single-error-correction explanation.",
+    "usage": {
+      "prompt_tokens": 5036,
+      "completion_tokens": 4004,
+      "total_tokens": 9040
+    },
+    "request": {
+      "protocol": "research-scientist-v3",
+      "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+      "entity": {
+        "id": "object",
+        "source": "local-research-lab-v1",
+        "revision": "950d16009f533442d5e9",
+        "interface": "json-tools-v1"
+      },
+      "tools": [
+        {
+          "name": "encode",
+          "description": "Returns a wire bit vector as result.bits.",
+          "arguments": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "bits": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "enum": [
+                    0,
+                    1
+                  ]
+                },
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "bits"
+            ]
+          }
+        },
+        {
+          "name": "decode",
+          "description": "Returns a decoded bit vector as result.bits; invalid frames may be rejected.",
+          "arguments": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "bits": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "enum": [
+                    0,
+                    1
+                  ]
+                },
+                "maxItems": 448
+              }
+            },
+            "required": [
+              "bits"
+            ]
+          }
+        }
+      ],
+      "remaining_unique_tool_calls": 4,
+      "execution_limits": {
+        "max_program_tool_calls": 24,
+        "remaining_unique_tool_attempts": 4,
+        "suggested_unique_calls_this_round": 4,
+        "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": []
+            }
+          },
+          "result": {
+            "bits": []
+          }
+        },
+        {
+          "id": "E2",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E3",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                1
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E4",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                0,
+                1
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              0,
+              0,
+              1,
+              1,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E5",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                1,
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E6",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                0,
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E7",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                1,
+                1
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              0,
+              1,
+              1,
+              1,
+              1,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E8",
+          "tool_request": {
+            "tool": "decode",
+            "arguments": {
+              "bits": []
+            }
+          },
+          "result": {
+            "bits": []
+          }
+        },
+        {
+          "id": "E9",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E10",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                0,
+                0,
+                0,
+                1
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              1,
+              0,
+              1,
+              0,
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "id": "E11",
+          "tool_request": {
+            "tool": "encode",
+            "arguments": {
+              "bits": [
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E12",
+          "tool_request": {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E13",
+          "tool_request": {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E14",
+          "tool_request": {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                1
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E15",
+          "tool_request": {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "E16",
+          "tool_request": {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          "result": {
+            "bits": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ],
+      "tool_errors": [
+        {
+          "tool": "decode",
+          "arguments": {
+            "bits": [
+              0
+            ]
+          },
+          "status": "tool_error"
+        },
+        {
+          "tool": "decode",
+          "arguments": {
+            "bits": [
+              1
+            ]
+          },
+          "status": "tool_error"
+        },
+        {
+          "tool": "decode",
+          "arguments": {
+            "bits": [
+              0,
+              1
+            ]
+          },
+          "status": "tool_error"
+        },
+        {
+          "tool": "decode",
+          "arguments": {
+            "bits": [
+              1,
+              0
+            ]
+          },
+          "status": "tool_error"
+        }
+      ],
+      "previous_rounds": [
+        {
+          "question": "What transformation do encode and decode apply to bit vectors, and are they inverse operations?",
+          "hypotheses": [
+            {
+              "id": "H1",
+              "statement": "encode and decode are identity maps on bit vectors.",
+              "prediction": "encode([b...]) returns the same bits; decode([b...]) returns the same bits.",
+              "falsification": "Any output bits differing from input bits, or any length change, falsifies H1."
+            },
+            {
+              "id": "H2",
+              "statement": "encode appends a deterministic redundancy (e.g., parity/checksum) and decode removes or corrects it, so encode expands length and decode contracts length.",
+              "prediction": "encode outputs longer vectors than inputs; decode of encoded vectors recovers the original bits; decode of raw short vectors may reject or alter them.",
+              "falsification": "encode preserving length, or decode not recovering encode inputs, falsifies H2."
+            },
+            {
+              "id": "H3",
+              "statement": "encode and decode implement a fixed block code (e.g., repetition or Hamming) with block-size-dependent behavior, not a simple per-bit identity or append-only checksum.",
+              "prediction": "encode length is a function of input length (e.g., multiples of a block size); decode accepts only valid codewords and may correct single-bit errors.",
+              "falsification": "If encode length is not block-structured or decode accepts arbitrary raw vectors identically, H3 is disfavored."
+            }
+          ],
+          "program": "import json\n\nprobes = []\nfor bits in ([], [0], [1], [0,1], [1,0], [0,0], [1,1]):\n    r = call(\"encode\", {\"bits\": bits})\n    probes.append({\"tool\": \"encode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nfor bits in ([], [0], [1], [0,1], [1,0]):\n    r = call(\"decode\", {\"bits\": bits})\n    probes.append({\"tool\": \"decode\", \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nemit(probes)",
+          "execution_status": "ok",
+          "emissions": [
+            [
+              {
+                "tool": "encode",
+                "input": [],
+                "status": "ok",
+                "result": {
+                  "bits": []
+                },
+                "evidence_id": "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  0,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    0,
+                    0,
+                    1,
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  1,
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  0,
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  1,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b"
+              },
+              {
+                "tool": "decode",
+                "input": [],
+                "status": "ok",
+                "result": {
+                  "bits": []
+                },
+                "evidence_id": "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878"
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  0
+                ],
+                "status": "tool_error",
+                "result": null,
+                "evidence_id": null
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  1
+                ],
+                "status": "tool_error",
+                "result": null,
+                "evidence_id": null
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  0,
+                  1
+                ],
+                "status": "tool_error",
+                "result": null,
+                "evidence_id": null
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  1,
+                  0
+                ],
+                "status": "tool_error",
+                "result": null,
+                "evidence_id": null
+              }
+            ]
+          ],
+          "diagnostic": null
+        },
+        {
+          "question": "Is encode a zero-padded Hamming(7,4) encoder, and does decode invert it (with or without single-bit error correction)?",
+          "hypotheses": [
+            {
+              "id": "H1",
+              "statement": "encode zero-pads to a multiple of 4 bits then applies Hamming(7,4); decode is the matching Hamming(7,4) decoder with single-bit error correction, emitting 4 bits per 7-bit block.",
+              "prediction": "decode([1,1,1,0,0,0,0]) = [1,0,0,0]; decode([1,1,1,0,0,0,1]) = [1,0,0,0] (error corrected); decode([0]*7) = [0,0,0,0]; decode of 14 bits returns 8 bits; encode([0,0,0,1]) = [1,1,0,1,0,0,1].",
+              "falsification": "decode of a valid codeword not returning the expected 4 data bits, or a single-bit error not being corrected, falsifies H1."
+            },
+            {
+              "id": "H2",
+              "statement": "encode is zero-padded Hamming(7,4) as in H1, but decode is a strict inverse with no error correction: it only maps valid codewords back and rejects or mis-decodes corrupted ones.",
+              "prediction": "decode([1,1,1,0,0,0,0]) = [1,0,0,0] but decode([1,1,1,0,0,0,1]) errors or returns bits other than [1,0,0,0].",
+              "falsification": "Successful correction of the single-bit-error codeword to [1,0,0,0] falsifies H2."
+            },
+            {
+              "id": "H3",
+              "statement": "encode is a linear (7,4) block code but not the standard Hamming(7,4) layout, so decode's valid-codeword output or error behavior differs from H1.",
+              "prediction": "decode([1,1,1,0,0,0,0]) returns something other than [1,0,0,0], or the single-error vector is decoded to a different value than the clean codeword.",
+              "falsification": "If decode([1,1,1,0,0,0,0]) = [1,0,0,0] and the single-bit error is corrected to the same value, H3 is disfavored."
+            }
+          ],
+          "program": "probes = []\ntests = [\n    (\"encode\", [0,0,0,0]),\n    (\"encode\", [0,0,0,1]),\n    (\"encode\", [1,0,0,0,0]),\n    (\"decode\", [1,1,1,0,0,0,0]),\n    (\"decode\", [0,0,0,0,0,0,0]),\n    (\"decode\", [1,1,1,0,0,0,1]),\n    (\"decode\", [1,1,1,0,0,0,0,0,0,0,0,0,0,0]),\n    (\"decode\", [1,1,1,1,1,1,1]),\n]\nfor tool, bits in tests:\n    r = call(tool, {\"bits\": bits})\n    probes.append({\"tool\": tool, \"input\": bits, \"status\": r.get(\"status\"), \"result\": r.get(\"result\"), \"evidence_id\": r.get(\"evidence_id\")})\nemit(probes)",
+          "execution_status": "ok",
+          "emissions": [
+            [
+              {
+                "tool": "encode",
+                "input": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "212babe9f73787bcf2b869d245604b37935a49d935292711cec300467aa6f77e"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    1,
+                    0,
+                    1,
+                    0,
+                    0,
+                    1
+                  ]
+                },
+                "evidence_id": "9b233e9d7414ab6b6cb1234f4fffffac610a3f6afede4738f1a0e7488a58b34c"
+              },
+              {
+                "tool": "encode",
+                "input": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "28e05ec6350884ecccf8c8477820d6c012d9f252e99318065523c2e56409d988"
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd"
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34"
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "519d2305149840dcd2bb601c366e5ba5c0a1f1143348f2cf036eebd3a17d5511"
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                "evidence_id": "02396a8e54e9681c11c2a338697da653ecbb58a1a7e826506a6c15491723e24b"
+              },
+              {
+                "tool": "decode",
+                "input": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "bits": [
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                },
+                "evidence_id": "9a09c68c0b965796724dd1b4c32d99e0537e9ff95ccbd0f7075c0770c793de88"
+              }
+            ]
+          ],
+          "diagnostic": null
+        }
+      ],
+      "phase": "review_and_seek_counterexamples",
+      "response_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "interpretations",
+          "remaining_unknowns",
+          "suggested_next_question"
+        ],
+        "properties": {
+          "interpretations": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "claim",
+                "evidence_ids",
+                "scope",
+                "uncertainties"
+              ],
+              "properties": {
+                "claim": {
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "scope": {
+                  "type": "string"
+                },
+                "uncertainties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "remaining_unknowns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "suggested_next_question": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "model_attempts": [
+      {
+        "attempt": 1,
+        "usage": {
+          "prompt_tokens": 5036,
+          "completion_tokens": 4004,
+          "total_tokens": 9040
+        },
+        "response": {
+          "interpretations": [
+            {
+              "claim": "Observed regularity: encode zero-pads the input to a multiple of 4 bits and emits one 7-bit block per 4-bit block; for the tested blocks the mapping matches systematic Hamming(7,4) with parity bits at positions 1,2,4 and data bits at 3,5,6,7 (e.g., [0,0,0,1] -> [1,1,0,1,0,0,1]).",
+              "evidence_ids": [
+                "E1",
+                "E2",
+                "E3",
+                "E4",
+                "E5",
+                "E6",
+                "E7",
+                "E9",
+                "E10",
+                "E11"
+              ],
+              "scope": "Tested encode inputs of lengths 0, 1, 2, 4, and 5 bits.",
+              "uncertainties": [
+                "Explanatory: the Hamming(7,4) interpretation is inferred from finite examples, not proven universally.",
+                "Lengths 3, 6, 7, and longer inputs were not tested.",
+                "The exact zero-padding rule for all input lengths is not established."
+              ]
+            },
+            {
+              "claim": "Observed regularity: decode maps valid 7-bit codewords back to 4 data bits and concatenates blocks; examples include 1110000 -> 1000, 0000000 -> 0000, 1110000 0000000 -> 10000000, and 1111111 -> 1111.",
+              "evidence_ids": [
+                "E8",
+                "E12",
+                "E13",
+                "E15",
+                "E16"
+              ],
+              "scope": "Tested decode inputs of lengths 0, 7, and 14 bits.",
+              "uncertainties": [
+                "Only a small subset of valid codewords was tested.",
+                "Whether decode is an exact inverse of encode for all valid inputs remains unverified."
+              ]
+            },
+            {
+              "claim": "Observed regularity: decode corrected the single-bit corruption 1110001 to 1000, the same result as the clean codeword 1110000, which is consistent with single-bit error correction.",
+              "evidence_ids": [
+                "E12",
+                "E14"
+              ],
+              "scope": "One 7-bit block with one flipped bit at position 7.",
+              "uncertainties": [
+                "Only one error position was tested.",
+                "Errors in parity positions and multi-bit errors were not tested.",
+                "The correction rule cannot be distinguished from other decoding rules from this single case."
+              ]
+            },
+            {
+              "claim": "Observed regularity: decode accepted empty, 7-bit, and 14-bit inputs, while unaliased tool_error observations show rejection for 1-bit and 2-bit inputs; this is consistent with a block decoder requiring lengths that are multiples of 7.",
+              "evidence_ids": [
+                "E8",
+                "E12",
+                "E13",
+                "E14",
+                "E15"
+              ],
+              "scope": "Accepted lengths observed: 0, 7, 14; rejected lengths observed without aliases: 1, 2.",
+              "uncertainties": [
+                "Lengths 3-6 and 8-13 were not tested.",
+                "The rejection evidence for lengths 1 and 2 lacks supplied observation aliases.",
+                "The exact validity condition for decode frames is not established."
+              ]
+            }
+          ],
+          "remaining_unknowns": [
+            "Whether encode zero-pads to a multiple of 4 for all input lengths, especially lengths 3, 6, and 7.",
+            "Whether decode corrects all single-bit errors, including errors in parity positions, and how it behaves for two-bit errors.",
+            "The exact set of decode-accepted lengths and whether invalid codewords are rejected or silently decoded.",
+            "Whether encode and decode are exact inverses for all valid inputs and whether there is a maximum length or truncation behavior."
+          ],
+          "suggested_next_question": "Does decode correct a single-bit error in a parity position, such as 0110000 or 1010000, to the same data as 1110000, and what does it return for a two-bit error such as 1010000? This would test the Hamming(7,4) single-error-correction explanation.",
+          "usage": {
+            "prompt_tokens": 5036,
+            "completion_tokens": 4004,
+            "total_tokens": 9040
+          }
+        },
+        "status": "accepted"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": []
+        }
+      },
+      "result": {
+        "bits": []
+      },
+      "evidence_id": "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": []
+        }
+      },
+      "result": {
+        "bits": []
+      },
+      "evidence_id": "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "212babe9f73787bcf2b869d245604b37935a49d935292711cec300467aa6f77e"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      "evidence_id": "9b233e9d7414ab6b6cb1234f4fffffac610a3f6afede4738f1a0e7488a58b34c"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "28e05ec6350884ecccf8c8477820d6c012d9f252e99318065523c2e56409d988"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "519d2305149840dcd2bb601c366e5ba5c0a1f1143348f2cf036eebd3a17d5511"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "02396a8e54e9681c11c2a338697da653ecbb58a1a7e826506a6c15491723e24b"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "evidence_id": "9a09c68c0b965796724dd1b4c32d99e0537e9ff95ccbd0f7075c0770c793de88"
+    }
+  ],
+  "interpretations": [
+    {
+      "claim": "encode maps an n-bit input to 7*ceil(n/4) bits, consistent with appending zero padding to a multiple of 4 bits and then applying a Hamming(7,4) block code (parity bits at positions 1,2,4; data at 3,5,6,7).",
+      "evidence_ids": [
+        "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b",
+        "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8",
+        "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4",
+        "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009",
+        "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88",
+        "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee",
+        "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b"
+      ],
+      "scope": "Inputs of length 0, 1 and 2 bits only; the block structure for n>=3 is inferred, not measured.",
+      "uncertainties": [
+        "Padding direction (trailing vs leading zeros) is inferred from [1,0] giving the same output as [1] and [0,0] the same as [0]; a leading-zero convention is not excluded by these data.",
+        "The exact parity layout is one of several equivalent Hamming(7,4) conventions; only the data-bit placement is pinned by E3, E4, E7."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "decode accepts the empty vector (E8) but rejects short non-empty vectors whose length is not a multiple of 7 (observed tool_errors for lengths 1 and 2), suggesting a block-length precondition.",
+      "evidence_ids": [
+        "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878"
+      ],
+      "scope": "Lengths 0, 1 and 2 only; no valid 7-bit codeword has yet been fed to decode.",
+      "uncertainties": [
+        "The rejection rule is inferred from unaliased tool_errors, so it is an execution observation without an evidence alias.",
+        "Whether decode strips the zero padding or returns full 4-bit blocks is untested."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Observed regularity: encode zero-pads the input to a multiple of 4 bits and emits one 7-bit block per 4-bit block; for the tested blocks the mapping matches systematic Hamming(7,4) with parity bits at positions 1,2,4 and data bits at 3,5,6,7 (e.g., [0,0,0,1] -> [1,1,0,1,0,0,1]).",
+      "evidence_ids": [
+        "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b",
+        "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8",
+        "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4",
+        "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009",
+        "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88",
+        "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee",
+        "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b",
+        "212babe9f73787bcf2b869d245604b37935a49d935292711cec300467aa6f77e",
+        "9b233e9d7414ab6b6cb1234f4fffffac610a3f6afede4738f1a0e7488a58b34c",
+        "28e05ec6350884ecccf8c8477820d6c012d9f252e99318065523c2e56409d988"
+      ],
+      "scope": "Tested encode inputs of lengths 0, 1, 2, 4, and 5 bits.",
+      "uncertainties": [
+        "Explanatory: the Hamming(7,4) interpretation is inferred from finite examples, not proven universally.",
+        "Lengths 3, 6, 7, and longer inputs were not tested.",
+        "The exact zero-padding rule for all input lengths is not established."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Observed regularity: decode maps valid 7-bit codewords back to 4 data bits and concatenates blocks; examples include 1110000 -> 1000, 0000000 -> 0000, 1110000 0000000 -> 10000000, and 1111111 -> 1111.",
+      "evidence_ids": [
+        "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878",
+        "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd",
+        "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34",
+        "02396a8e54e9681c11c2a338697da653ecbb58a1a7e826506a6c15491723e24b",
+        "9a09c68c0b965796724dd1b4c32d99e0537e9ff95ccbd0f7075c0770c793de88"
+      ],
+      "scope": "Tested decode inputs of lengths 0, 7, and 14 bits.",
+      "uncertainties": [
+        "Only a small subset of valid codewords was tested.",
+        "Whether decode is an exact inverse of encode for all valid inputs remains unverified."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Observed regularity: decode corrected the single-bit corruption 1110001 to 1000, the same result as the clean codeword 1110000, which is consistent with single-bit error correction.",
+      "evidence_ids": [
+        "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd",
+        "519d2305149840dcd2bb601c366e5ba5c0a1f1143348f2cf036eebd3a17d5511"
+      ],
+      "scope": "One 7-bit block with one flipped bit at position 7.",
+      "uncertainties": [
+        "Only one error position was tested.",
+        "Errors in parity positions and multi-bit errors were not tested.",
+        "The correction rule cannot be distinguished from other decoding rules from this single case."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Observed regularity: decode accepted empty, 7-bit, and 14-bit inputs, while unaliased tool_error observations show rejection for 1-bit and 2-bit inputs; this is consistent with a block decoder requiring lengths that are multiples of 7.",
+      "evidence_ids": [
+        "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878",
+        "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd",
+        "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34",
+        "519d2305149840dcd2bb601c366e5ba5c0a1f1143348f2cf036eebd3a17d5511",
+        "02396a8e54e9681c11c2a338697da653ecbb58a1a7e826506a6c15491723e24b"
+      ],
+      "scope": "Accepted lengths observed: 0, 7, 14; rejected lengths observed without aliases: 1, 2.",
+      "uncertainties": [
+        "Lengths 3-6 and 8-13 were not tested.",
+        "The rejection evidence for lengths 1 and 2 lacks supplied observation aliases.",
+        "The exact validity condition for decode frames is not established."
+      ],
+      "status": "llm_interpretation_unverified"
+    }
+  ],
+  "unique_tool_attempts": 20,
+  "duplicate_requests": 0,
+  "tool_errors": [
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          0
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          1
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          0,
+          1
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          1,
+          0
+        ]
+      },
+      "status": "tool_error"
+    }
+  ],
+  "status": "observed",
+  "claims_automatically_verified": false,
+  "domain": "bits",
+  "seed": 0
+}

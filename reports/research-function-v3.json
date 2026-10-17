@@ -1,0 +1,1792 @@
+{
+  "protocol": "research-scientist-v3",
+  "entity": {
+    "id": "object",
+    "source": "local-research-lab-v1",
+    "revision": "ffc2ea0b4c1b972bda89",
+    "interface": "json-tools-v1"
+  },
+  "tools": [
+    {
+      "name": "evaluate",
+      "description": "Unknown function of a list of integers; returns a number as result.value.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "values"
+        ]
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "request_sha256": "362c337fd1c90c940b9a765a3ce9dd1c0f3f34d4daa6dd57145b9668796312db",
+      "request": {
+        "protocol": "research-scientist-v3",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "ffc2ea0b4c1b972bda89",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "evaluate",
+            "description": "Unknown function of a list of integers; returns a number as result.value.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "values"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 24,
+        "execution_limits": {
+          "max_program_tool_calls": 24,
+          "remaining_unique_tool_attempts": 24,
+          "suggested_unique_calls_this_round": 12,
+          "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+        },
+        "observations": [],
+        "tool_errors": [],
+        "previous_rounds": [],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "usage": {
+            "prompt_tokens": 1113,
+            "completion_tokens": 1915,
+            "total_tokens": 3028
+          },
+          "response": {
+            "experiment": "probes = [[], [0], [1], [2], [1, 2], [2, 1], [1, 1], [2, 3], [-1, 1], [5], [1, 2, 3], [10, -10]]\nout = []\nfor values in probes:\n    response = call(\"evaluate\", {\"values\": values})\n    entry = {\"values\": values, \"status\": response.get(\"status\")}\n    if response.get(\"status\") == \"ok\":\n        entry[\"result\"] = response.get(\"result\")\n        entry[\"evidence_id\"] = response.get(\"evidence_id\")\n    else:\n        entry[\"error\"] = response.get(\"error\", response.get(\"result\"))\n    out.append(entry)\nemit(out)",
+            "hypotheses": [
+              {
+                "falsification": "Any return that differs from the sum prediction on a listed probe, or an empty-list return other than 0.",
+                "id": "H_sum",
+                "prediction": "[] -> 0; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 3; [2,1] -> 3; [1,1] -> 2; [2,3] -> 5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 6; [10,-10] -> 0.",
+                "statement": "evaluate returns the arithmetic sum of the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the product prediction on a listed probe.",
+                "id": "H_product",
+                "prediction": "[] -> 1; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 6; [-1,1] -> -1; [5] -> 5; [1,2,3] -> 6; [10,-10] -> -100.",
+                "statement": "evaluate returns the product of the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the maximum prediction on a listed probe, including failure on the empty list.",
+                "id": "H_max",
+                "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 3; [-1,1] -> 1; [5] -> 5; [1,2,3] -> 3; [10,-10] -> 10.",
+                "statement": "evaluate returns the maximum value in the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the length prediction on a listed probe.",
+                "id": "H_length",
+                "prediction": "[] -> 0; [0] -> 1; [1] -> 1; [2] -> 1; [1,2] -> 2; [2,1] -> 2; [1,1] -> 2; [2,3] -> 2; [-1,1] -> 2; [5] -> 1; [1,2,3] -> 3; [10,-10] -> 2.",
+                "statement": "evaluate returns the count of elements in the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the mean prediction on a listed probe, including failure on the empty list.",
+                "id": "H_mean",
+                "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 1.5; [2,1] -> 1.5; [1,1] -> 1; [2,3] -> 2.5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 2; [10,-10] -> 0.",
+                "statement": "evaluate returns the arithmetic mean of the integer list."
+              }
+            ],
+            "interpretations": [],
+            "question": "What elementary function does evaluate compute on a list of integers? This first round contrasts sum, product, maximum, length, and mean using probes that also test empty-list behavior, order sensitivity, duplicates, negatives, and a cancellation pair.",
+            "usage": {
+              "prompt_tokens": 1113,
+              "completion_tokens": 1915,
+              "total_tokens": 3028
+            }
+          },
+          "status": "accepted"
+        }
+      ],
+      "question": "What elementary function does evaluate compute on a list of integers? This first round contrasts sum, product, maximum, length, and mean using probes that also test empty-list behavior, order sensitivity, duplicates, negatives, and a cancellation pair.",
+      "hypotheses": [
+        {
+          "falsification": "Any return that differs from the sum prediction on a listed probe, or an empty-list return other than 0.",
+          "id": "H_sum",
+          "prediction": "[] -> 0; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 3; [2,1] -> 3; [1,1] -> 2; [2,3] -> 5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 6; [10,-10] -> 0.",
+          "statement": "evaluate returns the arithmetic sum of the integer list."
+        },
+        {
+          "falsification": "Any return that differs from the product prediction on a listed probe.",
+          "id": "H_product",
+          "prediction": "[] -> 1; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 6; [-1,1] -> -1; [5] -> 5; [1,2,3] -> 6; [10,-10] -> -100.",
+          "statement": "evaluate returns the product of the integer list."
+        },
+        {
+          "falsification": "Any return that differs from the maximum prediction on a listed probe, including failure on the empty list.",
+          "id": "H_max",
+          "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 3; [-1,1] -> 1; [5] -> 5; [1,2,3] -> 3; [10,-10] -> 10.",
+          "statement": "evaluate returns the maximum value in the integer list."
+        },
+        {
+          "falsification": "Any return that differs from the length prediction on a listed probe.",
+          "id": "H_length",
+          "prediction": "[] -> 0; [0] -> 1; [1] -> 1; [2] -> 1; [1,2] -> 2; [2,1] -> 2; [1,1] -> 2; [2,3] -> 2; [-1,1] -> 2; [5] -> 1; [1,2,3] -> 3; [10,-10] -> 2.",
+          "statement": "evaluate returns the count of elements in the integer list."
+        },
+        {
+          "falsification": "Any return that differs from the mean prediction on a listed probe, including failure on the empty list.",
+          "id": "H_mean",
+          "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 1.5; [2,1] -> 1.5; [1,1] -> 1; [2,3] -> 2.5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 2; [10,-10] -> 0.",
+          "statement": "evaluate returns the arithmetic mean of the integer list."
+        }
+      ],
+      "program": "probes = [[], [0], [1], [2], [1, 2], [2, 1], [1, 1], [2, 3], [-1, 1], [5], [1, 2, 3], [10, -10]]\nout = []\nfor values in probes:\n    response = call(\"evaluate\", {\"values\": values})\n    entry = {\"values\": values, \"status\": response.get(\"status\")}\n    if response.get(\"status\") == \"ok\":\n        entry[\"result\"] = response.get(\"result\")\n        entry[\"evidence_id\"] = response.get(\"evidence_id\")\n    else:\n        entry[\"error\"] = response.get(\"error\", response.get(\"result\"))\n    out.append(entry)\nemit(out)",
+      "execution_status": "ok",
+      "emissions": [
+        [
+          {
+            "values": [],
+            "status": "ok",
+            "result": {
+              "value": 0
+            },
+            "evidence_id": "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0"
+          },
+          {
+            "values": [
+              0
+            ],
+            "status": "ok",
+            "result": {
+              "value": 0
+            },
+            "evidence_id": "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c"
+          },
+          {
+            "values": [
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "value": 1
+            },
+            "evidence_id": "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff"
+          },
+          {
+            "values": [
+              2
+            ],
+            "status": "ok",
+            "result": {
+              "value": 4
+            },
+            "evidence_id": "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66"
+          },
+          {
+            "values": [
+              1,
+              2
+            ],
+            "status": "ok",
+            "result": {
+              "value": 5
+            },
+            "evidence_id": "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe"
+          },
+          {
+            "values": [
+              2,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "value": 5
+            },
+            "evidence_id": "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d"
+          },
+          {
+            "values": [
+              1,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "value": 2
+            },
+            "evidence_id": "5a2f0c90452c42080c18503761d23354c46a69e7a53160573b181b3c11bc9c5a"
+          },
+          {
+            "values": [
+              2,
+              3
+            ],
+            "status": "ok",
+            "result": {
+              "value": 13
+            },
+            "evidence_id": "eef5cf0cdeb91e620022c672e4e0c6f9ffda5fb830dd4e0257788453d914c8b6"
+          },
+          {
+            "values": [
+              -1,
+              1
+            ],
+            "status": "ok",
+            "result": {
+              "value": 2
+            },
+            "evidence_id": "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6"
+          },
+          {
+            "values": [
+              5
+            ],
+            "status": "ok",
+            "result": {
+              "value": 25
+            },
+            "evidence_id": "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50"
+          },
+          {
+            "values": [
+              1,
+              2,
+              3
+            ],
+            "status": "ok",
+            "result": {
+              "value": 14
+            },
+            "evidence_id": "d8e09855856678462d30d32bab08111447f8b7656287ef2eadaed1b57ab3805f"
+          },
+          {
+            "values": [
+              10,
+              -10
+            ],
+            "status": "ok",
+            "result": {
+              "value": 200
+            },
+            "evidence_id": "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+          }
+        ]
+      ],
+      "diagnostic": null,
+      "usage": {
+        "prompt_tokens": 1113,
+        "completion_tokens": 1915,
+        "total_tokens": 3028
+      },
+      "interpretations": []
+    },
+    {
+      "round": 2,
+      "request_sha256": "ca601163c161046db52e37c6b2bee501e4d6ed81fc574e8caa6c26bc9a6a231b",
+      "request": {
+        "protocol": "research-scientist-v3",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "ffc2ea0b4c1b972bda89",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "evaluate",
+            "description": "Unknown function of a list of integers; returns a number as result.value.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "values"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 12,
+        "execution_limits": {
+          "max_program_tool_calls": 24,
+          "remaining_unique_tool_attempts": 12,
+          "suggested_unique_calls_this_round": 12,
+          "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+        },
+        "observations": [
+          {
+            "id": "E1",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": []
+              }
+            },
+            "result": {
+              "value": 0
+            }
+          },
+          {
+            "id": "E2",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  0
+                ]
+              }
+            },
+            "result": {
+              "value": 0
+            }
+          },
+          {
+            "id": "E3",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  1
+                ]
+              }
+            },
+            "result": {
+              "value": 1
+            }
+          },
+          {
+            "id": "E4",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  2
+                ]
+              }
+            },
+            "result": {
+              "value": 4
+            }
+          },
+          {
+            "id": "E5",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  1,
+                  2
+                ]
+              }
+            },
+            "result": {
+              "value": 5
+            }
+          },
+          {
+            "id": "E6",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  2,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "value": 5
+            }
+          },
+          {
+            "id": "E7",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  1,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "value": 2
+            }
+          },
+          {
+            "id": "E8",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  2,
+                  3
+                ]
+              }
+            },
+            "result": {
+              "value": 13
+            }
+          },
+          {
+            "id": "E9",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  -1,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "value": 2
+            }
+          },
+          {
+            "id": "E10",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  5
+                ]
+              }
+            },
+            "result": {
+              "value": 25
+            }
+          },
+          {
+            "id": "E11",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            },
+            "result": {
+              "value": 14
+            }
+          },
+          {
+            "id": "E12",
+            "tool_request": {
+              "tool": "evaluate",
+              "arguments": {
+                "values": [
+                  10,
+                  -10
+                ]
+              }
+            },
+            "result": {
+              "value": 200
+            }
+          }
+        ],
+        "tool_errors": [],
+        "previous_rounds": [
+          {
+            "question": "What elementary function does evaluate compute on a list of integers? This first round contrasts sum, product, maximum, length, and mean using probes that also test empty-list behavior, order sensitivity, duplicates, negatives, and a cancellation pair.",
+            "hypotheses": [
+              {
+                "falsification": "Any return that differs from the sum prediction on a listed probe, or an empty-list return other than 0.",
+                "id": "H_sum",
+                "prediction": "[] -> 0; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 3; [2,1] -> 3; [1,1] -> 2; [2,3] -> 5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 6; [10,-10] -> 0.",
+                "statement": "evaluate returns the arithmetic sum of the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the product prediction on a listed probe.",
+                "id": "H_product",
+                "prediction": "[] -> 1; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 6; [-1,1] -> -1; [5] -> 5; [1,2,3] -> 6; [10,-10] -> -100.",
+                "statement": "evaluate returns the product of the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the maximum prediction on a listed probe, including failure on the empty list.",
+                "id": "H_max",
+                "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 3; [-1,1] -> 1; [5] -> 5; [1,2,3] -> 3; [10,-10] -> 10.",
+                "statement": "evaluate returns the maximum value in the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the length prediction on a listed probe.",
+                "id": "H_length",
+                "prediction": "[] -> 0; [0] -> 1; [1] -> 1; [2] -> 1; [1,2] -> 2; [2,1] -> 2; [1,1] -> 2; [2,3] -> 2; [-1,1] -> 2; [5] -> 1; [1,2,3] -> 3; [10,-10] -> 2.",
+                "statement": "evaluate returns the count of elements in the integer list."
+              },
+              {
+                "falsification": "Any return that differs from the mean prediction on a listed probe, including failure on the empty list.",
+                "id": "H_mean",
+                "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 1.5; [2,1] -> 1.5; [1,1] -> 1; [2,3] -> 2.5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 2; [10,-10] -> 0.",
+                "statement": "evaluate returns the arithmetic mean of the integer list."
+              }
+            ],
+            "program": "probes = [[], [0], [1], [2], [1, 2], [2, 1], [1, 1], [2, 3], [-1, 1], [5], [1, 2, 3], [10, -10]]\nout = []\nfor values in probes:\n    response = call(\"evaluate\", {\"values\": values})\n    entry = {\"values\": values, \"status\": response.get(\"status\")}\n    if response.get(\"status\") == \"ok\":\n        entry[\"result\"] = response.get(\"result\")\n        entry[\"evidence_id\"] = response.get(\"evidence_id\")\n    else:\n        entry[\"error\"] = response.get(\"error\", response.get(\"result\"))\n    out.append(entry)\nemit(out)",
+            "execution_status": "ok",
+            "emissions": [
+              [
+                {
+                  "values": [],
+                  "status": "ok",
+                  "result": {
+                    "value": 0
+                  },
+                  "evidence_id": "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0"
+                },
+                {
+                  "values": [
+                    0
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 0
+                  },
+                  "evidence_id": "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c"
+                },
+                {
+                  "values": [
+                    1
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 1
+                  },
+                  "evidence_id": "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff"
+                },
+                {
+                  "values": [
+                    2
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 4
+                  },
+                  "evidence_id": "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66"
+                },
+                {
+                  "values": [
+                    1,
+                    2
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 5
+                  },
+                  "evidence_id": "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe"
+                },
+                {
+                  "values": [
+                    2,
+                    1
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 5
+                  },
+                  "evidence_id": "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d"
+                },
+                {
+                  "values": [
+                    1,
+                    1
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 2
+                  },
+                  "evidence_id": "5a2f0c90452c42080c18503761d23354c46a69e7a53160573b181b3c11bc9c5a"
+                },
+                {
+                  "values": [
+                    2,
+                    3
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 13
+                  },
+                  "evidence_id": "eef5cf0cdeb91e620022c672e4e0c6f9ffda5fb830dd4e0257788453d914c8b6"
+                },
+                {
+                  "values": [
+                    -1,
+                    1
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 2
+                  },
+                  "evidence_id": "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6"
+                },
+                {
+                  "values": [
+                    5
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 25
+                  },
+                  "evidence_id": "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50"
+                },
+                {
+                  "values": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 14
+                  },
+                  "evidence_id": "d8e09855856678462d30d32bab08111447f8b7656287ef2eadaed1b57ab3805f"
+                },
+                {
+                  "values": [
+                    10,
+                    -10
+                  ],
+                  "status": "ok",
+                  "result": {
+                    "value": 200
+                  },
+                  "evidence_id": "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+                }
+              ]
+            ],
+            "diagnostic": null
+          }
+        ],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "status": "transport_error",
+          "usage": {
+            "prompt_tokens": 3417,
+            "completion_tokens": 8192,
+            "total_tokens": 11609
+          },
+          "diagnostic": "OpenRouter response token limit"
+        }
+      ],
+      "execution_status": "research_error",
+      "error": "OpenRouterFailure"
+    }
+  ],
+  "review": {
+    "status": "ok",
+    "interpretations": [
+      {
+        "uncertainties": [
+          "Only integer lists of length 0-3 and values from {-10,-1,0,1,2,3,5,10} were tested.",
+          "Finite data cannot establish a universal law; other functions may coincide on these points.",
+          "Longer lists, larger magnitudes, and untested integers remain unverified."
+        ],
+        "scope": "Tested integer lists of length 0-3 with values in {-10,-1,0,1,2,3,5,10}, including empty, zero, duplicates, order swaps, and negatives.",
+        "evidence_ids": [
+          "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0",
+          "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c",
+          "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff",
+          "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66",
+          "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe",
+          "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d",
+          "5a2f0c90452c42080c18503761d23354c46a69e7a53160573b181b3c11bc9c5a",
+          "eef5cf0cdeb91e620022c672e4e0c6f9ffda5fb830dd4e0257788453d914c8b6",
+          "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6",
+          "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50",
+          "d8e09855856678462d30d32bab08111447f8b7656287ef2eadaed1b57ab3805f",
+          "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+        ],
+        "claim": "For every observed input, evaluate returns the sum of squares of the input integers.",
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "uncertainties": [
+          "Only one swapped pair was tested.",
+          "Longer permutations and repeated elements in different positions remain untested."
+        ],
+        "scope": "One order-swapped pair, [1,2] and [2,1].",
+        "evidence_ids": [
+          "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe",
+          "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d"
+        ],
+        "claim": "On the tested pair, evaluate is order-insensitive.",
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "uncertainties": [
+          "Only singletons 0, 1, 2, and 5 were tested.",
+          "The empty-list behavior could be a special case rather than the empty sum."
+        ],
+        "scope": "Empty list and singleton inputs 0, 1, 2, and 5.",
+        "evidence_ids": [
+          "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0",
+          "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c",
+          "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff",
+          "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66",
+          "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50"
+        ],
+        "claim": "evaluate returns 0 for the empty list and n^2 for tested singleton inputs n.",
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "uncertainties": [
+          "Only -1 and -10 were tested as negative values.",
+          "Other negative integers and mixed-sign lists remain untested."
+        ],
+        "scope": "Two lists containing negative values: [-1,1] and [10,-10].",
+        "evidence_ids": [
+          "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6",
+          "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+        ],
+        "claim": "Negative inputs contribute positively, consistent with squaring rather than signed addition or product.",
+        "status": "llm_interpretation_unverified"
+      }
+    ],
+    "remaining_unknowns": [
+      "Whether the sum-of-squares pattern holds for longer lists, larger magnitudes, and integer values not yet tested.",
+      "Whether the empty-list return 0 is the natural empty sum or a special case.",
+      "Whether any hidden order dependence appears for longer or repeated-element lists.",
+      "Whether the function is exactly sum of squares or another expression that coincides on the tested inputs.",
+      "Whether execution limits, overflow, or type handling alter results for large inputs."
+    ],
+    "suggested_next_question": "Does evaluate([3,4]) return 25, as the sum-of-squares explanation predicts, or a different value that would falsify it?",
+    "usage": {
+      "prompt_tokens": 3169,
+      "completion_tokens": 2169,
+      "total_tokens": 5338
+    },
+    "request": {
+      "protocol": "research-scientist-v3",
+      "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+      "entity": {
+        "id": "object",
+        "source": "local-research-lab-v1",
+        "revision": "ffc2ea0b4c1b972bda89",
+        "interface": "json-tools-v1"
+      },
+      "tools": [
+        {
+          "name": "evaluate",
+          "description": "Unknown function of a list of integers; returns a number as result.value.",
+          "arguments": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "maxItems": 64
+              }
+            },
+            "required": [
+              "values"
+            ]
+          }
+        }
+      ],
+      "remaining_unique_tool_calls": 12,
+      "execution_limits": {
+        "max_program_tool_calls": 24,
+        "remaining_unique_tool_attempts": 12,
+        "suggested_unique_calls_this_round": 12,
+        "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": []
+            }
+          },
+          "result": {
+            "value": 0
+          }
+        },
+        {
+          "id": "E2",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                0
+              ]
+            }
+          },
+          "result": {
+            "value": 0
+          }
+        },
+        {
+          "id": "E3",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                1
+              ]
+            }
+          },
+          "result": {
+            "value": 1
+          }
+        },
+        {
+          "id": "E4",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                2
+              ]
+            }
+          },
+          "result": {
+            "value": 4
+          }
+        },
+        {
+          "id": "E5",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                1,
+                2
+              ]
+            }
+          },
+          "result": {
+            "value": 5
+          }
+        },
+        {
+          "id": "E6",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                2,
+                1
+              ]
+            }
+          },
+          "result": {
+            "value": 5
+          }
+        },
+        {
+          "id": "E7",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                1,
+                1
+              ]
+            }
+          },
+          "result": {
+            "value": 2
+          }
+        },
+        {
+          "id": "E8",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                2,
+                3
+              ]
+            }
+          },
+          "result": {
+            "value": 13
+          }
+        },
+        {
+          "id": "E9",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                -1,
+                1
+              ]
+            }
+          },
+          "result": {
+            "value": 2
+          }
+        },
+        {
+          "id": "E10",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                5
+              ]
+            }
+          },
+          "result": {
+            "value": 25
+          }
+        },
+        {
+          "id": "E11",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                1,
+                2,
+                3
+              ]
+            }
+          },
+          "result": {
+            "value": 14
+          }
+        },
+        {
+          "id": "E12",
+          "tool_request": {
+            "tool": "evaluate",
+            "arguments": {
+              "values": [
+                10,
+                -10
+              ]
+            }
+          },
+          "result": {
+            "value": 200
+          }
+        }
+      ],
+      "tool_errors": [],
+      "previous_rounds": [
+        {
+          "question": "What elementary function does evaluate compute on a list of integers? This first round contrasts sum, product, maximum, length, and mean using probes that also test empty-list behavior, order sensitivity, duplicates, negatives, and a cancellation pair.",
+          "hypotheses": [
+            {
+              "falsification": "Any return that differs from the sum prediction on a listed probe, or an empty-list return other than 0.",
+              "id": "H_sum",
+              "prediction": "[] -> 0; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 3; [2,1] -> 3; [1,1] -> 2; [2,3] -> 5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 6; [10,-10] -> 0.",
+              "statement": "evaluate returns the arithmetic sum of the integer list."
+            },
+            {
+              "falsification": "Any return that differs from the product prediction on a listed probe.",
+              "id": "H_product",
+              "prediction": "[] -> 1; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 6; [-1,1] -> -1; [5] -> 5; [1,2,3] -> 6; [10,-10] -> -100.",
+              "statement": "evaluate returns the product of the integer list."
+            },
+            {
+              "falsification": "Any return that differs from the maximum prediction on a listed probe, including failure on the empty list.",
+              "id": "H_max",
+              "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 2; [2,1] -> 2; [1,1] -> 1; [2,3] -> 3; [-1,1] -> 1; [5] -> 5; [1,2,3] -> 3; [10,-10] -> 10.",
+              "statement": "evaluate returns the maximum value in the integer list."
+            },
+            {
+              "falsification": "Any return that differs from the length prediction on a listed probe.",
+              "id": "H_length",
+              "prediction": "[] -> 0; [0] -> 1; [1] -> 1; [2] -> 1; [1,2] -> 2; [2,1] -> 2; [1,1] -> 2; [2,3] -> 2; [-1,1] -> 2; [5] -> 1; [1,2,3] -> 3; [10,-10] -> 2.",
+              "statement": "evaluate returns the count of elements in the integer list."
+            },
+            {
+              "falsification": "Any return that differs from the mean prediction on a listed probe, including failure on the empty list.",
+              "id": "H_mean",
+              "prediction": "[] -> error or no numeric result; [0] -> 0; [1] -> 1; [2] -> 2; [1,2] -> 1.5; [2,1] -> 1.5; [1,1] -> 1; [2,3] -> 2.5; [-1,1] -> 0; [5] -> 5; [1,2,3] -> 2; [10,-10] -> 0.",
+              "statement": "evaluate returns the arithmetic mean of the integer list."
+            }
+          ],
+          "program": "probes = [[], [0], [1], [2], [1, 2], [2, 1], [1, 1], [2, 3], [-1, 1], [5], [1, 2, 3], [10, -10]]\nout = []\nfor values in probes:\n    response = call(\"evaluate\", {\"values\": values})\n    entry = {\"values\": values, \"status\": response.get(\"status\")}\n    if response.get(\"status\") == \"ok\":\n        entry[\"result\"] = response.get(\"result\")\n        entry[\"evidence_id\"] = response.get(\"evidence_id\")\n    else:\n        entry[\"error\"] = response.get(\"error\", response.get(\"result\"))\n    out.append(entry)\nemit(out)",
+          "execution_status": "ok",
+          "emissions": [
+            [
+              {
+                "values": [],
+                "status": "ok",
+                "result": {
+                  "value": 0
+                },
+                "evidence_id": "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0"
+              },
+              {
+                "values": [
+                  0
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 0
+                },
+                "evidence_id": "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c"
+              },
+              {
+                "values": [
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 1
+                },
+                "evidence_id": "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff"
+              },
+              {
+                "values": [
+                  2
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 4
+                },
+                "evidence_id": "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66"
+              },
+              {
+                "values": [
+                  1,
+                  2
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 5
+                },
+                "evidence_id": "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe"
+              },
+              {
+                "values": [
+                  2,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 5
+                },
+                "evidence_id": "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d"
+              },
+              {
+                "values": [
+                  1,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 2
+                },
+                "evidence_id": "5a2f0c90452c42080c18503761d23354c46a69e7a53160573b181b3c11bc9c5a"
+              },
+              {
+                "values": [
+                  2,
+                  3
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 13
+                },
+                "evidence_id": "eef5cf0cdeb91e620022c672e4e0c6f9ffda5fb830dd4e0257788453d914c8b6"
+              },
+              {
+                "values": [
+                  -1,
+                  1
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 2
+                },
+                "evidence_id": "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6"
+              },
+              {
+                "values": [
+                  5
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 25
+                },
+                "evidence_id": "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50"
+              },
+              {
+                "values": [
+                  1,
+                  2,
+                  3
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 14
+                },
+                "evidence_id": "d8e09855856678462d30d32bab08111447f8b7656287ef2eadaed1b57ab3805f"
+              },
+              {
+                "values": [
+                  10,
+                  -10
+                ],
+                "status": "ok",
+                "result": {
+                  "value": 200
+                },
+                "evidence_id": "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+              }
+            ]
+          ],
+          "diagnostic": null
+        },
+        {
+          "execution_status": "research_error",
+          "error": "OpenRouterFailure"
+        }
+      ],
+      "phase": "review_and_seek_counterexamples",
+      "response_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "interpretations",
+          "remaining_unknowns",
+          "suggested_next_question"
+        ],
+        "properties": {
+          "interpretations": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "claim",
+                "evidence_ids",
+                "scope",
+                "uncertainties"
+              ],
+              "properties": {
+                "claim": {
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "scope": {
+                  "type": "string"
+                },
+                "uncertainties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "remaining_unknowns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "suggested_next_question": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "model_attempts": [
+      {
+        "attempt": 1,
+        "usage": {
+          "prompt_tokens": 3169,
+          "completion_tokens": 2169,
+          "total_tokens": 5338
+        },
+        "response": {
+          "suggested_next_question": "Does evaluate([3,4]) return 25, as the sum-of-squares explanation predicts, or a different value that would falsify it?",
+          "remaining_unknowns": [
+            "Whether the sum-of-squares pattern holds for longer lists, larger magnitudes, and integer values not yet tested.",
+            "Whether the empty-list return 0 is the natural empty sum or a special case.",
+            "Whether any hidden order dependence appears for longer or repeated-element lists.",
+            "Whether the function is exactly sum of squares or another expression that coincides on the tested inputs.",
+            "Whether execution limits, overflow, or type handling alter results for large inputs."
+          ],
+          "interpretations": [
+            {
+              "uncertainties": [
+                "Only integer lists of length 0-3 and values from {-10,-1,0,1,2,3,5,10} were tested.",
+                "Finite data cannot establish a universal law; other functions may coincide on these points.",
+                "Longer lists, larger magnitudes, and untested integers remain unverified."
+              ],
+              "scope": "Tested integer lists of length 0-3 with values in {-10,-1,0,1,2,3,5,10}, including empty, zero, duplicates, order swaps, and negatives.",
+              "evidence_ids": [
+                "E1",
+                "E2",
+                "E3",
+                "E4",
+                "E5",
+                "E6",
+                "E7",
+                "E8",
+                "E9",
+                "E10",
+                "E11",
+                "E12"
+              ],
+              "claim": "For every observed input, evaluate returns the sum of squares of the input integers."
+            },
+            {
+              "uncertainties": [
+                "Only one swapped pair was tested.",
+                "Longer permutations and repeated elements in different positions remain untested."
+              ],
+              "scope": "One order-swapped pair, [1,2] and [2,1].",
+              "evidence_ids": [
+                "E5",
+                "E6"
+              ],
+              "claim": "On the tested pair, evaluate is order-insensitive."
+            },
+            {
+              "uncertainties": [
+                "Only singletons 0, 1, 2, and 5 were tested.",
+                "The empty-list behavior could be a special case rather than the empty sum."
+              ],
+              "scope": "Empty list and singleton inputs 0, 1, 2, and 5.",
+              "evidence_ids": [
+                "E1",
+                "E2",
+                "E3",
+                "E4",
+                "E10"
+              ],
+              "claim": "evaluate returns 0 for the empty list and n^2 for tested singleton inputs n."
+            },
+            {
+              "uncertainties": [
+                "Only -1 and -10 were tested as negative values.",
+                "Other negative integers and mixed-sign lists remain untested."
+              ],
+              "scope": "Two lists containing negative values: [-1,1] and [10,-10].",
+              "evidence_ids": [
+                "E9",
+                "E12"
+              ],
+              "claim": "Negative inputs contribute positively, consistent with squaring rather than signed addition or product."
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 3169,
+            "completion_tokens": 2169,
+            "total_tokens": 5338
+          }
+        },
+        "status": "accepted"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": []
+        }
+      },
+      "result": {
+        "value": 0
+      },
+      "evidence_id": "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            0
+          ]
+        }
+      },
+      "result": {
+        "value": 0
+      },
+      "evidence_id": "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            1
+          ]
+        }
+      },
+      "result": {
+        "value": 1
+      },
+      "evidence_id": "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            2
+          ]
+        }
+      },
+      "result": {
+        "value": 4
+      },
+      "evidence_id": "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            1,
+            2
+          ]
+        }
+      },
+      "result": {
+        "value": 5
+      },
+      "evidence_id": "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            2,
+            1
+          ]
+        }
+      },
+      "result": {
+        "value": 5
+      },
+      "evidence_id": "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            1,
+            1
+          ]
+        }
+      },
+      "result": {
+        "value": 2
+      },
+      "evidence_id": "5a2f0c90452c42080c18503761d23354c46a69e7a53160573b181b3c11bc9c5a"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            2,
+            3
+          ]
+        }
+      },
+      "result": {
+        "value": 13
+      },
+      "evidence_id": "eef5cf0cdeb91e620022c672e4e0c6f9ffda5fb830dd4e0257788453d914c8b6"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            -1,
+            1
+          ]
+        }
+      },
+      "result": {
+        "value": 2
+      },
+      "evidence_id": "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            5
+          ]
+        }
+      },
+      "result": {
+        "value": 25
+      },
+      "evidence_id": "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "result": {
+        "value": 14
+      },
+      "evidence_id": "d8e09855856678462d30d32bab08111447f8b7656287ef2eadaed1b57ab3805f"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "ffc2ea0b4c1b972bda89",
+      "experiment": {
+        "tool": "evaluate",
+        "arguments": {
+          "values": [
+            10,
+            -10
+          ]
+        }
+      },
+      "result": {
+        "value": 200
+      },
+      "evidence_id": "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+    }
+  ],
+  "interpretations": [
+    {
+      "uncertainties": [
+        "Only integer lists of length 0-3 and values from {-10,-1,0,1,2,3,5,10} were tested.",
+        "Finite data cannot establish a universal law; other functions may coincide on these points.",
+        "Longer lists, larger magnitudes, and untested integers remain unverified."
+      ],
+      "scope": "Tested integer lists of length 0-3 with values in {-10,-1,0,1,2,3,5,10}, including empty, zero, duplicates, order swaps, and negatives.",
+      "evidence_ids": [
+        "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0",
+        "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c",
+        "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff",
+        "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66",
+        "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe",
+        "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d",
+        "5a2f0c90452c42080c18503761d23354c46a69e7a53160573b181b3c11bc9c5a",
+        "eef5cf0cdeb91e620022c672e4e0c6f9ffda5fb830dd4e0257788453d914c8b6",
+        "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6",
+        "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50",
+        "d8e09855856678462d30d32bab08111447f8b7656287ef2eadaed1b57ab3805f",
+        "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+      ],
+      "claim": "For every observed input, evaluate returns the sum of squares of the input integers.",
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "uncertainties": [
+        "Only one swapped pair was tested.",
+        "Longer permutations and repeated elements in different positions remain untested."
+      ],
+      "scope": "One order-swapped pair, [1,2] and [2,1].",
+      "evidence_ids": [
+        "03c0aa797aae0352b4a5589bce885d8e37b5f0bb22d66e76eccaa7352025acfe",
+        "ce1db17a0199dda7fb768c4f4a7635668db635b49024600a54e299bc6d37399d"
+      ],
+      "claim": "On the tested pair, evaluate is order-insensitive.",
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "uncertainties": [
+        "Only singletons 0, 1, 2, and 5 were tested.",
+        "The empty-list behavior could be a special case rather than the empty sum."
+      ],
+      "scope": "Empty list and singleton inputs 0, 1, 2, and 5.",
+      "evidence_ids": [
+        "f69c09aa5c41c49372d8c29ce5b17c8e2cdb09c98ca404c367045ec9680069c0",
+        "e2d252a6137d4f67fd6b8f92615ff5a2fe10ccaefcc475d86f3fc72795036d1c",
+        "0e241b360fa037ea027f9e1d0b1ff30b2e61bfef68b49bf611f5bdf2bc0633ff",
+        "9a14b12496df7d2984db0daeb5d54e43766960859285f5c3a2353981b043bb66",
+        "2a4d8f9e9d784db584ef82a85c371cd79a1e7867aeedfcdc685c4502693f7f50"
+      ],
+      "claim": "evaluate returns 0 for the empty list and n^2 for tested singleton inputs n.",
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "uncertainties": [
+        "Only -1 and -10 were tested as negative values.",
+        "Other negative integers and mixed-sign lists remain untested."
+      ],
+      "scope": "Two lists containing negative values: [-1,1] and [10,-10].",
+      "evidence_ids": [
+        "ae83b7ce54752645159dd8aa2fd66a24d893292fcb5abf4cdb8c35f83ce810e6",
+        "11343ca28ab93be4cccfa648007a5aa3840870a734fa5bae621c793d0dea3db8"
+      ],
+      "claim": "Negative inputs contribute positively, consistent with squaring rather than signed addition or product.",
+      "status": "llm_interpretation_unverified"
+    }
+  ],
+  "unique_tool_attempts": 12,
+  "duplicate_requests": 0,
+  "tool_errors": [],
+  "status": "observed",
+  "claims_automatically_verified": false,
+  "domain": "function",
+  "seed": 0
+}

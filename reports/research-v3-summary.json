@@ -1,0 +1,45 @@
+[
+  {
+    "domain": "function",
+    "observations": 12,
+    "replayed": 12,
+    "rounds": [
+      "ok",
+      "research_error"
+    ],
+    "review": "ok",
+    "errors": [
+      "OpenRouter response token limit"
+    ],
+    "total_tokens": 19975,
+    "model_calls": 3
+  },
+  {
+    "domain": "bits",
+    "observations": 16,
+    "replayed": 16,
+    "rounds": [
+      "ok",
+      "ok"
+    ],
+    "review": "ok",
+    "errors": [],
+    "total_tokens": 18776,
+    "model_calls": 3
+  },
+  {
+    "domain": "physics",
+    "observations": 10,
+    "replayed": 10,
+    "rounds": [
+      "ok",
+      "research_error"
+    ],
+    "review": "ok",
+    "errors": [
+      "OpenRouter response token limit"
+    ],
+    "total_tokens": 25216,
+    "model_calls": 3
+  }
+]

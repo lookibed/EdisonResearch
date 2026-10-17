@@ -1,0 +1,1562 @@
+{
+  "protocol": "research-scientist-v3",
+  "entity": {
+    "id": "object",
+    "source": "local-research-lab-v1",
+    "revision": "1d04c4771ca34824c390",
+    "interface": "json-tools-v1"
+  },
+  "tools": [
+    {
+      "name": "observe",
+      "description": "Apply constant force in N for duration in s from rest at position zero. Each call resets the object. Returns position in m and velocity in m/s.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "force": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          }
+        },
+        "required": [
+          "force",
+          "duration"
+        ]
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "request_sha256": "5b45cbdb8f1d6095eda2c3f2d4d31147070db64a6491d96f85091fb82517a50e",
+      "request": {
+        "protocol": "research-scientist-v3",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "1d04c4771ca34824c390",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "observe",
+            "description": "Apply constant force in N for duration in s from rest at position zero. Each call resets the object. Returns position in m and velocity in m/s.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "force": {
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 10
+                },
+                "duration": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 5
+                }
+              },
+              "required": [
+                "force",
+                "duration"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 24,
+        "execution_limits": {
+          "max_program_tool_calls": 24,
+          "remaining_unique_tool_attempts": 24,
+          "suggested_unique_calls_this_round": 12,
+          "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+        },
+        "observations": [],
+        "tool_errors": [],
+        "previous_rounds": [],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "usage": {
+            "prompt_tokens": 1494,
+            "completion_tokens": 1446,
+            "total_tokens": 2940
+          },
+          "response": {
+            "interpretations": [],
+            "question": "Does the object obey ideal Newtonian dynamics with constant mass and no drag, or does it show drag, a force threshold, or nonlinear force response?",
+            "experiment": "results = []\nprobes = [\n    (1, 1),\n    (2, 1),\n    (1, 2),\n    (0, 1),\n    (-1, 1),\n    (10, 1),\n    (1, 0.5),\n    (5, 2),\n    (0.1, 1),\n    (1, 5),\n]\nfor force, duration in probes:\n    resp = call(\"observe\", {\"force\": force, \"duration\": duration})\n    entry = {\"force\": force, \"duration\": duration, \"status\": resp.get(\"status\")}\n    if resp.get(\"status\") == \"ok\":\n        entry[\"result\"] = resp.get(\"result\")\n        entry[\"evidence_id\"] = resp.get(\"evidence_id\")\n    results.append(entry)\nemit(results)",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "Ideal Newtonian point mass with constant mass m and no drag: x = 0.5*(F/m)*t^2, v = (F/m)*t.",
+                "prediction": "At fixed duration, x and v are exactly proportional to F; at fixed force, x is exactly proportional to t^2 and v to t; F=0 gives x=0 and v=0; F=-1 mirrors F=1 with opposite signs.",
+                "falsification": "Any deviation from exact proportionality (e.g., x(2F) != 2*x(F), x(2t) != 4*x(t), nonzero motion at F=0, or asymmetry under sign reversal) refutes H1."
+              },
+              {
+                "id": "H2",
+                "statement": "Linear viscous drag with constant mass: m dv/dt = F - gamma*v, so velocity saturates and position grows sub-quadratically in time.",
+                "prediction": "At fixed force, v(t) approaches a terminal value F/gamma and x(t) grows roughly linearly at large t; at fixed duration, x and v remain proportional to F if m and gamma are constant.",
+                "falsification": "If v grows linearly without saturation over the tested durations, or if x(t) matches t^2 exactly, H2 is disfavored."
+              },
+              {
+                "id": "H3",
+                "statement": "Nonlinear or threshold response: either a static friction threshold (small forces produce no motion) or a force-dependent effective mass (x not proportional to F).",
+                "prediction": "A small force such as F=0.1 may yield zero or disproportionately small displacement; x(2F) may not equal 2*x(F); or a force threshold appears.",
+                "falsification": "If F=0.1 produces motion consistent with the same proportionality seen at larger forces, and x scales linearly with F, H3 is disfavored."
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1494,
+              "completion_tokens": 1446,
+              "total_tokens": 2940
+            }
+          },
+          "status": "accepted"
+        }
+      ],
+      "question": "Does the object obey ideal Newtonian dynamics with constant mass and no drag, or does it show drag, a force threshold, or nonlinear force response?",
+      "hypotheses": [
+        {
+          "id": "H1",
+          "statement": "Ideal Newtonian point mass with constant mass m and no drag: x = 0.5*(F/m)*t^2, v = (F/m)*t.",
+          "prediction": "At fixed duration, x and v are exactly proportional to F; at fixed force, x is exactly proportional to t^2 and v to t; F=0 gives x=0 and v=0; F=-1 mirrors F=1 with opposite signs.",
+          "falsification": "Any deviation from exact proportionality (e.g., x(2F) != 2*x(F), x(2t) != 4*x(t), nonzero motion at F=0, or asymmetry under sign reversal) refutes H1."
+        },
+        {
+          "id": "H2",
+          "statement": "Linear viscous drag with constant mass: m dv/dt = F - gamma*v, so velocity saturates and position grows sub-quadratically in time.",
+          "prediction": "At fixed force, v(t) approaches a terminal value F/gamma and x(t) grows roughly linearly at large t; at fixed duration, x and v remain proportional to F if m and gamma are constant.",
+          "falsification": "If v grows linearly without saturation over the tested durations, or if x(t) matches t^2 exactly, H2 is disfavored."
+        },
+        {
+          "id": "H3",
+          "statement": "Nonlinear or threshold response: either a static friction threshold (small forces produce no motion) or a force-dependent effective mass (x not proportional to F).",
+          "prediction": "A small force such as F=0.1 may yield zero or disproportionately small displacement; x(2F) may not equal 2*x(F); or a force threshold appears.",
+          "falsification": "If F=0.1 produces motion consistent with the same proportionality seen at larger forces, and x scales linearly with F, H3 is disfavored."
+        }
+      ],
+      "program": "results = []\nprobes = [\n    (1, 1),\n    (2, 1),\n    (1, 2),\n    (0, 1),\n    (-1, 1),\n    (10, 1),\n    (1, 0.5),\n    (5, 2),\n    (0.1, 1),\n    (1, 5),\n]\nfor force, duration in probes:\n    resp = call(\"observe\", {\"force\": force, \"duration\": duration})\n    entry = {\"force\": force, \"duration\": duration, \"status\": resp.get(\"status\")}\n    if resp.get(\"status\") == \"ok\":\n        entry[\"result\"] = resp.get(\"result\")\n        entry[\"evidence_id\"] = resp.get(\"evidence_id\")\n    results.append(entry)\nemit(results)",
+      "execution_status": "ok",
+      "emissions": [
+        [
+          {
+            "force": 1,
+            "duration": 1,
+            "status": "ok",
+            "result": {
+              "position": 0.125804878,
+              "velocity": 0.244967692
+            },
+            "evidence_id": "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31"
+          },
+          {
+            "force": 2,
+            "duration": 1,
+            "status": "ok",
+            "result": {
+              "position": 0.251609756,
+              "velocity": 0.489935383
+            },
+            "evidence_id": "303f804a547461bf9776fcf1fde77df342fd0c2bb312379f9f9f9c3dc5d30118"
+          },
+          {
+            "force": 1,
+            "duration": 2,
+            "status": "ok",
+            "result": {
+              "position": 0.477681361,
+              "velocity": 0.453140857
+            },
+            "evidence_id": "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8"
+          },
+          {
+            "force": 0,
+            "duration": 1,
+            "status": "ok",
+            "result": {
+              "position": 0.0,
+              "velocity": 0.0
+            },
+            "evidence_id": "a5eaa8aa11a9279ca0614a3c86378a55ff5dc056967b660e48bcd675f9864447"
+          },
+          {
+            "force": -1,
+            "duration": 1,
+            "status": "ok",
+            "result": {
+              "position": -0.125804878,
+              "velocity": -0.244967692
+            },
+            "evidence_id": "a160b7e9c83f632500d9beeb75cf3aa1111d038a129cf940489bf5bb8302ce47"
+          },
+          {
+            "force": 10,
+            "duration": 1,
+            "status": "ok",
+            "result": {
+              "position": 1.258048781,
+              "velocity": 2.449676916
+            },
+            "evidence_id": "5bd1e8d68f44f2d5988ccf6b325d985b8535866652aa6665319bbf27dc88f185"
+          },
+          {
+            "force": 1,
+            "duration": 0.5,
+            "status": "ok",
+            "result": {
+              "position": 0.032298365,
+              "velocity": 0.127464845
+            },
+            "evidence_id": "fbb6c440dafaa93f0ec4f16c44a6dcc3cb7df993ad6b4857a081ec4dcc107403"
+          },
+          {
+            "force": 5,
+            "duration": 2,
+            "status": "ok",
+            "result": {
+              "position": 2.388406803,
+              "velocity": 2.265704286
+            },
+            "evidence_id": "f66065373efa7bdb322f703935b50db8955715de80699bf11638ff2f3adebc94"
+          },
+          {
+            "force": 0.1,
+            "duration": 1,
+            "status": "ok",
+            "result": {
+              "position": 0.012580488,
+              "velocity": 0.024496769
+            },
+            "evidence_id": "4436c395eaafa2bb2f5a9391d43fc6252098e7cf52a83ae7c41fe78a8289b7b4"
+          },
+          {
+            "force": 1,
+            "duration": 5,
+            "status": "ok",
+            "result": {
+              "position": 2.574912766,
+              "velocity": 0.908133313
+            },
+            "evidence_id": "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+          }
+        ]
+      ],
+      "diagnostic": null,
+      "usage": {
+        "prompt_tokens": 1494,
+        "completion_tokens": 1446,
+        "total_tokens": 2940
+      },
+      "interpretations": []
+    },
+    {
+      "round": 2,
+      "request_sha256": "35bc93ae9a94116c49d8dbf8392d6f76d13d35b4ccfc2495cfd9a0ab25724ea6",
+      "request": {
+        "protocol": "research-scientist-v3",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "1d04c4771ca34824c390",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "observe",
+            "description": "Apply constant force in N for duration in s from rest at position zero. Each call resets the object. Returns position in m and velocity in m/s.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "force": {
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 10
+                },
+                "duration": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 5
+                }
+              },
+              "required": [
+                "force",
+                "duration"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 14,
+        "execution_limits": {
+          "max_program_tool_calls": 24,
+          "remaining_unique_tool_attempts": 14,
+          "suggested_unique_calls_this_round": 14,
+          "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+        },
+        "observations": [
+          {
+            "id": "E1",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 1,
+                "duration": 1
+              }
+            },
+            "result": {
+              "position": 0.125804878,
+              "velocity": 0.244967692
+            }
+          },
+          {
+            "id": "E2",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 2,
+                "duration": 1
+              }
+            },
+            "result": {
+              "position": 0.251609756,
+              "velocity": 0.489935383
+            }
+          },
+          {
+            "id": "E3",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 1,
+                "duration": 2
+              }
+            },
+            "result": {
+              "position": 0.477681361,
+              "velocity": 0.453140857
+            }
+          },
+          {
+            "id": "E4",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 0,
+                "duration": 1
+              }
+            },
+            "result": {
+              "position": 0.0,
+              "velocity": 0.0
+            }
+          },
+          {
+            "id": "E5",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": -1,
+                "duration": 1
+              }
+            },
+            "result": {
+              "position": -0.125804878,
+              "velocity": -0.244967692
+            }
+          },
+          {
+            "id": "E6",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 10,
+                "duration": 1
+              }
+            },
+            "result": {
+              "position": 1.258048781,
+              "velocity": 2.449676916
+            }
+          },
+          {
+            "id": "E7",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 1,
+                "duration": 0.5
+              }
+            },
+            "result": {
+              "position": 0.032298365,
+              "velocity": 0.127464845
+            }
+          },
+          {
+            "id": "E8",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 5,
+                "duration": 2
+              }
+            },
+            "result": {
+              "position": 2.388406803,
+              "velocity": 2.265704286
+            }
+          },
+          {
+            "id": "E9",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 0.1,
+                "duration": 1
+              }
+            },
+            "result": {
+              "position": 0.012580488,
+              "velocity": 0.024496769
+            }
+          },
+          {
+            "id": "E10",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 1,
+                "duration": 5
+              }
+            },
+            "result": {
+              "position": 2.574912766,
+              "velocity": 0.908133313
+            }
+          }
+        ],
+        "tool_errors": [],
+        "previous_rounds": [
+          {
+            "question": "Does the object obey ideal Newtonian dynamics with constant mass and no drag, or does it show drag, a force threshold, or nonlinear force response?",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "Ideal Newtonian point mass with constant mass m and no drag: x = 0.5*(F/m)*t^2, v = (F/m)*t.",
+                "prediction": "At fixed duration, x and v are exactly proportional to F; at fixed force, x is exactly proportional to t^2 and v to t; F=0 gives x=0 and v=0; F=-1 mirrors F=1 with opposite signs.",
+                "falsification": "Any deviation from exact proportionality (e.g., x(2F) != 2*x(F), x(2t) != 4*x(t), nonzero motion at F=0, or asymmetry under sign reversal) refutes H1."
+              },
+              {
+                "id": "H2",
+                "statement": "Linear viscous drag with constant mass: m dv/dt = F - gamma*v, so velocity saturates and position grows sub-quadratically in time.",
+                "prediction": "At fixed force, v(t) approaches a terminal value F/gamma and x(t) grows roughly linearly at large t; at fixed duration, x and v remain proportional to F if m and gamma are constant.",
+                "falsification": "If v grows linearly without saturation over the tested durations, or if x(t) matches t^2 exactly, H2 is disfavored."
+              },
+              {
+                "id": "H3",
+                "statement": "Nonlinear or threshold response: either a static friction threshold (small forces produce no motion) or a force-dependent effective mass (x not proportional to F).",
+                "prediction": "A small force such as F=0.1 may yield zero or disproportionately small displacement; x(2F) may not equal 2*x(F); or a force threshold appears.",
+                "falsification": "If F=0.1 produces motion consistent with the same proportionality seen at larger forces, and x scales linearly with F, H3 is disfavored."
+              }
+            ],
+            "program": "results = []\nprobes = [\n    (1, 1),\n    (2, 1),\n    (1, 2),\n    (0, 1),\n    (-1, 1),\n    (10, 1),\n    (1, 0.5),\n    (5, 2),\n    (0.1, 1),\n    (1, 5),\n]\nfor force, duration in probes:\n    resp = call(\"observe\", {\"force\": force, \"duration\": duration})\n    entry = {\"force\": force, \"duration\": duration, \"status\": resp.get(\"status\")}\n    if resp.get(\"status\") == \"ok\":\n        entry[\"result\"] = resp.get(\"result\")\n        entry[\"evidence_id\"] = resp.get(\"evidence_id\")\n    results.append(entry)\nemit(results)",
+            "execution_status": "ok",
+            "emissions": [
+              [
+                {
+                  "force": 1,
+                  "duration": 1,
+                  "status": "ok",
+                  "result": {
+                    "position": 0.125804878,
+                    "velocity": 0.244967692
+                  },
+                  "evidence_id": "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31"
+                },
+                {
+                  "force": 2,
+                  "duration": 1,
+                  "status": "ok",
+                  "result": {
+                    "position": 0.251609756,
+                    "velocity": 0.489935383
+                  },
+                  "evidence_id": "303f804a547461bf9776fcf1fde77df342fd0c2bb312379f9f9f9c3dc5d30118"
+                },
+                {
+                  "force": 1,
+                  "duration": 2,
+                  "status": "ok",
+                  "result": {
+                    "position": 0.477681361,
+                    "velocity": 0.453140857
+                  },
+                  "evidence_id": "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8"
+                },
+                {
+                  "force": 0,
+                  "duration": 1,
+                  "status": "ok",
+                  "result": {
+                    "position": 0.0,
+                    "velocity": 0.0
+                  },
+                  "evidence_id": "a5eaa8aa11a9279ca0614a3c86378a55ff5dc056967b660e48bcd675f9864447"
+                },
+                {
+                  "force": -1,
+                  "duration": 1,
+                  "status": "ok",
+                  "result": {
+                    "position": -0.125804878,
+                    "velocity": -0.244967692
+                  },
+                  "evidence_id": "a160b7e9c83f632500d9beeb75cf3aa1111d038a129cf940489bf5bb8302ce47"
+                },
+                {
+                  "force": 10,
+                  "duration": 1,
+                  "status": "ok",
+                  "result": {
+                    "position": 1.258048781,
+                    "velocity": 2.449676916
+                  },
+                  "evidence_id": "5bd1e8d68f44f2d5988ccf6b325d985b8535866652aa6665319bbf27dc88f185"
+                },
+                {
+                  "force": 1,
+                  "duration": 0.5,
+                  "status": "ok",
+                  "result": {
+                    "position": 0.032298365,
+                    "velocity": 0.127464845
+                  },
+                  "evidence_id": "fbb6c440dafaa93f0ec4f16c44a6dcc3cb7df993ad6b4857a081ec4dcc107403"
+                },
+                {
+                  "force": 5,
+                  "duration": 2,
+                  "status": "ok",
+                  "result": {
+                    "position": 2.388406803,
+                    "velocity": 2.265704286
+                  },
+                  "evidence_id": "f66065373efa7bdb322f703935b50db8955715de80699bf11638ff2f3adebc94"
+                },
+                {
+                  "force": 0.1,
+                  "duration": 1,
+                  "status": "ok",
+                  "result": {
+                    "position": 0.012580488,
+                    "velocity": 0.024496769
+                  },
+                  "evidence_id": "4436c395eaafa2bb2f5a9391d43fc6252098e7cf52a83ae7c41fe78a8289b7b4"
+                },
+                {
+                  "force": 1,
+                  "duration": 5,
+                  "status": "ok",
+                  "result": {
+                    "position": 2.574912766,
+                    "velocity": 0.908133313
+                  },
+                  "evidence_id": "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+                }
+              ]
+            ],
+            "diagnostic": null
+          }
+        ],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "status": "transport_error",
+          "usage": {
+            "prompt_tokens": 3249,
+            "completion_tokens": 8192,
+            "total_tokens": 11441
+          },
+          "diagnostic": "OpenRouter response token limit"
+        }
+      ],
+      "execution_status": "research_error",
+      "error": "OpenRouterFailure"
+    }
+  ],
+  "review": {
+    "status": "ok",
+    "interpretations": [
+      {
+        "claim": "Observed regularity: at fixed duration, position and velocity scale linearly with force: E2 is about 2x E1, E6 about 10x E1, E9 about 0.1x E1 at t=1 s; E8 is about 5x E3 at t=2 s; E5 is about -E1; E4 is zero. This is consistent with no static threshold and a linear force response in the tested range.",
+        "evidence_ids": [
+          "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+          "303f804a547461bf9776fcf1fde77df342fd0c2bb312379f9f9f9c3dc5d30118",
+          "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8",
+          "a5eaa8aa11a9279ca0614a3c86378a55ff5dc056967b660e48bcd675f9864447",
+          "a160b7e9c83f632500d9beeb75cf3aa1111d038a129cf940489bf5bb8302ce47",
+          "5bd1e8d68f44f2d5988ccf6b325d985b8535866652aa6665319bbf27dc88f185",
+          "f66065373efa7bdb322f703935b50db8955715de80699bf11638ff2f3adebc94",
+          "4436c395eaafa2bb2f5a9391d43fc6252098e7cf52a83ae7c41fe78a8289b7b4"
+        ],
+        "scope": "F in [-1, 10] N plus 0.1 N, mainly t=1 s; one t=2 s force check; single object, reset each call.",
+        "uncertainties": [
+          "No test below 0.1 N or above 10 N.",
+          "No test of negative forces other than -1 N.",
+          "Force scaling at durations other than 1 s and 2 s is only partially checked."
+        ],
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "claim": "Observed regularity: at F=1 N, motion is sub-quadratic in time: x(2)/x(1) is about 3.80 versus 4, and x(5)/x(1) is about 20.47 versus 25; velocity is sublinear: v(2)/v(1) is about 1.85 versus 2, and v(5)/v(1) is about 3.71 versus 5. This disfavors ideal Newtonian motion with no drag over the tested durations.",
+        "evidence_ids": [
+          "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+          "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8",
+          "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+        ],
+        "scope": "F=1 N, t=0.5, 1, 2, 5 s.",
+        "uncertainties": [
+          "Time scaling was measured mainly at one force.",
+          "Finite precision and unknown measurement noise may affect small deviations."
+        ],
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "claim": "Leading explanation: linear viscous drag with constant mass, m dv/dt = F - gamma v, fits the data. A rough fit from E1 and E3 gives gamma/m about 0.16 s^-1, m about 3.77 kg, and gamma about 0.60 kg/s, and predicts E10 within about 0.5%.",
+        "evidence_ids": [
+          "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+          "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8",
+          "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+        ],
+        "scope": "F=1-5 N, t=0.5-5 s, assuming constant m and gamma and no other forces.",
+        "uncertainties": [
+          "Parameters are approximate and not uniquely identified from finite data.",
+          "Other velocity-dependent or time-dependent models may also fit.",
+          "No independent mass or drag measurement is available."
+        ],
+        "status": "llm_interpretation_unverified"
+      },
+      {
+        "claim": "Observed regularity: short-duration E7 is consistent with drag: v(0.5)/v(1) is about 0.520, above 0.5, and x(0.5)/x(1) is about 0.257, above 0.25, as expected for velocity-dependent drag rather than constant acceleration.",
+        "evidence_ids": [
+          "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+          "fbb6c440dafaa93f0ec4f16c44a6dcc3cb7df993ad6b4857a081ec4dcc107403"
+        ],
+        "scope": "F=1 N, t=0.5 s versus 1 s.",
+        "uncertainties": [
+          "Small deviations could be affected by timing or measurement precision.",
+          "Only one short-duration point is available."
+        ],
+        "status": "llm_interpretation_unverified"
+      }
+    ],
+    "remaining_unknowns": [
+      "Whether velocity approaches a finite terminal value F/gamma at long durations, as linear viscous drag predicts.",
+      "Whether the drag law remains linear at higher speeds or forces beyond the tested range.",
+      "Whether mass and drag coefficient are constant across all forces and durations.",
+      "Whether a threshold exists below 0.1 N.",
+      "Whether behavior is symmetric for negative forces other than -1 N.",
+      "Exact parameter values and measurement noise level."
+    ],
+    "suggested_next_question": "Does the velocity approach a finite terminal value F/gamma at long durations, as linear viscous drag predicts, or continue to grow without saturation?",
+    "usage": {
+      "prompt_tokens": 3001,
+      "completion_tokens": 7834,
+      "total_tokens": 10835
+    },
+    "request": {
+      "protocol": "research-scientist-v3",
+      "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+      "entity": {
+        "id": "object",
+        "source": "local-research-lab-v1",
+        "revision": "1d04c4771ca34824c390",
+        "interface": "json-tools-v1"
+      },
+      "tools": [
+        {
+          "name": "observe",
+          "description": "Apply constant force in N for duration in s from rest at position zero. Each call resets the object. Returns position in m and velocity in m/s.",
+          "arguments": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "force": {
+                "type": "number",
+                "minimum": -10,
+                "maximum": 10
+              },
+              "duration": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 5
+              }
+            },
+            "required": [
+              "force",
+              "duration"
+            ]
+          }
+        }
+      ],
+      "remaining_unique_tool_calls": 14,
+      "execution_limits": {
+        "max_program_tool_calls": 24,
+        "remaining_unique_tool_attempts": 14,
+        "suggested_unique_calls_this_round": 14,
+        "note": "Program call limit includes cached and invalid calls; unique attempt limit is shared across rounds."
+      },
+      "observations": [
+        {
+          "id": "E1",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 1,
+              "duration": 1
+            }
+          },
+          "result": {
+            "position": 0.125804878,
+            "velocity": 0.244967692
+          }
+        },
+        {
+          "id": "E2",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 2,
+              "duration": 1
+            }
+          },
+          "result": {
+            "position": 0.251609756,
+            "velocity": 0.489935383
+          }
+        },
+        {
+          "id": "E3",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 1,
+              "duration": 2
+            }
+          },
+          "result": {
+            "position": 0.477681361,
+            "velocity": 0.453140857
+          }
+        },
+        {
+          "id": "E4",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 0,
+              "duration": 1
+            }
+          },
+          "result": {
+            "position": 0.0,
+            "velocity": 0.0
+          }
+        },
+        {
+          "id": "E5",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": -1,
+              "duration": 1
+            }
+          },
+          "result": {
+            "position": -0.125804878,
+            "velocity": -0.244967692
+          }
+        },
+        {
+          "id": "E6",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 10,
+              "duration": 1
+            }
+          },
+          "result": {
+            "position": 1.258048781,
+            "velocity": 2.449676916
+          }
+        },
+        {
+          "id": "E7",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 1,
+              "duration": 0.5
+            }
+          },
+          "result": {
+            "position": 0.032298365,
+            "velocity": 0.127464845
+          }
+        },
+        {
+          "id": "E8",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 5,
+              "duration": 2
+            }
+          },
+          "result": {
+            "position": 2.388406803,
+            "velocity": 2.265704286
+          }
+        },
+        {
+          "id": "E9",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 0.1,
+              "duration": 1
+            }
+          },
+          "result": {
+            "position": 0.012580488,
+            "velocity": 0.024496769
+          }
+        },
+        {
+          "id": "E10",
+          "tool_request": {
+            "tool": "observe",
+            "arguments": {
+              "force": 1,
+              "duration": 5
+            }
+          },
+          "result": {
+            "position": 2.574912766,
+            "velocity": 0.908133313
+          }
+        }
+      ],
+      "tool_errors": [],
+      "previous_rounds": [
+        {
+          "question": "Does the object obey ideal Newtonian dynamics with constant mass and no drag, or does it show drag, a force threshold, or nonlinear force response?",
+          "hypotheses": [
+            {
+              "id": "H1",
+              "statement": "Ideal Newtonian point mass with constant mass m and no drag: x = 0.5*(F/m)*t^2, v = (F/m)*t.",
+              "prediction": "At fixed duration, x and v are exactly proportional to F; at fixed force, x is exactly proportional to t^2 and v to t; F=0 gives x=0 and v=0; F=-1 mirrors F=1 with opposite signs.",
+              "falsification": "Any deviation from exact proportionality (e.g., x(2F) != 2*x(F), x(2t) != 4*x(t), nonzero motion at F=0, or asymmetry under sign reversal) refutes H1."
+            },
+            {
+              "id": "H2",
+              "statement": "Linear viscous drag with constant mass: m dv/dt = F - gamma*v, so velocity saturates and position grows sub-quadratically in time.",
+              "prediction": "At fixed force, v(t) approaches a terminal value F/gamma and x(t) grows roughly linearly at large t; at fixed duration, x and v remain proportional to F if m and gamma are constant.",
+              "falsification": "If v grows linearly without saturation over the tested durations, or if x(t) matches t^2 exactly, H2 is disfavored."
+            },
+            {
+              "id": "H3",
+              "statement": "Nonlinear or threshold response: either a static friction threshold (small forces produce no motion) or a force-dependent effective mass (x not proportional to F).",
+              "prediction": "A small force such as F=0.1 may yield zero or disproportionately small displacement; x(2F) may not equal 2*x(F); or a force threshold appears.",
+              "falsification": "If F=0.1 produces motion consistent with the same proportionality seen at larger forces, and x scales linearly with F, H3 is disfavored."
+            }
+          ],
+          "program": "results = []\nprobes = [\n    (1, 1),\n    (2, 1),\n    (1, 2),\n    (0, 1),\n    (-1, 1),\n    (10, 1),\n    (1, 0.5),\n    (5, 2),\n    (0.1, 1),\n    (1, 5),\n]\nfor force, duration in probes:\n    resp = call(\"observe\", {\"force\": force, \"duration\": duration})\n    entry = {\"force\": force, \"duration\": duration, \"status\": resp.get(\"status\")}\n    if resp.get(\"status\") == \"ok\":\n        entry[\"result\"] = resp.get(\"result\")\n        entry[\"evidence_id\"] = resp.get(\"evidence_id\")\n    results.append(entry)\nemit(results)",
+          "execution_status": "ok",
+          "emissions": [
+            [
+              {
+                "force": 1,
+                "duration": 1,
+                "status": "ok",
+                "result": {
+                  "position": 0.125804878,
+                  "velocity": 0.244967692
+                },
+                "evidence_id": "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31"
+              },
+              {
+                "force": 2,
+                "duration": 1,
+                "status": "ok",
+                "result": {
+                  "position": 0.251609756,
+                  "velocity": 0.489935383
+                },
+                "evidence_id": "303f804a547461bf9776fcf1fde77df342fd0c2bb312379f9f9f9c3dc5d30118"
+              },
+              {
+                "force": 1,
+                "duration": 2,
+                "status": "ok",
+                "result": {
+                  "position": 0.477681361,
+                  "velocity": 0.453140857
+                },
+                "evidence_id": "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8"
+              },
+              {
+                "force": 0,
+                "duration": 1,
+                "status": "ok",
+                "result": {
+                  "position": 0.0,
+                  "velocity": 0.0
+                },
+                "evidence_id": "a5eaa8aa11a9279ca0614a3c86378a55ff5dc056967b660e48bcd675f9864447"
+              },
+              {
+                "force": -1,
+                "duration": 1,
+                "status": "ok",
+                "result": {
+                  "position": -0.125804878,
+                  "velocity": -0.244967692
+                },
+                "evidence_id": "a160b7e9c83f632500d9beeb75cf3aa1111d038a129cf940489bf5bb8302ce47"
+              },
+              {
+                "force": 10,
+                "duration": 1,
+                "status": "ok",
+                "result": {
+                  "position": 1.258048781,
+                  "velocity": 2.449676916
+                },
+                "evidence_id": "5bd1e8d68f44f2d5988ccf6b325d985b8535866652aa6665319bbf27dc88f185"
+              },
+              {
+                "force": 1,
+                "duration": 0.5,
+                "status": "ok",
+                "result": {
+                  "position": 0.032298365,
+                  "velocity": 0.127464845
+                },
+                "evidence_id": "fbb6c440dafaa93f0ec4f16c44a6dcc3cb7df993ad6b4857a081ec4dcc107403"
+              },
+              {
+                "force": 5,
+                "duration": 2,
+                "status": "ok",
+                "result": {
+                  "position": 2.388406803,
+                  "velocity": 2.265704286
+                },
+                "evidence_id": "f66065373efa7bdb322f703935b50db8955715de80699bf11638ff2f3adebc94"
+              },
+              {
+                "force": 0.1,
+                "duration": 1,
+                "status": "ok",
+                "result": {
+                  "position": 0.012580488,
+                  "velocity": 0.024496769
+                },
+                "evidence_id": "4436c395eaafa2bb2f5a9391d43fc6252098e7cf52a83ae7c41fe78a8289b7b4"
+              },
+              {
+                "force": 1,
+                "duration": 5,
+                "status": "ok",
+                "result": {
+                  "position": 2.574912766,
+                  "velocity": 0.908133313
+                },
+                "evidence_id": "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+              }
+            ]
+          ],
+          "diagnostic": null
+        },
+        {
+          "execution_status": "research_error",
+          "error": "OpenRouterFailure"
+        }
+      ],
+      "phase": "review_and_seek_counterexamples",
+      "response_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "interpretations",
+          "remaining_unknowns",
+          "suggested_next_question"
+        ],
+        "properties": {
+          "interpretations": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "claim",
+                "evidence_ids",
+                "scope",
+                "uncertainties"
+              ],
+              "properties": {
+                "claim": {
+                  "type": "string"
+                },
+                "evidence_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "scope": {
+                  "type": "string"
+                },
+                "uncertainties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "remaining_unknowns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "suggested_next_question": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "model_attempts": [
+      {
+        "attempt": 1,
+        "usage": {
+          "prompt_tokens": 3001,
+          "completion_tokens": 7834,
+          "total_tokens": 10835
+        },
+        "response": {
+          "interpretations": [
+            {
+              "claim": "Observed regularity: at fixed duration, position and velocity scale linearly with force: E2 is about 2x E1, E6 about 10x E1, E9 about 0.1x E1 at t=1 s; E8 is about 5x E3 at t=2 s; E5 is about -E1; E4 is zero. This is consistent with no static threshold and a linear force response in the tested range.",
+              "evidence_ids": [
+                "E1",
+                "E2",
+                "E3",
+                "E4",
+                "E5",
+                "E6",
+                "E8",
+                "E9"
+              ],
+              "scope": "F in [-1, 10] N plus 0.1 N, mainly t=1 s; one t=2 s force check; single object, reset each call.",
+              "uncertainties": [
+                "No test below 0.1 N or above 10 N.",
+                "No test of negative forces other than -1 N.",
+                "Force scaling at durations other than 1 s and 2 s is only partially checked."
+              ]
+            },
+            {
+              "claim": "Observed regularity: at F=1 N, motion is sub-quadratic in time: x(2)/x(1) is about 3.80 versus 4, and x(5)/x(1) is about 20.47 versus 25; velocity is sublinear: v(2)/v(1) is about 1.85 versus 2, and v(5)/v(1) is about 3.71 versus 5. This disfavors ideal Newtonian motion with no drag over the tested durations.",
+              "evidence_ids": [
+                "E1",
+                "E3",
+                "E10"
+              ],
+              "scope": "F=1 N, t=0.5, 1, 2, 5 s.",
+              "uncertainties": [
+                "Time scaling was measured mainly at one force.",
+                "Finite precision and unknown measurement noise may affect small deviations."
+              ]
+            },
+            {
+              "claim": "Leading explanation: linear viscous drag with constant mass, m dv/dt = F - gamma v, fits the data. A rough fit from E1 and E3 gives gamma/m about 0.16 s^-1, m about 3.77 kg, and gamma about 0.60 kg/s, and predicts E10 within about 0.5%.",
+              "evidence_ids": [
+                "E1",
+                "E3",
+                "E10"
+              ],
+              "scope": "F=1-5 N, t=0.5-5 s, assuming constant m and gamma and no other forces.",
+              "uncertainties": [
+                "Parameters are approximate and not uniquely identified from finite data.",
+                "Other velocity-dependent or time-dependent models may also fit.",
+                "No independent mass or drag measurement is available."
+              ]
+            },
+            {
+              "claim": "Observed regularity: short-duration E7 is consistent with drag: v(0.5)/v(1) is about 0.520, above 0.5, and x(0.5)/x(1) is about 0.257, above 0.25, as expected for velocity-dependent drag rather than constant acceleration.",
+              "evidence_ids": [
+                "E1",
+                "E7"
+              ],
+              "scope": "F=1 N, t=0.5 s versus 1 s.",
+              "uncertainties": [
+                "Small deviations could be affected by timing or measurement precision.",
+                "Only one short-duration point is available."
+              ]
+            }
+          ],
+          "remaining_unknowns": [
+            "Whether velocity approaches a finite terminal value F/gamma at long durations, as linear viscous drag predicts.",
+            "Whether the drag law remains linear at higher speeds or forces beyond the tested range.",
+            "Whether mass and drag coefficient are constant across all forces and durations.",
+            "Whether a threshold exists below 0.1 N.",
+            "Whether behavior is symmetric for negative forces other than -1 N.",
+            "Exact parameter values and measurement noise level."
+          ],
+          "suggested_next_question": "Does the velocity approach a finite terminal value F/gamma at long durations, as linear viscous drag predicts, or continue to grow without saturation?",
+          "usage": {
+            "prompt_tokens": 3001,
+            "completion_tokens": 7834,
+            "total_tokens": 10835
+          }
+        },
+        "status": "accepted"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 1,
+          "duration": 1
+        }
+      },
+      "result": {
+        "position": 0.125804878,
+        "velocity": 0.244967692
+      },
+      "evidence_id": "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 2,
+          "duration": 1
+        }
+      },
+      "result": {
+        "position": 0.251609756,
+        "velocity": 0.489935383
+      },
+      "evidence_id": "303f804a547461bf9776fcf1fde77df342fd0c2bb312379f9f9f9c3dc5d30118"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 1,
+          "duration": 2
+        }
+      },
+      "result": {
+        "position": 0.477681361,
+        "velocity": 0.453140857
+      },
+      "evidence_id": "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 0,
+          "duration": 1
+        }
+      },
+      "result": {
+        "position": 0.0,
+        "velocity": 0.0
+      },
+      "evidence_id": "a5eaa8aa11a9279ca0614a3c86378a55ff5dc056967b660e48bcd675f9864447"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": -1,
+          "duration": 1
+        }
+      },
+      "result": {
+        "position": -0.125804878,
+        "velocity": -0.244967692
+      },
+      "evidence_id": "a160b7e9c83f632500d9beeb75cf3aa1111d038a129cf940489bf5bb8302ce47"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 10,
+          "duration": 1
+        }
+      },
+      "result": {
+        "position": 1.258048781,
+        "velocity": 2.449676916
+      },
+      "evidence_id": "5bd1e8d68f44f2d5988ccf6b325d985b8535866652aa6665319bbf27dc88f185"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 1,
+          "duration": 0.5
+        }
+      },
+      "result": {
+        "position": 0.032298365,
+        "velocity": 0.127464845
+      },
+      "evidence_id": "fbb6c440dafaa93f0ec4f16c44a6dcc3cb7df993ad6b4857a081ec4dcc107403"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 5,
+          "duration": 2
+        }
+      },
+      "result": {
+        "position": 2.388406803,
+        "velocity": 2.265704286
+      },
+      "evidence_id": "f66065373efa7bdb322f703935b50db8955715de80699bf11638ff2f3adebc94"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 0.1,
+          "duration": 1
+        }
+      },
+      "result": {
+        "position": 0.012580488,
+        "velocity": 0.024496769
+      },
+      "evidence_id": "4436c395eaafa2bb2f5a9391d43fc6252098e7cf52a83ae7c41fe78a8289b7b4"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 1,
+          "duration": 5
+        }
+      },
+      "result": {
+        "position": 2.574912766,
+        "velocity": 0.908133313
+      },
+      "evidence_id": "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+    }
+  ],
+  "interpretations": [
+    {
+      "claim": "Observed regularity: at fixed duration, position and velocity scale linearly with force: E2 is about 2x E1, E6 about 10x E1, E9 about 0.1x E1 at t=1 s; E8 is about 5x E3 at t=2 s; E5 is about -E1; E4 is zero. This is consistent with no static threshold and a linear force response in the tested range.",
+      "evidence_ids": [
+        "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+        "303f804a547461bf9776fcf1fde77df342fd0c2bb312379f9f9f9c3dc5d30118",
+        "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8",
+        "a5eaa8aa11a9279ca0614a3c86378a55ff5dc056967b660e48bcd675f9864447",
+        "a160b7e9c83f632500d9beeb75cf3aa1111d038a129cf940489bf5bb8302ce47",
+        "5bd1e8d68f44f2d5988ccf6b325d985b8535866652aa6665319bbf27dc88f185",
+        "f66065373efa7bdb322f703935b50db8955715de80699bf11638ff2f3adebc94",
+        "4436c395eaafa2bb2f5a9391d43fc6252098e7cf52a83ae7c41fe78a8289b7b4"
+      ],
+      "scope": "F in [-1, 10] N plus 0.1 N, mainly t=1 s; one t=2 s force check; single object, reset each call.",
+      "uncertainties": [
+        "No test below 0.1 N or above 10 N.",
+        "No test of negative forces other than -1 N.",
+        "Force scaling at durations other than 1 s and 2 s is only partially checked."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Observed regularity: at F=1 N, motion is sub-quadratic in time: x(2)/x(1) is about 3.80 versus 4, and x(5)/x(1) is about 20.47 versus 25; velocity is sublinear: v(2)/v(1) is about 1.85 versus 2, and v(5)/v(1) is about 3.71 versus 5. This disfavors ideal Newtonian motion with no drag over the tested durations.",
+      "evidence_ids": [
+        "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+        "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8",
+        "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+      ],
+      "scope": "F=1 N, t=0.5, 1, 2, 5 s.",
+      "uncertainties": [
+        "Time scaling was measured mainly at one force.",
+        "Finite precision and unknown measurement noise may affect small deviations."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Leading explanation: linear viscous drag with constant mass, m dv/dt = F - gamma v, fits the data. A rough fit from E1 and E3 gives gamma/m about 0.16 s^-1, m about 3.77 kg, and gamma about 0.60 kg/s, and predicts E10 within about 0.5%.",
+      "evidence_ids": [
+        "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+        "90f6a2a7c6a780ee5d908a0f4e478d5851e3016e74ec0046a9c6e1fc17a352e8",
+        "9d3e36941e1f7cedb53c0d2269548b3aaac89a4c4a5e4d2ab2c8cdb8452c7ae4"
+      ],
+      "scope": "F=1-5 N, t=0.5-5 s, assuming constant m and gamma and no other forces.",
+      "uncertainties": [
+        "Parameters are approximate and not uniquely identified from finite data.",
+        "Other velocity-dependent or time-dependent models may also fit.",
+        "No independent mass or drag measurement is available."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Observed regularity: short-duration E7 is consistent with drag: v(0.5)/v(1) is about 0.520, above 0.5, and x(0.5)/x(1) is about 0.257, above 0.25, as expected for velocity-dependent drag rather than constant acceleration.",
+      "evidence_ids": [
+        "0eac20d7d013c48bd81a1fbd1a4e71786408395ec09c63789e879bb1d3892a31",
+        "fbb6c440dafaa93f0ec4f16c44a6dcc3cb7df993ad6b4857a081ec4dcc107403"
+      ],
+      "scope": "F=1 N, t=0.5 s versus 1 s.",
+      "uncertainties": [
+        "Small deviations could be affected by timing or measurement precision.",
+        "Only one short-duration point is available."
+      ],
+      "status": "llm_interpretation_unverified"
+    }
+  ],
+  "unique_tool_attempts": 10,
+  "duplicate_requests": 0,
+  "tool_errors": [],
+  "status": "observed",
+  "claims_automatically_verified": false,
+  "domain": "physics",
+  "seed": 0
+}
