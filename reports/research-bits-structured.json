@@ -1,0 +1,1428 @@
+{
+  "protocol": "research-scientist-v2",
+  "entity": {
+    "id": "object",
+    "source": "local-research-lab-v1",
+    "revision": "950d16009f533442d5e9",
+    "interface": "json-tools-v1"
+  },
+  "tools": [
+    {
+      "name": "encode",
+      "description": "Returns a wire bit vector as result.bits.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bits": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "maxItems": 64
+          }
+        },
+        "required": [
+          "bits"
+        ]
+      }
+    },
+    {
+      "name": "decode",
+      "description": "Returns a decoded bit vector as result.bits; invalid frames may be rejected.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "bits": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "maxItems": 448
+          }
+        },
+        "required": [
+          "bits"
+        ]
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "request_sha256": "347ba0a99f804f55d2fa5e2371262216affe5e036112a559e9ccec3d3236cd41",
+      "request": {
+        "protocol": "research-scientist-v2",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "950d16009f533442d5e9",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "encode",
+            "description": "Returns a wire bit vector as result.bits.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          },
+          {
+            "name": "decode",
+            "description": "Returns a decoded bit vector as result.bits; invalid frames may be rejected.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 448
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 24,
+        "observations": [],
+        "tool_errors": [],
+        "previous_rounds": [],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "usage": {
+            "prompt_tokens": 1074,
+            "completion_tokens": 2113,
+            "total_tokens": 3187
+          },
+          "response": {
+            "experiment": "def run(name, args):\n    r = call(name, args)\n    out = {\"tool\": name, \"args\": args, \"status\": r.get(\"status\")}\n    if r.get(\"status\") == \"ok\":\n        out[\"result\"] = r.get(\"result\")\n        out[\"evidence_id\"] = r.get(\"evidence_id\")\n    else:\n        out[\"error\"] = r.get(\"error\") or r.get(\"result\")\n    return out\n\ntests = []\nfor bits in ([], [0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0, 1, 0], [1, 0, 1], [0] * 8, [1] * 8):\n    tests.append(run(\"encode\", {\"bits\": bits}))\n\nfor bits in ([], [0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0] * 8, [1] * 8):\n    tests.append(run(\"decode\", {\"bits\": bits}))\n\nfor bits in ([0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0, 1, 0], [1, 0, 1]):\n    enc = call(\"encode\", {\"bits\": bits})\n    if enc.get(\"status\") == \"ok\":\n        enc_result = enc.get(\"result\")\n        enc_bits = enc_result.get(\"bits\") if isinstance(enc_result, dict) else None\n        if enc_bits is not None:\n            dec = call(\"decode\", {\"bits\": enc_bits})\n            tests.append({\n                \"tool\": \"roundtrip\",\n                \"input\": bits,\n                \"encoded\": enc_bits,\n                \"encode_evidence\": enc.get(\"evidence_id\"),\n                \"decode_status\": dec.get(\"status\"),\n                \"decode_result\": dec.get(\"result\"),\n                \"decode_evidence\": dec.get(\"evidence_id\")\n            })\n        else:\n            tests.append({\n                \"tool\": \"roundtrip\",\n                \"input\": bits,\n                \"error\": \"no bits in encode result\",\n                \"encode_result\": enc_result\n            })\n    else:\n        tests.append({\n            \"tool\": \"roundtrip\",\n            \"input\": bits,\n            \"encode_status\": enc.get(\"status\"),\n            \"encode_error\": enc.get(\"error\")\n        })\n\nemit({\"tests\": tests})",
+            "hypotheses": [
+              {
+                "falsification": "If encode returns a bit vector different from the input for any tested input, H1 is falsified.",
+                "id": "H1",
+                "prediction": "encode(bits) returns exactly the same bits, and decode(bits) returns exactly the same bits for all valid inputs.",
+                "statement": "encode and decode are identity transformations on bit vectors."
+              },
+              {
+                "falsification": "If encode output length equals input length for all tested inputs, H2 is falsified.",
+                "id": "H2",
+                "prediction": "encode output length is greater than input length by a fixed or patterned amount, and decode of the encoded frame recovers the original bits.",
+                "statement": "encode adds framing, parity, or error-detection bits; decode removes them and recovers the payload."
+              },
+              {
+                "falsification": "If encoded length is not a simple multiple of input length, or decode does not recover the original bits, H3 is falsified.",
+                "id": "H3",
+                "prediction": "encode repeats each input bit a fixed number of times or applies a block code, so encoded length is a multiple of input length and decode corrects or detects errors.",
+                "statement": "encode applies a repetition or block error-correcting code."
+              },
+              {
+                "falsification": "If decode accepts raw unframed bit vectors and returns a result, H4 is falsified.",
+                "id": "H4",
+                "prediction": "decode rejects raw bit vectors that were not produced by encode, returning a non-ok status or an error.",
+                "statement": "decode expects a specific frame structure and rejects arbitrary raw bit vectors."
+              },
+              {
+                "falsification": "If any round-trip encode-then-decode fails to recover the original bits, H5 is falsified.",
+                "id": "H5",
+                "prediction": "For every tested input, decode(encode(bits)) returns the original bits.",
+                "statement": "encode and decode are inverse operations for valid frames."
+              }
+            ],
+            "interpretations": [],
+            "question": "What transformation does encode apply to a bit vector, and is decode its inverse for valid frames?",
+            "usage": {
+              "prompt_tokens": 1074,
+              "completion_tokens": 2113,
+              "total_tokens": 3187
+            }
+          },
+          "status": "accepted"
+        }
+      ],
+      "question": "What transformation does encode apply to a bit vector, and is decode its inverse for valid frames?",
+      "hypotheses": [
+        {
+          "falsification": "If encode returns a bit vector different from the input for any tested input, H1 is falsified.",
+          "id": "H1",
+          "prediction": "encode(bits) returns exactly the same bits, and decode(bits) returns exactly the same bits for all valid inputs.",
+          "statement": "encode and decode are identity transformations on bit vectors."
+        },
+        {
+          "falsification": "If encode output length equals input length for all tested inputs, H2 is falsified.",
+          "id": "H2",
+          "prediction": "encode output length is greater than input length by a fixed or patterned amount, and decode of the encoded frame recovers the original bits.",
+          "statement": "encode adds framing, parity, or error-detection bits; decode removes them and recovers the payload."
+        },
+        {
+          "falsification": "If encoded length is not a simple multiple of input length, or decode does not recover the original bits, H3 is falsified.",
+          "id": "H3",
+          "prediction": "encode repeats each input bit a fixed number of times or applies a block code, so encoded length is a multiple of input length and decode corrects or detects errors.",
+          "statement": "encode applies a repetition or block error-correcting code."
+        },
+        {
+          "falsification": "If decode accepts raw unframed bit vectors and returns a result, H4 is falsified.",
+          "id": "H4",
+          "prediction": "decode rejects raw bit vectors that were not produced by encode, returning a non-ok status or an error.",
+          "statement": "decode expects a specific frame structure and rejects arbitrary raw bit vectors."
+        },
+        {
+          "falsification": "If any round-trip encode-then-decode fails to recover the original bits, H5 is falsified.",
+          "id": "H5",
+          "prediction": "For every tested input, decode(encode(bits)) returns the original bits.",
+          "statement": "encode and decode are inverse operations for valid frames."
+        }
+      ],
+      "program": "def run(name, args):\n    r = call(name, args)\n    out = {\"tool\": name, \"args\": args, \"status\": r.get(\"status\")}\n    if r.get(\"status\") == \"ok\":\n        out[\"result\"] = r.get(\"result\")\n        out[\"evidence_id\"] = r.get(\"evidence_id\")\n    else:\n        out[\"error\"] = r.get(\"error\") or r.get(\"result\")\n    return out\n\ntests = []\nfor bits in ([], [0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0, 1, 0], [1, 0, 1], [0] * 8, [1] * 8):\n    tests.append(run(\"encode\", {\"bits\": bits}))\n\nfor bits in ([], [0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0] * 8, [1] * 8):\n    tests.append(run(\"decode\", {\"bits\": bits}))\n\nfor bits in ([0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0, 1, 0], [1, 0, 1]):\n    enc = call(\"encode\", {\"bits\": bits})\n    if enc.get(\"status\") == \"ok\":\n        enc_result = enc.get(\"result\")\n        enc_bits = enc_result.get(\"bits\") if isinstance(enc_result, dict) else None\n        if enc_bits is not None:\n            dec = call(\"decode\", {\"bits\": enc_bits})\n            tests.append({\n                \"tool\": \"roundtrip\",\n                \"input\": bits,\n                \"encoded\": enc_bits,\n                \"encode_evidence\": enc.get(\"evidence_id\"),\n                \"decode_status\": dec.get(\"status\"),\n                \"decode_result\": dec.get(\"result\"),\n                \"decode_evidence\": dec.get(\"evidence_id\")\n            })\n        else:\n            tests.append({\n                \"tool\": \"roundtrip\",\n                \"input\": bits,\n                \"error\": \"no bits in encode result\",\n                \"encode_result\": enc_result\n            })\n    else:\n        tests.append({\n            \"tool\": \"roundtrip\",\n            \"input\": bits,\n            \"encode_status\": enc.get(\"status\"),\n            \"encode_error\": enc.get(\"error\")\n        })\n\nemit({\"tests\": tests})",
+      "execution_status": "tool_budget_exhausted",
+      "emissions": [],
+      "diagnostic": null,
+      "usage": {
+        "prompt_tokens": 1074,
+        "completion_tokens": 2113,
+        "total_tokens": 3187
+      },
+      "interpretations": []
+    },
+    {
+      "round": 2,
+      "request_sha256": "7bf1536538829db1a4b70fd0b8b1086c374a4d2598f0b6f6e04f567e5da8b085",
+      "request": {
+        "protocol": "research-scientist-v2",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "950d16009f533442d5e9",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "encode",
+            "description": "Returns a wire bit vector as result.bits.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          },
+          {
+            "name": "decode",
+            "description": "Returns a decoded bit vector as result.bits; invalid frames may be rejected.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "bits": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "maxItems": 448
+                }
+              },
+              "required": [
+                "bits"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 2,
+        "observations": [
+          {
+            "id": "E1",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": []
+              }
+            },
+            "result": {
+              "bits": []
+            }
+          },
+          {
+            "id": "E2",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E3",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E4",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E5",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E6",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E7",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E8",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0,
+                  1,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E9",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1,
+                  0,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                0,
+                1,
+                1,
+                0,
+                1,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E10",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E11",
+            "tool_request": {
+              "tool": "encode",
+              "arguments": {
+                "bits": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ]
+            }
+          },
+          {
+            "id": "E12",
+            "tool_request": {
+              "tool": "decode",
+              "arguments": {
+                "bits": []
+              }
+            },
+            "result": {
+              "bits": []
+            }
+          },
+          {
+            "id": "E13",
+            "tool_request": {
+              "tool": "decode",
+              "arguments": {
+                "bits": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          {
+            "id": "E14",
+            "tool_request": {
+              "tool": "decode",
+              "arguments": {
+                "bits": [
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            "result": {
+              "bits": [
+                1,
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        ],
+        "tool_errors": [
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                0
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                0,
+                1
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                0
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                0,
+                0
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                1
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "status": "tool_error"
+          },
+          {
+            "tool": "decode",
+            "arguments": {
+              "bits": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ]
+            },
+            "status": "tool_error"
+          }
+        ],
+        "previous_rounds": [
+          {
+            "question": "What transformation does encode apply to a bit vector, and is decode its inverse for valid frames?",
+            "hypotheses": [
+              {
+                "falsification": "If encode returns a bit vector different from the input for any tested input, H1 is falsified.",
+                "id": "H1",
+                "prediction": "encode(bits) returns exactly the same bits, and decode(bits) returns exactly the same bits for all valid inputs.",
+                "statement": "encode and decode are identity transformations on bit vectors."
+              },
+              {
+                "falsification": "If encode output length equals input length for all tested inputs, H2 is falsified.",
+                "id": "H2",
+                "prediction": "encode output length is greater than input length by a fixed or patterned amount, and decode of the encoded frame recovers the original bits.",
+                "statement": "encode adds framing, parity, or error-detection bits; decode removes them and recovers the payload."
+              },
+              {
+                "falsification": "If encoded length is not a simple multiple of input length, or decode does not recover the original bits, H3 is falsified.",
+                "id": "H3",
+                "prediction": "encode repeats each input bit a fixed number of times or applies a block code, so encoded length is a multiple of input length and decode corrects or detects errors.",
+                "statement": "encode applies a repetition or block error-correcting code."
+              },
+              {
+                "falsification": "If decode accepts raw unframed bit vectors and returns a result, H4 is falsified.",
+                "id": "H4",
+                "prediction": "decode rejects raw bit vectors that were not produced by encode, returning a non-ok status or an error.",
+                "statement": "decode expects a specific frame structure and rejects arbitrary raw bit vectors."
+              },
+              {
+                "falsification": "If any round-trip encode-then-decode fails to recover the original bits, H5 is falsified.",
+                "id": "H5",
+                "prediction": "For every tested input, decode(encode(bits)) returns the original bits.",
+                "statement": "encode and decode are inverse operations for valid frames."
+              }
+            ],
+            "program": "def run(name, args):\n    r = call(name, args)\n    out = {\"tool\": name, \"args\": args, \"status\": r.get(\"status\")}\n    if r.get(\"status\") == \"ok\":\n        out[\"result\"] = r.get(\"result\")\n        out[\"evidence_id\"] = r.get(\"evidence_id\")\n    else:\n        out[\"error\"] = r.get(\"error\") or r.get(\"result\")\n    return out\n\ntests = []\nfor bits in ([], [0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0, 1, 0], [1, 0, 1], [0] * 8, [1] * 8):\n    tests.append(run(\"encode\", {\"bits\": bits}))\n\nfor bits in ([], [0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0] * 8, [1] * 8):\n    tests.append(run(\"decode\", {\"bits\": bits}))\n\nfor bits in ([0], [1], [0, 1], [1, 0], [0, 0], [1, 1], [0, 1, 0], [1, 0, 1]):\n    enc = call(\"encode\", {\"bits\": bits})\n    if enc.get(\"status\") == \"ok\":\n        enc_result = enc.get(\"result\")\n        enc_bits = enc_result.get(\"bits\") if isinstance(enc_result, dict) else None\n        if enc_bits is not None:\n            dec = call(\"decode\", {\"bits\": enc_bits})\n            tests.append({\n                \"tool\": \"roundtrip\",\n                \"input\": bits,\n                \"encoded\": enc_bits,\n                \"encode_evidence\": enc.get(\"evidence_id\"),\n                \"decode_status\": dec.get(\"status\"),\n                \"decode_result\": dec.get(\"result\"),\n                \"decode_evidence\": dec.get(\"evidence_id\")\n            })\n        else:\n            tests.append({\n                \"tool\": \"roundtrip\",\n                \"input\": bits,\n                \"error\": \"no bits in encode result\",\n                \"encode_result\": enc_result\n            })\n    else:\n        tests.append({\n            \"tool\": \"roundtrip\",\n            \"input\": bits,\n            \"encode_status\": enc.get(\"status\"),\n            \"encode_error\": enc.get(\"error\")\n        })\n\nemit({\"tests\": tests})",
+            "execution_status": "tool_budget_exhausted",
+            "emissions": [],
+            "diagnostic": null
+          }
+        ],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "status": "transport_error",
+          "diagnostic": "OpenRouter response token limit"
+        }
+      ],
+      "execution_status": "research_error",
+      "error": "RuntimeError"
+    }
+  ],
+  "review": {
+    "status": "failed",
+    "model_attempts": [
+      {
+        "attempt": 1,
+        "status": "transport_error",
+        "diagnostic": "OpenRouter response token limit"
+      }
+    ],
+    "error": "RuntimeError"
+  },
+  "evidence": [
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": []
+        }
+      },
+      "result": {
+        "bits": []
+      },
+      "evidence_id": "b71e7dfe847b1604d4923ce897f5764818f34b0c363afe9d0f3c933dfcd0963b"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "0ac0162dbcab010254bfb93c1cd4da9ca8193565cbb763a89ddd09e56860d5f8"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "dc1d07cdce9bf5b60381e69ad863ef4d0225f7cd013bfd9db209b0e4508739b4"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "dc96da0d2d46d34e2c1a1488ccbad4f01d864df2d81a0db0cc97fb42499be009"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "deb2ba6e726dc6666b174aadb0be77e6dd35d20fe3f32b45450a879576738e88"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "9f20e965e85125ba5fc0b252dc68e850926cde2be77dfe550525e8cf0fdd57ee"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "2f69bd56ea50b58248872e24bd4c21a3fa41bd5ce33e02928eaa9599c99bba7b"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            1,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "2b6f724acdea68a1f76d2d66e57819b87cd58fa0f9d86361e13eca44485067f1"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1,
+            0,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      "evidence_id": "372549aba768d224ec88a342ddf3f2b5d65f73fe1814f2e07423689cea4ce1c4"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "8095e3bcb585b26fabbebb85d8e28b1836ce6e86e8560b2d59dfea53527f00af"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "encode",
+        "arguments": {
+          "bits": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "evidence_id": "a0c77f8398087904782d40e95198e57a0f55afe5f9b78c601c0e01f05ee4b209"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": []
+        }
+      },
+      "result": {
+        "bits": []
+      },
+      "evidence_id": "e0f884a8d88cbeb03556614d07843778333bc340e6c3ce4f2a34ecc99ce00878"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "c8311f4cb756a589a136769f82be69cad100763f46be72b00de43c029893db34"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "950d16009f533442d5e9",
+      "experiment": {
+        "tool": "decode",
+        "arguments": {
+          "bits": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "result": {
+        "bits": [
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "evidence_id": "ac255da399f325ccb45c82ff96a5a92c242882f08a87b61c34d9d05bbf89afdd"
+    }
+  ],
+  "interpretations": [],
+  "unique_tool_attempts": 22,
+  "duplicate_requests": 2,
+  "tool_errors": [
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          0
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          1
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          0,
+          1
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          1,
+          0
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          0,
+          0
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          1,
+          1
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "status": "tool_error"
+    },
+    {
+      "tool": "decode",
+      "arguments": {
+        "bits": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "status": "tool_error"
+    }
+  ],
+  "status": "observed",
+  "claims_automatically_verified": false,
+  "domain": "bits",
+  "seed": 0
+}

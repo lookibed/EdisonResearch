@@ -1,6 +1,7 @@
 """LLM scientist: chooses hypotheses and Python experiments, then revises from evidence."""
 import hashlib
 import json
+import ast
 from .experiments import ExperimentExecutor
 from .openrouter import request_json
 
@@ -23,12 +24,41 @@ SYSTEM = (
     'Output exactly one JSON object with the requested keys. No code fences.'
 )
 
+DESIGN = '''\nPhase: experiment design. Choose a small experiment that separates plausible
+explanations; do not assume familiar names reveal the hidden mechanism. Keep
+alternatives open, and seek counterexamples to your current favourite. A finite
+sample supports only its tested scope. No catalogue of properties or target law
+is supplied. You choose inputs and analysis within the public tool contracts.
+Use the remaining call budget; do not repeat recorded requests unless using the
+cached result in analysis. Tool errors contain no result or evidence_id: check
+response["status"] == "ok" before reading those keys. Each program starts fresh;
+previous variables do not persist. emit accepts one JSON-serializable value.
+interpretations can cite only observations supplied before this program runs;
+new measurements will be available for interpretation in the next turn.
+Keep the answer compact: normally 2-3 hypotheses and short predictions.
+Every call() consumes one program call, including duplicate and invalid requests.
+Use execution_limits from this request; reserve budget for a follow-up round.
+Do not enumerate a large Cartesian product when a few contrasting probes suffice.
+If format_feedback is present, correct the rejected response. It is a formatting
+or syntax failure, not experimental evidence. Never claim the rejected code ran.
+'''
+
+REVIEW = '''\nPhase: evidence review. Do not write or propose executable code in this response.
+Separate observed regularities from explanations. Cite only supplied observation
+aliases, state tested scope, counterexamples and remaining uncertainty. No
+observations means no interpretations. Identify a next question that could
+disprove the leading explanation. Do not claim a universal law from finite data.
+Return at most four concise interpretations, cite only the most relevant evidence
+aliases for each claim, and do not restate the full measurement table.
+'''
+
 
 class ResearchModel:
     def respond(self, request, review=False):
         keys = {'interpretations', 'remaining_unknowns', 'suggested_next_question'} if review else {
             'question', 'hypotheses', 'experiment', 'interpretations'}
-        return request_json(request, SYSTEM, keys)
+        return request_json(request, SYSTEM + (REVIEW if review else DESIGN), keys,
+                            schema=request['response_schema'], temperature=0.2, max_tokens=8192)
 
 
 def interpretation_schema():
@@ -45,7 +75,9 @@ def response_schema(review=False):
         properties.update(remaining_unknowns={'type': 'array', 'items': {'type': 'string'}},
                           suggested_next_question={'type': 'string'})
     else:
-        properties.update(question={'type': 'string'}, experiment={'type': 'string'},
+        properties.update(question={'type': 'string'}, experiment={'type': 'string',
+                          'description': 'Executable Python source only. No prose, Markdown or code fences. '
+                                         'Use call(name, dict) and emit(value); responses are dictionaries.'},
                           hypotheses={'type': 'array', 'minItems': 2, 'maxItems': 5, 'items': {
                               'type': 'object', 'additionalProperties': False,
                               'required': ['id', 'statement', 'prediction', 'falsification'],
@@ -92,6 +124,10 @@ def validate_response(response, aliases, review=False):
             ids.append(h['id'])
         if len(set(ids)) != len(ids):
             raise ValueError('Hypothesis IDs must differ')
+        try:
+            ast.parse(response['experiment'], filename='<experiment>', mode='exec')
+        except (SyntaxError, ValueError, RecursionError):
+            raise ValueError('experiment must be syntactically valid Python source only') from None
     return resolved
 
 
@@ -102,6 +138,37 @@ class ResearchScientist:
         self.model = model if model is not None else ResearchModel()
         self.executor = executor if executor is not None else ExperimentExecutor(max_calls=call_budget)
         self.rounds, self.call_budget = rounds, call_budget
+
+    def _respond(self, prompt, aliases, trace, review=False):
+        """One bounded format repair; no retries of paid transport failures."""
+        for attempt in range(2):
+            record = {'attempt': attempt + 1}
+            trace.append(record)
+            try:
+                response = self.model.respond(prompt, review=review)
+            except (ValueError, RuntimeError, TimeoutError) as exc:
+                diagnostic = str(exc)
+                safe = diagnostic in ('OpenRouter response token limit', 'OpenRouter connection failed',
+                                      'Invalid OpenRouter response', 'OpenRouter response is too large',
+                                      'OPENROUTER_API_KEY is not configured')
+                safe = safe or (diagnostic.startswith('OpenRouter HTTP ') and diagnostic[16:].isdigit())
+                record.update(status='transport_error', usage=getattr(exc, 'usage', {}),
+                              diagnostic=diagnostic if safe else type(exc).__name__)
+                raise
+            record.update(usage=response.get('usage', {}), response=response)
+            try:
+                claims = validate_response(response, aliases, review=review)
+            except ValueError as exc:
+                record['status'] = 'rejected_format'
+                record['diagnostic'] = str(exc)
+                if attempt:
+                    raise
+                prompt = dict(prompt, format_feedback={
+                    'error': str(exc), 'rejected_response': response,
+                    'instruction': 'Return the complete corrected object. No code has run.'})
+            else:
+                record['status'] = 'accepted'
+                return response, claims
 
     def investigate(self, entity, tools, invoke, initial_evidence=()):
         self.executor.check()
@@ -153,15 +220,22 @@ class ResearchScientist:
             aliases = {f'E{i}': key for i, key in enumerate(ledger, 1)}
             observations = [{'id': name, 'tool_request': ledger[key]['experiment'],
                              'result': ledger[key]['result']} for name, key in aliases.items()]
-            value = {'protocol': 'research-scientist-v1',
+            value = {'protocol': 'research-scientist-v3',
                      'goal': 'Investigate the unknown entity; choose the questions, interventions and analysis yourself.',
                      'entity': entity, 'tools': tools,
                      'remaining_unique_tool_calls': self.call_budget - attempts,
+                     'execution_limits': {
+                         'max_program_tool_calls': getattr(self.executor, 'max_calls', self.call_budget),
+                         'remaining_unique_tool_attempts': self.call_budget - attempts,
+                         'suggested_unique_calls_this_round': max(0, (self.call_budget - attempts) //
+                             max(1, self.rounds - len(iterations))),
+                         'note': 'Program call limit includes cached and invalid calls; '
+                                 'unique attempt limit is shared across rounds.'},
                      'observations': observations,
                      'tool_errors': list(failures),
                      'previous_rounds': [{k: v for k, v in step.items() if k in
                                           ('question', 'hypotheses', 'program', 'execution_status',
-                                           'emissions', 'diagnostic')} for step in iterations],
+                                           'emissions', 'diagnostic', 'error')} for step in iterations],
                      'phase': 'review_and_seek_counterexamples' if review else 'design_and_revise',
                      'response_schema': response_schema(review)}
             return value, aliases
@@ -169,10 +243,9 @@ class ResearchScientist:
             prompt, aliases = request(False)
             step = {'round': index + 1,
                     'request_sha256': hashlib.sha256(json.dumps(prompt, sort_keys=True).encode()).hexdigest(),
-                    'request': prompt}
+                    'request': prompt, 'model_attempts': []}
             try:
-                response = self.model.respond(prompt)
-                claims = validate_response(response, aliases)
+                response, claims = self._respond(prompt, aliases, step['model_attempts'])
                 interpretations.extend(claims)
                 outcome = self.executor.run(response['experiment'], tools, observe)
                 step.update(question=response['question'], hypotheses=response['hypotheses'],
@@ -187,18 +260,18 @@ class ResearchScientist:
                 step.update(execution_status='research_error', error=type(exc).__name__)
             iterations.append(step)
         prompt, aliases = request(True)
-        review = {'status': 'failed'}
+        review = {'status': 'failed', 'model_attempts': []}
         try:
-            response = self.model.respond(prompt, review=True)
-            claims = validate_response(response, aliases, review=True)
+            response, claims = self._respond(prompt, aliases, review['model_attempts'], review=True)
             interpretations.extend(claims)
             review = {'status': 'ok', 'interpretations': claims,
                       'remaining_unknowns': response['remaining_unknowns'],
                       'suggested_next_question': response['suggested_next_question'],
-                      'usage': response.get('usage', {}), 'request': prompt}
+                      'usage': response.get('usage', {}), 'request': prompt,
+                      'model_attempts': review['model_attempts']}
         except (ValueError, RuntimeError, TimeoutError) as exc:
             review['error'] = type(exc).__name__
-        return {'protocol': 'research-scientist-v1', 'entity': entity, 'tools': tools,
+        return {'protocol': 'research-scientist-v3', 'entity': entity, 'tools': tools,
                 'rounds': iterations, 'review': review, 'evidence': list(ledger.values()),
                 'interpretations': interpretations, 'unique_tool_attempts': attempts,
                 'duplicate_requests': duplicate_requests,

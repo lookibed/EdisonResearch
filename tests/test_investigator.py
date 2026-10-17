@@ -1,14 +1,17 @@
 import json
 import os
 import unittest
+import io
+from unittest.mock import patch
 
 from edison.experiments import ExperimentExecutor
 from edison.infopole import InfoField
 from edison.composition import CompositionWorld
-from edison.investigator import ResearchScientist, validate_response
+from edison.investigator import ResearchScientist, ResearchModel, response_schema, validate_response
 from edison.lab import LabBackend
 from edison.llm_scientist import LLMComponentScientist
 from edison.scientist import KnowledgeBase
+from edison.openrouter import OpenRouterFailure
 
 
 def hypotheses():
@@ -42,6 +45,58 @@ class ScriptedModel:
 
 
 class ProtocolTests(unittest.TestCase):
+    def test_strict_schema_is_sent_to_provider_for_both_phases(self):
+        for review in (False, True):
+            schema = response_schema(review)
+            content = {key: None for key in schema['required']}
+            wire = {'choices': [{'message': {'content': json.dumps(content)}}]}
+            with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'test-only'}):
+                with patch('edison.openrouter.urlopen', return_value=io.BytesIO(json.dumps(wire).encode())) as http:
+                    ResearchModel().respond({'response_schema': schema}, review=review)
+            payload = json.loads(http.call_args.args[0].data)
+            self.assertEqual(payload['response_format']['type'], 'json_schema')
+            self.assertTrue(payload['response_format']['json_schema']['strict'])
+            self.assertEqual(payload['response_format']['json_schema']['schema'], schema)
+            self.assertTrue(payload['provider']['require_parameters'])
+            self.assertEqual(payload['max_tokens'], 8192)
+
+    def test_token_truncation_keeps_usage_without_accepting_partial_json(self):
+        wire = {'choices': [{'finish_reason': 'length', 'message': {'content': '{partial'}}],
+                'usage': {'prompt_tokens': 100, 'completion_tokens': 8192, 'total_tokens': 8292}}
+        with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'test-only'}):
+            with patch('edison.openrouter.urlopen', return_value=io.BytesIO(json.dumps(wire).encode())):
+                with self.assertRaises(OpenRouterFailure) as error:
+                    ResearchModel().respond({'response_schema': response_schema()})
+        self.assertEqual(error.exception.usage['completion_tokens'], 8192)
+
+    def test_prose_is_rejected_and_repaired_before_execution(self):
+        model = ScriptedModel(['Run an experiment to compare two inputs.', 'emit(1)'])
+        scientist = ResearchScientist(model=model)
+        trace = []
+        response, _ = scientist._respond({'observations': []}, {}, trace)
+        self.assertEqual(response['experiment'], 'emit(1)')
+        self.assertEqual([a['status'] for a in trace], ['rejected_format', 'accepted'])
+        self.assertIn('valid Python', model.requests[1]['format_feedback']['error'])
+        self.assertEqual(model.requests[1]['observations'], [])
+
+    def test_repair_is_bounded(self):
+        model = ScriptedModel(['Not Python code.'])
+        trace = []
+        with self.assertRaises(ValueError):
+            ResearchScientist(model=model)._respond({'observations': []}, {}, trace)
+        self.assertEqual(len(model.requests), 2)
+        self.assertEqual(len(trace), 2)
+
+    def test_transport_failure_is_not_retried_or_downgraded(self):
+        model = ScriptedModel()
+        trace = []
+        with patch.object(model, 'respond', side_effect=RuntimeError('OpenRouter HTTP 400')) as respond:
+            with self.assertRaises(RuntimeError):
+                ResearchScientist(model=model)._respond({'observations': []}, {}, trace)
+        self.assertEqual(respond.call_count, 1)
+        self.assertEqual(trace[0]['status'], 'transport_error')
+        self.assertEqual(trace[0]['diagnostic'], 'OpenRouter HTTP 400')
+
     def test_interpretation_cannot_invent_evidence(self):
         response = {'question': 'question', 'hypotheses': hypotheses(), 'experiment': 'emit(1)',
                     'interpretations': [{'claim': 'unsupported', 'evidence_ids': ['E99'],

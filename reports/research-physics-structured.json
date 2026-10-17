@@ -1,0 +1,1445 @@
+{
+  "protocol": "research-scientist-v2",
+  "entity": {
+    "id": "object",
+    "source": "local-research-lab-v1",
+    "revision": "1d04c4771ca34824c390",
+    "interface": "json-tools-v1"
+  },
+  "tools": [
+    {
+      "name": "observe",
+      "description": "Apply constant force in N for duration in s from rest at position zero. Each call resets the object. Returns position in m and velocity in m/s.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "force": {
+            "type": "number",
+            "minimum": -10,
+            "maximum": 10
+          },
+          "duration": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          }
+        },
+        "required": [
+          "force",
+          "duration"
+        ]
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "request_sha256": "33163de19b872ef1e309be039c4bfa38b87bc32cf9de0e0a7ea16e28ff73e1ef",
+      "request": {
+        "protocol": "research-scientist-v2",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "1d04c4771ca34824c390",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "observe",
+            "description": "Apply constant force in N for duration in s from rest at position zero. Each call resets the object. Returns position in m and velocity in m/s.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "force": {
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 10
+                },
+                "duration": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 5
+                }
+              },
+              "required": [
+                "force",
+                "duration"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 24,
+        "observations": [],
+        "tool_errors": [],
+        "previous_rounds": [],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "usage": {
+            "prompt_tokens": 1021,
+            "completion_tokens": 1567,
+            "total_tokens": 2588
+          },
+          "response": {
+            "interpretations": [],
+            "question": "Does the object's motion follow a constant-mass Newtonian response (position linear in force and quadratic in duration), or do friction, force saturation, or velocity-dependent drag produce detectable deviations?",
+            "experiment": "results = []\nfor f in [-10, -2, -1, 0, 1, 10]:\n    r = call(\"observe\", {\"force\": f, \"duration\": 1.0})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": f, \"duration\": 1.0, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": f, \"duration\": 1.0, \"error_status\": r[\"status\"]})\nfor d in [0.25, 0.5, 2.0, 4.0]:\n    r = call(\"observe\", {\"force\": 2.0, \"duration\": d})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": 2.0, \"duration\": d, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": 2.0, \"duration\": d, \"error_status\": r[\"status\"]})\nemit(results)",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "The object behaves as a constant-mass Newtonian body: acceleration is proportional to applied force and independent of duration, so position is proportional to force and quadratic in duration.",
+                "prediction": "For fixed duration 1.0, position and velocity are proportional to force with zero intercept. For fixed force 2.0, position scales as duration squared and velocity scales linearly with duration.",
+                "falsification": "Any nonzero position at zero force, nonlinear force response, or time scaling that is not quadratic in position / linear in velocity falsifies H1."
+              },
+              {
+                "id": "H2",
+                "statement": "The object experiences static or kinetic friction, so small forces may produce no motion and the force-to-motion relation has a threshold or offset.",
+                "prediction": "At force 0 and possibly at small nonzero forces, position and velocity remain zero. The force response may be piecewise or have a nonzero force intercept.",
+                "falsification": "If zero force gives zero motion but every nonzero tested force produces motion proportional to force with no threshold, H2 is not supported in the tested range."
+              },
+              {
+                "id": "H3",
+                "statement": "The object's response saturates or is clamped at large forces, so position and velocity grow sublinearly with force magnitude at high |force|.",
+                "prediction": "Comparing force 10 with force 1 or 2 at duration 1.0, the position and velocity ratios are smaller than the force ratios.",
+                "falsification": "If position and velocity remain proportional to force across the tested range, including force 10, H3 is not supported."
+              },
+              {
+                "id": "H4",
+                "statement": "The object experiences velocity-dependent drag, so acceleration decreases as speed increases, making position grow subquadratically in duration and velocity grow sublinearly in duration.",
+                "prediction": "For fixed force 2.0, position divided by duration squared decreases as duration increases, and velocity divided by duration decreases as duration increases.",
+                "falsification": "If position/duration^2 and velocity/duration are constant across durations, H4 is not supported."
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1021,
+              "completion_tokens": 1567,
+              "total_tokens": 2588
+            }
+          },
+          "status": "accepted"
+        }
+      ],
+      "question": "Does the object's motion follow a constant-mass Newtonian response (position linear in force and quadratic in duration), or do friction, force saturation, or velocity-dependent drag produce detectable deviations?",
+      "hypotheses": [
+        {
+          "id": "H1",
+          "statement": "The object behaves as a constant-mass Newtonian body: acceleration is proportional to applied force and independent of duration, so position is proportional to force and quadratic in duration.",
+          "prediction": "For fixed duration 1.0, position and velocity are proportional to force with zero intercept. For fixed force 2.0, position scales as duration squared and velocity scales linearly with duration.",
+          "falsification": "Any nonzero position at zero force, nonlinear force response, or time scaling that is not quadratic in position / linear in velocity falsifies H1."
+        },
+        {
+          "id": "H2",
+          "statement": "The object experiences static or kinetic friction, so small forces may produce no motion and the force-to-motion relation has a threshold or offset.",
+          "prediction": "At force 0 and possibly at small nonzero forces, position and velocity remain zero. The force response may be piecewise or have a nonzero force intercept.",
+          "falsification": "If zero force gives zero motion but every nonzero tested force produces motion proportional to force with no threshold, H2 is not supported in the tested range."
+        },
+        {
+          "id": "H3",
+          "statement": "The object's response saturates or is clamped at large forces, so position and velocity grow sublinearly with force magnitude at high |force|.",
+          "prediction": "Comparing force 10 with force 1 or 2 at duration 1.0, the position and velocity ratios are smaller than the force ratios.",
+          "falsification": "If position and velocity remain proportional to force across the tested range, including force 10, H3 is not supported."
+        },
+        {
+          "id": "H4",
+          "statement": "The object experiences velocity-dependent drag, so acceleration decreases as speed increases, making position grow subquadratically in duration and velocity grow sublinearly in duration.",
+          "prediction": "For fixed force 2.0, position divided by duration squared decreases as duration increases, and velocity divided by duration decreases as duration increases.",
+          "falsification": "If position/duration^2 and velocity/duration are constant across durations, H4 is not supported."
+        }
+      ],
+      "program": "results = []\nfor f in [-10, -2, -1, 0, 1, 10]:\n    r = call(\"observe\", {\"force\": f, \"duration\": 1.0})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": f, \"duration\": 1.0, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": f, \"duration\": 1.0, \"error_status\": r[\"status\"]})\nfor d in [0.25, 0.5, 2.0, 4.0]:\n    r = call(\"observe\", {\"force\": 2.0, \"duration\": d})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": 2.0, \"duration\": d, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": 2.0, \"duration\": d, \"error_status\": r[\"status\"]})\nemit(results)",
+      "execution_status": "ok",
+      "emissions": [
+        [
+          {
+            "force": -10,
+            "duration": 1.0,
+            "position": -1.258048781,
+            "velocity": -2.449676916,
+            "evidence_id": "a510b8a3ab2ed9673e8c9955a2482176b1f219c299a43354055598bea3936373"
+          },
+          {
+            "force": -2,
+            "duration": 1.0,
+            "position": -0.251609756,
+            "velocity": -0.489935383,
+            "evidence_id": "442073e2981caac1a36830a34bfc6abf3156e0918203d37ad21a4c211d44c784"
+          },
+          {
+            "force": -1,
+            "duration": 1.0,
+            "position": -0.125804878,
+            "velocity": -0.244967692,
+            "evidence_id": "4b20669bcae2260117b24b7c9e3637b2580a33f830f0a10d1c272ccc7e65b185"
+          },
+          {
+            "force": 0,
+            "duration": 1.0,
+            "position": 0.0,
+            "velocity": 0.0,
+            "evidence_id": "07f18e3cec73a0dab39ae342598d9419e6201d5dd04e694693fe26f59e1ad378"
+          },
+          {
+            "force": 1,
+            "duration": 1.0,
+            "position": 0.125804878,
+            "velocity": 0.244967692,
+            "evidence_id": "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d"
+          },
+          {
+            "force": 10,
+            "duration": 1.0,
+            "position": 1.258048781,
+            "velocity": 2.449676916,
+            "evidence_id": "543bacb11c3a05f100358f53000b48cc588aea16ba8d071a0a6ae74aa3804dbf"
+          },
+          {
+            "force": 2.0,
+            "duration": 0.25,
+            "position": 0.016367457,
+            "velocity": 0.130057697,
+            "evidence_id": "da4fd3e81c5da7ecbb8f3f81daca76a36d048a84bd133f21da3f9f7d1539b241"
+          },
+          {
+            "force": 2.0,
+            "duration": 0.5,
+            "position": 0.06459673,
+            "velocity": 0.254929689,
+            "evidence_id": "a13b380194e61f4c4c97b4947c3a4b376f1125cdd8531d60a1b6d0795f810d8b"
+          },
+          {
+            "force": 2.0,
+            "duration": 2.0,
+            "position": 0.955362721,
+            "velocity": 0.906281715,
+            "evidence_id": "c3a9d81575a91e7e400f15edd417e4655eb7d38f42db87d60c9a1341203ac9c3"
+          },
+          {
+            "force": 2.0,
+            "duration": 4.0,
+            "position": 3.457848422,
+            "velocity": 1.560759773,
+            "evidence_id": "8cdc1ea9d07251d3cec93e3b9f161510419b333df5ff5a296e3f4d0407209140"
+          }
+        ]
+      ],
+      "diagnostic": null,
+      "usage": {
+        "prompt_tokens": 1021,
+        "completion_tokens": 1567,
+        "total_tokens": 2588
+      },
+      "interpretations": []
+    },
+    {
+      "round": 2,
+      "request_sha256": "a1762a7edc839baa862bdad131e6bd517b3492797d7c896b62c0ae9514374bdd",
+      "request": {
+        "protocol": "research-scientist-v2",
+        "goal": "Investigate the unknown entity; choose the questions, interventions and analysis yourself.",
+        "entity": {
+          "id": "object",
+          "source": "local-research-lab-v1",
+          "revision": "1d04c4771ca34824c390",
+          "interface": "json-tools-v1"
+        },
+        "tools": [
+          {
+            "name": "observe",
+            "description": "Apply constant force in N for duration in s from rest at position zero. Each call resets the object. Returns position in m and velocity in m/s.",
+            "arguments": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "force": {
+                  "type": "number",
+                  "minimum": -10,
+                  "maximum": 10
+                },
+                "duration": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 5
+                }
+              },
+              "required": [
+                "force",
+                "duration"
+              ]
+            }
+          }
+        ],
+        "remaining_unique_tool_calls": 14,
+        "observations": [
+          {
+            "id": "E1",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": -10,
+                "duration": 1.0
+              }
+            },
+            "result": {
+              "position": -1.258048781,
+              "velocity": -2.449676916
+            }
+          },
+          {
+            "id": "E2",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": -2,
+                "duration": 1.0
+              }
+            },
+            "result": {
+              "position": -0.251609756,
+              "velocity": -0.489935383
+            }
+          },
+          {
+            "id": "E3",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": -1,
+                "duration": 1.0
+              }
+            },
+            "result": {
+              "position": -0.125804878,
+              "velocity": -0.244967692
+            }
+          },
+          {
+            "id": "E4",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 0,
+                "duration": 1.0
+              }
+            },
+            "result": {
+              "position": 0.0,
+              "velocity": 0.0
+            }
+          },
+          {
+            "id": "E5",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 1,
+                "duration": 1.0
+              }
+            },
+            "result": {
+              "position": 0.125804878,
+              "velocity": 0.244967692
+            }
+          },
+          {
+            "id": "E6",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 10,
+                "duration": 1.0
+              }
+            },
+            "result": {
+              "position": 1.258048781,
+              "velocity": 2.449676916
+            }
+          },
+          {
+            "id": "E7",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 2.0,
+                "duration": 0.25
+              }
+            },
+            "result": {
+              "position": 0.016367457,
+              "velocity": 0.130057697
+            }
+          },
+          {
+            "id": "E8",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 2.0,
+                "duration": 0.5
+              }
+            },
+            "result": {
+              "position": 0.06459673,
+              "velocity": 0.254929689
+            }
+          },
+          {
+            "id": "E9",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 2.0,
+                "duration": 2.0
+              }
+            },
+            "result": {
+              "position": 0.955362721,
+              "velocity": 0.906281715
+            }
+          },
+          {
+            "id": "E10",
+            "tool_request": {
+              "tool": "observe",
+              "arguments": {
+                "force": 2.0,
+                "duration": 4.0
+              }
+            },
+            "result": {
+              "position": 3.457848422,
+              "velocity": 1.560759773
+            }
+          }
+        ],
+        "tool_errors": [],
+        "previous_rounds": [
+          {
+            "question": "Does the object's motion follow a constant-mass Newtonian response (position linear in force and quadratic in duration), or do friction, force saturation, or velocity-dependent drag produce detectable deviations?",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "The object behaves as a constant-mass Newtonian body: acceleration is proportional to applied force and independent of duration, so position is proportional to force and quadratic in duration.",
+                "prediction": "For fixed duration 1.0, position and velocity are proportional to force with zero intercept. For fixed force 2.0, position scales as duration squared and velocity scales linearly with duration.",
+                "falsification": "Any nonzero position at zero force, nonlinear force response, or time scaling that is not quadratic in position / linear in velocity falsifies H1."
+              },
+              {
+                "id": "H2",
+                "statement": "The object experiences static or kinetic friction, so small forces may produce no motion and the force-to-motion relation has a threshold or offset.",
+                "prediction": "At force 0 and possibly at small nonzero forces, position and velocity remain zero. The force response may be piecewise or have a nonzero force intercept.",
+                "falsification": "If zero force gives zero motion but every nonzero tested force produces motion proportional to force with no threshold, H2 is not supported in the tested range."
+              },
+              {
+                "id": "H3",
+                "statement": "The object's response saturates or is clamped at large forces, so position and velocity grow sublinearly with force magnitude at high |force|.",
+                "prediction": "Comparing force 10 with force 1 or 2 at duration 1.0, the position and velocity ratios are smaller than the force ratios.",
+                "falsification": "If position and velocity remain proportional to force across the tested range, including force 10, H3 is not supported."
+              },
+              {
+                "id": "H4",
+                "statement": "The object experiences velocity-dependent drag, so acceleration decreases as speed increases, making position grow subquadratically in duration and velocity grow sublinearly in duration.",
+                "prediction": "For fixed force 2.0, position divided by duration squared decreases as duration increases, and velocity divided by duration decreases as duration increases.",
+                "falsification": "If position/duration^2 and velocity/duration are constant across durations, H4 is not supported."
+              }
+            ],
+            "program": "results = []\nfor f in [-10, -2, -1, 0, 1, 10]:\n    r = call(\"observe\", {\"force\": f, \"duration\": 1.0})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": f, \"duration\": 1.0, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": f, \"duration\": 1.0, \"error_status\": r[\"status\"]})\nfor d in [0.25, 0.5, 2.0, 4.0]:\n    r = call(\"observe\", {\"force\": 2.0, \"duration\": d})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": 2.0, \"duration\": d, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": 2.0, \"duration\": d, \"error_status\": r[\"status\"]})\nemit(results)",
+            "execution_status": "ok",
+            "emissions": [
+              [
+                {
+                  "force": -10,
+                  "duration": 1.0,
+                  "position": -1.258048781,
+                  "velocity": -2.449676916,
+                  "evidence_id": "a510b8a3ab2ed9673e8c9955a2482176b1f219c299a43354055598bea3936373"
+                },
+                {
+                  "force": -2,
+                  "duration": 1.0,
+                  "position": -0.251609756,
+                  "velocity": -0.489935383,
+                  "evidence_id": "442073e2981caac1a36830a34bfc6abf3156e0918203d37ad21a4c211d44c784"
+                },
+                {
+                  "force": -1,
+                  "duration": 1.0,
+                  "position": -0.125804878,
+                  "velocity": -0.244967692,
+                  "evidence_id": "4b20669bcae2260117b24b7c9e3637b2580a33f830f0a10d1c272ccc7e65b185"
+                },
+                {
+                  "force": 0,
+                  "duration": 1.0,
+                  "position": 0.0,
+                  "velocity": 0.0,
+                  "evidence_id": "07f18e3cec73a0dab39ae342598d9419e6201d5dd04e694693fe26f59e1ad378"
+                },
+                {
+                  "force": 1,
+                  "duration": 1.0,
+                  "position": 0.125804878,
+                  "velocity": 0.244967692,
+                  "evidence_id": "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d"
+                },
+                {
+                  "force": 10,
+                  "duration": 1.0,
+                  "position": 1.258048781,
+                  "velocity": 2.449676916,
+                  "evidence_id": "543bacb11c3a05f100358f53000b48cc588aea16ba8d071a0a6ae74aa3804dbf"
+                },
+                {
+                  "force": 2.0,
+                  "duration": 0.25,
+                  "position": 0.016367457,
+                  "velocity": 0.130057697,
+                  "evidence_id": "da4fd3e81c5da7ecbb8f3f81daca76a36d048a84bd133f21da3f9f7d1539b241"
+                },
+                {
+                  "force": 2.0,
+                  "duration": 0.5,
+                  "position": 0.06459673,
+                  "velocity": 0.254929689,
+                  "evidence_id": "a13b380194e61f4c4c97b4947c3a4b376f1125cdd8531d60a1b6d0795f810d8b"
+                },
+                {
+                  "force": 2.0,
+                  "duration": 2.0,
+                  "position": 0.955362721,
+                  "velocity": 0.906281715,
+                  "evidence_id": "c3a9d81575a91e7e400f15edd417e4655eb7d38f42db87d60c9a1341203ac9c3"
+                },
+                {
+                  "force": 2.0,
+                  "duration": 4.0,
+                  "position": 3.457848422,
+                  "velocity": 1.560759773,
+                  "evidence_id": "8cdc1ea9d07251d3cec93e3b9f161510419b333df5ff5a296e3f4d0407209140"
+                }
+              ]
+            ],
+            "diagnostic": null
+          }
+        ],
+        "phase": "design_and_revise",
+        "response_schema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretations",
+            "question",
+            "experiment",
+            "hypotheses"
+          ],
+          "properties": {
+            "interpretations": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "claim",
+                  "evidence_ids",
+                  "scope",
+                  "uncertainties"
+                ],
+                "properties": {
+                  "claim": {
+                    "type": "string"
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "uncertainties": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "question": {
+              "type": "string"
+            },
+            "experiment": {
+              "type": "string",
+              "description": "Executable Python source only. No prose, Markdown or code fences. Use call(name, dict) and emit(value); responses are dictionaries."
+            },
+            "hypotheses": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "statement",
+                  "prediction",
+                  "falsification"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "statement": {
+                    "type": "string"
+                  },
+                  "prediction": {
+                    "type": "string"
+                  },
+                  "falsification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "model_attempts": [
+        {
+          "attempt": 1,
+          "usage": {
+            "prompt_tokens": 3550,
+            "completion_tokens": 1363,
+            "total_tokens": 4913
+          },
+          "response": {
+            "interpretations": [
+              {
+                "claim": "At duration 1.0, position and velocity are odd and strictly proportional to force with zero intercept (e.g. F=1 gives v=0.24497, F=10 gives v=2.44968, ratio 10.000; F=-1 mirrors F=1).",
+                "evidence_ids": [
+                  "E1",
+                  "E2",
+                  "E3",
+                  "E4",
+                  "E5",
+                  "E6"
+                ],
+                "scope": "Force in [-10,10], duration 1.0, from rest at origin.",
+                "uncertainties": [
+                  "Only integer forces tested at duration 1.0; proportionality between sampled points untested.",
+                  "No evidence about force beyond |10|."
+                ]
+              },
+              {
+                "claim": "For fixed force 2.0, velocity grows sublinearly in duration: v/d falls from ~0.520 (d=0.25) to ~0.390 (d=4.0), consistent with velocity-dependent drag rather than constant acceleration.",
+                "evidence_ids": [
+                  "E7",
+                  "E8",
+                  "E9",
+                  "E10"
+                ],
+                "scope": "Force 2.0, durations 0.25-4.0 s.",
+                "uncertainties": [
+                  "Drag functional form (linear vs quadratic) not identified.",
+                  "Only one force level sampled across durations."
+                ]
+              },
+              {
+                "claim": "Position/d^2 also decreases with duration (0.262 at d=0.25 vs 0.216 at d=4.0), so motion is subquadratic in time, consistent with drag; the effect is modest, so drag is weak relative to inertia at these scales.",
+                "evidence_ids": [
+                  "E7",
+                  "E8",
+                  "E9",
+                  "E10"
+                ],
+                "scope": "Force 2.0, durations 0.25-4.0 s.",
+                "uncertainties": [
+                  "Deviations are small; could also reflect a velocity-independent nonlinearity or time-dependent force."
+                ]
+              },
+              {
+                "claim": "Zero force yields exactly zero position and velocity, and no threshold is seen at F=1, so static friction with a threshold above 1 N is not supported.",
+                "evidence_ids": [
+                  "E4",
+                  "E5",
+                  "E3"
+                ],
+                "scope": "Forces -1,0,1 at duration 1.0.",
+                "uncertainties": [
+                  "Thresholds below 1 N or between sampled forces not excluded."
+                ]
+              },
+              {
+                "claim": "No saturation at high force: F=10 response is exactly 10x F=1 response, so force response is linear up to 10 N at duration 1.0.",
+                "evidence_ids": [
+                  "E5",
+                  "E6"
+                ],
+                "scope": "Force 1 vs 10, duration 1.0.",
+                "uncertainties": [
+                  "Saturation above 10 N untested."
+                ]
+              }
+            ],
+            "question": "Is the sublinear velocity growth with duration due to velocity-dependent drag, and if so is drag linear (terminal-velocity approach) or quadratic in velocity? Does the force-to-acceleration ratio (effective mass) stay constant across forces and durations?",
+            "experiment": "results = []\nfor f in [0.5, 5.0]:\n    for d in [0.5, 1.0, 3.0, 5.0]:\n        r = call(\"observe\", {\"force\": f, \"duration\": d})\n        if r[\"status\"] == \"ok\":\n            results.append({\"force\": f, \"duration\": d, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n        else:\n            results.append({\"force\": f, \"duration\": d, \"error_status\": r[\"status\"]})\nfor f in [3.0, 7.0]:\n    r = call(\"observe\", {\"force\": f, \"duration\": 1.0})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": f, \"duration\": 1.0, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": f, \"duration\": 1.0, \"error_status\": r[\"status\"]})\nemit(results)",
+            "hypotheses": [
+              {
+                "id": "H1",
+                "statement": "Linear (Stokes-like) drag: acceleration = (F - b*v)/m, so velocity approaches terminal velocity F/b and v(t) = (F/b)(1-exp(-bt/m)).",
+                "prediction": "For fixed force, v(d) saturates toward a force-dependent terminal value; v/F at long durations approaches a constant independent of force; position grows linearly at long times.",
+                "falsification": "If v keeps growing without saturation, or terminal velocity does not scale linearly with force, linear drag is falsified."
+              },
+              {
+                "id": "H2",
+                "statement": "Quadratic drag: acceleration = F/m - c*v^2*sign(v), so terminal velocity scales as sqrt(F).",
+                "prediction": "At long durations, v saturates at a value proportional to sqrt(F); v/F decreases with force.",
+                "falsification": "If terminal velocity scales linearly with F or no saturation occurs, quadratic drag is falsified."
+              },
+              {
+                "id": "H3",
+                "statement": "No drag; the sublinearity arises from a velocity-independent nonlinearity or a force that varies with time/position (e.g. effective mass changing with speed).",
+                "prediction": "v/d should be constant across durations at fixed force, and v/F constant across forces at fixed duration.",
+                "falsification": "If v/d varies systematically with duration and v/F varies with force, H3 is disfavored."
+              },
+              {
+                "id": "H4",
+                "statement": "Effective mass is constant and force response linear at all tested forces; drag is the only nonlinearity.",
+                "prediction": "Initial acceleration (small-duration limit) is proportional to force with a single constant of proportionality.",
+                "falsification": "If small-duration acceleration per unit force differs across forces, effective mass or force coupling is not constant."
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 3550,
+              "completion_tokens": 1363,
+              "total_tokens": 4913
+            }
+          },
+          "status": "accepted"
+        }
+      ],
+      "question": "Is the sublinear velocity growth with duration due to velocity-dependent drag, and if so is drag linear (terminal-velocity approach) or quadratic in velocity? Does the force-to-acceleration ratio (effective mass) stay constant across forces and durations?",
+      "hypotheses": [
+        {
+          "id": "H1",
+          "statement": "Linear (Stokes-like) drag: acceleration = (F - b*v)/m, so velocity approaches terminal velocity F/b and v(t) = (F/b)(1-exp(-bt/m)).",
+          "prediction": "For fixed force, v(d) saturates toward a force-dependent terminal value; v/F at long durations approaches a constant independent of force; position grows linearly at long times.",
+          "falsification": "If v keeps growing without saturation, or terminal velocity does not scale linearly with force, linear drag is falsified."
+        },
+        {
+          "id": "H2",
+          "statement": "Quadratic drag: acceleration = F/m - c*v^2*sign(v), so terminal velocity scales as sqrt(F).",
+          "prediction": "At long durations, v saturates at a value proportional to sqrt(F); v/F decreases with force.",
+          "falsification": "If terminal velocity scales linearly with F or no saturation occurs, quadratic drag is falsified."
+        },
+        {
+          "id": "H3",
+          "statement": "No drag; the sublinearity arises from a velocity-independent nonlinearity or a force that varies with time/position (e.g. effective mass changing with speed).",
+          "prediction": "v/d should be constant across durations at fixed force, and v/F constant across forces at fixed duration.",
+          "falsification": "If v/d varies systematically with duration and v/F varies with force, H3 is disfavored."
+        },
+        {
+          "id": "H4",
+          "statement": "Effective mass is constant and force response linear at all tested forces; drag is the only nonlinearity.",
+          "prediction": "Initial acceleration (small-duration limit) is proportional to force with a single constant of proportionality.",
+          "falsification": "If small-duration acceleration per unit force differs across forces, effective mass or force coupling is not constant."
+        }
+      ],
+      "program": "results = []\nfor f in [0.5, 5.0]:\n    for d in [0.5, 1.0, 3.0, 5.0]:\n        r = call(\"observe\", {\"force\": f, \"duration\": d})\n        if r[\"status\"] == \"ok\":\n            results.append({\"force\": f, \"duration\": d, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n        else:\n            results.append({\"force\": f, \"duration\": d, \"error_status\": r[\"status\"]})\nfor f in [3.0, 7.0]:\n    r = call(\"observe\", {\"force\": f, \"duration\": 1.0})\n    if r[\"status\"] == \"ok\":\n        results.append({\"force\": f, \"duration\": 1.0, \"position\": r[\"result\"][\"position\"], \"velocity\": r[\"result\"][\"velocity\"], \"evidence_id\": r[\"evidence_id\"]})\n    else:\n        results.append({\"force\": f, \"duration\": 1.0, \"error_status\": r[\"status\"]})\nemit(results)",
+      "execution_status": "ok",
+      "emissions": [
+        [
+          {
+            "force": 0.5,
+            "duration": 0.5,
+            "position": 0.016149183,
+            "velocity": 0.063732422,
+            "evidence_id": "68310750b3b0ee0b8419dc9157280b263aaa10aefa6f373b18656fd66563c66c"
+          },
+          {
+            "force": 0.5,
+            "duration": 1.0,
+            "position": 0.062902439,
+            "velocity": 0.122483846,
+            "evidence_id": "404cefc9bd9f9c697f5c84264f4f7aff3d1b5662f5c6f86dbe83d0f1cb171055"
+          },
+          {
+            "force": 0.5,
+            "duration": 3.0,
+            "position": 0.510836572,
+            "velocity": 0.315023046,
+            "evidence_id": "6aec29a76ddc34c5e7f0e244b521e2da13747ab064456e074345b32a3cca9cb0"
+          },
+          {
+            "force": 0.5,
+            "duration": 5.0,
+            "position": 1.287456383,
+            "velocity": 0.454066656,
+            "evidence_id": "58b6873061894d201433bb5f3a82bc228fd120349133e2d3e6c5170a9cc0c211"
+          },
+          {
+            "force": 5.0,
+            "duration": 0.5,
+            "position": 0.161491825,
+            "velocity": 0.637324223,
+            "evidence_id": "13e335d7f06342bf464e17e5efc31f72fd3c13ee7cfe9225bf654cf813b70641"
+          },
+          {
+            "force": 5.0,
+            "duration": 1.0,
+            "position": 0.629024391,
+            "velocity": 1.224838458,
+            "evidence_id": "25810a351a6e4a65d72b718ab295f81c1ab8be9779cb5b7e88914e614e3dff09"
+          },
+          {
+            "force": 5.0,
+            "duration": 3.0,
+            "position": 5.108365716,
+            "velocity": 3.150230458,
+            "evidence_id": "1b05fbd3c9bb0782d6a479b9da52c12fbe8a9105494a4359ce0d93c53a963aa0"
+          },
+          {
+            "force": 5.0,
+            "duration": 5.0,
+            "position": 12.874563832,
+            "velocity": 4.540666564,
+            "evidence_id": "44505d063961e4ad9f48dc77742d4c3f43acc93c81e72a7ee4f5bda947db1da8"
+          },
+          {
+            "force": 3.0,
+            "duration": 1.0,
+            "position": 0.377414634,
+            "velocity": 0.734903075,
+            "evidence_id": "30c14c6f48fd7d7eb4180a1528dd9aab5fab245fe77d66ef8bdb575ceed82913"
+          },
+          {
+            "force": 7.0,
+            "duration": 1.0,
+            "position": 0.880634147,
+            "velocity": 1.714773841,
+            "evidence_id": "08ca631cfbda1dba1ca6ec5447610d7d56db379ecbbc786de726d1d2ec7c3383"
+          }
+        ]
+      ],
+      "diagnostic": null,
+      "usage": {
+        "prompt_tokens": 3550,
+        "completion_tokens": 1363,
+        "total_tokens": 4913
+      },
+      "interpretations": [
+        {
+          "claim": "At duration 1.0, position and velocity are odd and strictly proportional to force with zero intercept (e.g. F=1 gives v=0.24497, F=10 gives v=2.44968, ratio 10.000; F=-1 mirrors F=1).",
+          "evidence_ids": [
+            "a510b8a3ab2ed9673e8c9955a2482176b1f219c299a43354055598bea3936373",
+            "442073e2981caac1a36830a34bfc6abf3156e0918203d37ad21a4c211d44c784",
+            "4b20669bcae2260117b24b7c9e3637b2580a33f830f0a10d1c272ccc7e65b185",
+            "07f18e3cec73a0dab39ae342598d9419e6201d5dd04e694693fe26f59e1ad378",
+            "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d",
+            "543bacb11c3a05f100358f53000b48cc588aea16ba8d071a0a6ae74aa3804dbf"
+          ],
+          "scope": "Force in [-10,10], duration 1.0, from rest at origin.",
+          "uncertainties": [
+            "Only integer forces tested at duration 1.0; proportionality between sampled points untested.",
+            "No evidence about force beyond |10|."
+          ],
+          "status": "llm_interpretation_unverified"
+        },
+        {
+          "claim": "For fixed force 2.0, velocity grows sublinearly in duration: v/d falls from ~0.520 (d=0.25) to ~0.390 (d=4.0), consistent with velocity-dependent drag rather than constant acceleration.",
+          "evidence_ids": [
+            "da4fd3e81c5da7ecbb8f3f81daca76a36d048a84bd133f21da3f9f7d1539b241",
+            "a13b380194e61f4c4c97b4947c3a4b376f1125cdd8531d60a1b6d0795f810d8b",
+            "c3a9d81575a91e7e400f15edd417e4655eb7d38f42db87d60c9a1341203ac9c3",
+            "8cdc1ea9d07251d3cec93e3b9f161510419b333df5ff5a296e3f4d0407209140"
+          ],
+          "scope": "Force 2.0, durations 0.25-4.0 s.",
+          "uncertainties": [
+            "Drag functional form (linear vs quadratic) not identified.",
+            "Only one force level sampled across durations."
+          ],
+          "status": "llm_interpretation_unverified"
+        },
+        {
+          "claim": "Position/d^2 also decreases with duration (0.262 at d=0.25 vs 0.216 at d=4.0), so motion is subquadratic in time, consistent with drag; the effect is modest, so drag is weak relative to inertia at these scales.",
+          "evidence_ids": [
+            "da4fd3e81c5da7ecbb8f3f81daca76a36d048a84bd133f21da3f9f7d1539b241",
+            "a13b380194e61f4c4c97b4947c3a4b376f1125cdd8531d60a1b6d0795f810d8b",
+            "c3a9d81575a91e7e400f15edd417e4655eb7d38f42db87d60c9a1341203ac9c3",
+            "8cdc1ea9d07251d3cec93e3b9f161510419b333df5ff5a296e3f4d0407209140"
+          ],
+          "scope": "Force 2.0, durations 0.25-4.0 s.",
+          "uncertainties": [
+            "Deviations are small; could also reflect a velocity-independent nonlinearity or time-dependent force."
+          ],
+          "status": "llm_interpretation_unverified"
+        },
+        {
+          "claim": "Zero force yields exactly zero position and velocity, and no threshold is seen at F=1, so static friction with a threshold above 1 N is not supported.",
+          "evidence_ids": [
+            "07f18e3cec73a0dab39ae342598d9419e6201d5dd04e694693fe26f59e1ad378",
+            "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d",
+            "4b20669bcae2260117b24b7c9e3637b2580a33f830f0a10d1c272ccc7e65b185"
+          ],
+          "scope": "Forces -1,0,1 at duration 1.0.",
+          "uncertainties": [
+            "Thresholds below 1 N or between sampled forces not excluded."
+          ],
+          "status": "llm_interpretation_unverified"
+        },
+        {
+          "claim": "No saturation at high force: F=10 response is exactly 10x F=1 response, so force response is linear up to 10 N at duration 1.0.",
+          "evidence_ids": [
+            "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d",
+            "543bacb11c3a05f100358f53000b48cc588aea16ba8d071a0a6ae74aa3804dbf"
+          ],
+          "scope": "Force 1 vs 10, duration 1.0.",
+          "uncertainties": [
+            "Saturation above 10 N untested."
+          ],
+          "status": "llm_interpretation_unverified"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "failed",
+    "model_attempts": [
+      {
+        "attempt": 1,
+        "status": "transport_error",
+        "diagnostic": "OpenRouter response token limit"
+      }
+    ],
+    "error": "RuntimeError"
+  },
+  "evidence": [
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": -10,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": -1.258048781,
+        "velocity": -2.449676916
+      },
+      "evidence_id": "a510b8a3ab2ed9673e8c9955a2482176b1f219c299a43354055598bea3936373"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": -2,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": -0.251609756,
+        "velocity": -0.489935383
+      },
+      "evidence_id": "442073e2981caac1a36830a34bfc6abf3156e0918203d37ad21a4c211d44c784"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": -1,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": -0.125804878,
+        "velocity": -0.244967692
+      },
+      "evidence_id": "4b20669bcae2260117b24b7c9e3637b2580a33f830f0a10d1c272ccc7e65b185"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 0,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": 0.0,
+        "velocity": 0.0
+      },
+      "evidence_id": "07f18e3cec73a0dab39ae342598d9419e6201d5dd04e694693fe26f59e1ad378"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 1,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": 0.125804878,
+        "velocity": 0.244967692
+      },
+      "evidence_id": "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 10,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": 1.258048781,
+        "velocity": 2.449676916
+      },
+      "evidence_id": "543bacb11c3a05f100358f53000b48cc588aea16ba8d071a0a6ae74aa3804dbf"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 2.0,
+          "duration": 0.25
+        }
+      },
+      "result": {
+        "position": 0.016367457,
+        "velocity": 0.130057697
+      },
+      "evidence_id": "da4fd3e81c5da7ecbb8f3f81daca76a36d048a84bd133f21da3f9f7d1539b241"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 2.0,
+          "duration": 0.5
+        }
+      },
+      "result": {
+        "position": 0.06459673,
+        "velocity": 0.254929689
+      },
+      "evidence_id": "a13b380194e61f4c4c97b4947c3a4b376f1125cdd8531d60a1b6d0795f810d8b"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 2.0,
+          "duration": 2.0
+        }
+      },
+      "result": {
+        "position": 0.955362721,
+        "velocity": 0.906281715
+      },
+      "evidence_id": "c3a9d81575a91e7e400f15edd417e4655eb7d38f42db87d60c9a1341203ac9c3"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 2.0,
+          "duration": 4.0
+        }
+      },
+      "result": {
+        "position": 3.457848422,
+        "velocity": 1.560759773
+      },
+      "evidence_id": "8cdc1ea9d07251d3cec93e3b9f161510419b333df5ff5a296e3f4d0407209140"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 0.5,
+          "duration": 0.5
+        }
+      },
+      "result": {
+        "position": 0.016149183,
+        "velocity": 0.063732422
+      },
+      "evidence_id": "68310750b3b0ee0b8419dc9157280b263aaa10aefa6f373b18656fd66563c66c"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 0.5,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": 0.062902439,
+        "velocity": 0.122483846
+      },
+      "evidence_id": "404cefc9bd9f9c697f5c84264f4f7aff3d1b5662f5c6f86dbe83d0f1cb171055"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 0.5,
+          "duration": 3.0
+        }
+      },
+      "result": {
+        "position": 0.510836572,
+        "velocity": 0.315023046
+      },
+      "evidence_id": "6aec29a76ddc34c5e7f0e244b521e2da13747ab064456e074345b32a3cca9cb0"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 0.5,
+          "duration": 5.0
+        }
+      },
+      "result": {
+        "position": 1.287456383,
+        "velocity": 0.454066656
+      },
+      "evidence_id": "58b6873061894d201433bb5f3a82bc228fd120349133e2d3e6c5170a9cc0c211"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 5.0,
+          "duration": 0.5
+        }
+      },
+      "result": {
+        "position": 0.161491825,
+        "velocity": 0.637324223
+      },
+      "evidence_id": "13e335d7f06342bf464e17e5efc31f72fd3c13ee7cfe9225bf654cf813b70641"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 5.0,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": 0.629024391,
+        "velocity": 1.224838458
+      },
+      "evidence_id": "25810a351a6e4a65d72b718ab295f81c1ab8be9779cb5b7e88914e614e3dff09"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 5.0,
+          "duration": 3.0
+        }
+      },
+      "result": {
+        "position": 5.108365716,
+        "velocity": 3.150230458
+      },
+      "evidence_id": "1b05fbd3c9bb0782d6a479b9da52c12fbe8a9105494a4359ce0d93c53a963aa0"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 5.0,
+          "duration": 5.0
+        }
+      },
+      "result": {
+        "position": 12.874563832,
+        "velocity": 4.540666564
+      },
+      "evidence_id": "44505d063961e4ad9f48dc77742d4c3f43acc93c81e72a7ee4f5bda947db1da8"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 3.0,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": 0.377414634,
+        "velocity": 0.734903075
+      },
+      "evidence_id": "30c14c6f48fd7d7eb4180a1528dd9aab5fab245fe77d66ef8bdb575ceed82913"
+    },
+    {
+      "status": "ok",
+      "entity": "object",
+      "source": "local-research-lab-v1",
+      "revision": "1d04c4771ca34824c390",
+      "experiment": {
+        "tool": "observe",
+        "arguments": {
+          "force": 7.0,
+          "duration": 1.0
+        }
+      },
+      "result": {
+        "position": 0.880634147,
+        "velocity": 1.714773841
+      },
+      "evidence_id": "08ca631cfbda1dba1ca6ec5447610d7d56db379ecbbc786de726d1d2ec7c3383"
+    }
+  ],
+  "interpretations": [
+    {
+      "claim": "At duration 1.0, position and velocity are odd and strictly proportional to force with zero intercept (e.g. F=1 gives v=0.24497, F=10 gives v=2.44968, ratio 10.000; F=-1 mirrors F=1).",
+      "evidence_ids": [
+        "a510b8a3ab2ed9673e8c9955a2482176b1f219c299a43354055598bea3936373",
+        "442073e2981caac1a36830a34bfc6abf3156e0918203d37ad21a4c211d44c784",
+        "4b20669bcae2260117b24b7c9e3637b2580a33f830f0a10d1c272ccc7e65b185",
+        "07f18e3cec73a0dab39ae342598d9419e6201d5dd04e694693fe26f59e1ad378",
+        "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d",
+        "543bacb11c3a05f100358f53000b48cc588aea16ba8d071a0a6ae74aa3804dbf"
+      ],
+      "scope": "Force in [-10,10], duration 1.0, from rest at origin.",
+      "uncertainties": [
+        "Only integer forces tested at duration 1.0; proportionality between sampled points untested.",
+        "No evidence about force beyond |10|."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "For fixed force 2.0, velocity grows sublinearly in duration: v/d falls from ~0.520 (d=0.25) to ~0.390 (d=4.0), consistent with velocity-dependent drag rather than constant acceleration.",
+      "evidence_ids": [
+        "da4fd3e81c5da7ecbb8f3f81daca76a36d048a84bd133f21da3f9f7d1539b241",
+        "a13b380194e61f4c4c97b4947c3a4b376f1125cdd8531d60a1b6d0795f810d8b",
+        "c3a9d81575a91e7e400f15edd417e4655eb7d38f42db87d60c9a1341203ac9c3",
+        "8cdc1ea9d07251d3cec93e3b9f161510419b333df5ff5a296e3f4d0407209140"
+      ],
+      "scope": "Force 2.0, durations 0.25-4.0 s.",
+      "uncertainties": [
+        "Drag functional form (linear vs quadratic) not identified.",
+        "Only one force level sampled across durations."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Position/d^2 also decreases with duration (0.262 at d=0.25 vs 0.216 at d=4.0), so motion is subquadratic in time, consistent with drag; the effect is modest, so drag is weak relative to inertia at these scales.",
+      "evidence_ids": [
+        "da4fd3e81c5da7ecbb8f3f81daca76a36d048a84bd133f21da3f9f7d1539b241",
+        "a13b380194e61f4c4c97b4947c3a4b376f1125cdd8531d60a1b6d0795f810d8b",
+        "c3a9d81575a91e7e400f15edd417e4655eb7d38f42db87d60c9a1341203ac9c3",
+        "8cdc1ea9d07251d3cec93e3b9f161510419b333df5ff5a296e3f4d0407209140"
+      ],
+      "scope": "Force 2.0, durations 0.25-4.0 s.",
+      "uncertainties": [
+        "Deviations are small; could also reflect a velocity-independent nonlinearity or time-dependent force."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "Zero force yields exactly zero position and velocity, and no threshold is seen at F=1, so static friction with a threshold above 1 N is not supported.",
+      "evidence_ids": [
+        "07f18e3cec73a0dab39ae342598d9419e6201d5dd04e694693fe26f59e1ad378",
+        "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d",
+        "4b20669bcae2260117b24b7c9e3637b2580a33f830f0a10d1c272ccc7e65b185"
+      ],
+      "scope": "Forces -1,0,1 at duration 1.0.",
+      "uncertainties": [
+        "Thresholds below 1 N or between sampled forces not excluded."
+      ],
+      "status": "llm_interpretation_unverified"
+    },
+    {
+      "claim": "No saturation at high force: F=10 response is exactly 10x F=1 response, so force response is linear up to 10 N at duration 1.0.",
+      "evidence_ids": [
+        "29693a1e98dc4ea1c3fd9204fca35a9d541a4e393a525b9d2d093355b1bc950d",
+        "543bacb11c3a05f100358f53000b48cc588aea16ba8d071a0a6ae74aa3804dbf"
+      ],
+      "scope": "Force 1 vs 10, duration 1.0.",
+      "uncertainties": [
+        "Saturation above 10 N untested."
+      ],
+      "status": "llm_interpretation_unverified"
+    }
+  ],
+  "unique_tool_attempts": 20,
+  "duplicate_requests": 0,
+  "tool_errors": [],
+  "status": "observed",
+  "claims_automatically_verified": false,
+  "domain": "physics",
+  "seed": 0
+}

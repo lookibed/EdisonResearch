@@ -12,6 +12,12 @@ ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_MODEL = "openai/gpt-4.1-mini"
 
 
+class OpenRouterFailure(RuntimeError):
+    def __init__(self, message, usage=None):
+        super().__init__(message)
+        self.usage = usage or {}
+
+
 def generate(request: dict) -> dict:
     return request_json(request, (
         "You generate research proposals. Return only a JSON object matching the "
@@ -19,7 +25,8 @@ def generate(request: dict) -> dict:
         "You have no experiment history. Do not claim your proposals were tested."), {'constructions'})
 
 
-def request_json(request: dict, system: str, expected_keys: set[str]) -> dict:
+def request_json(request: dict, system: str, expected_keys: set[str], *, schema=None,
+                 temperature=0.8, max_tokens=4096) -> dict:
     """Shared transport; different agents keep independent prompts and histories."""
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
@@ -31,10 +38,16 @@ def request_json(request: dict, system: str, expected_keys: set[str]) -> dict:
             {"role": "user", "content": json.dumps(request)},
         ],
         "response_format": {"type": "json_object"},
-        "max_tokens": 4096,
+        "max_tokens": max_tokens,
         "reasoning": {"effort": "low"},
-        "temperature": 0.8,
+        "temperature": temperature,
     }
+    if schema is not None:
+        payload['response_format'] = {'type': 'json_schema', 'json_schema': {
+            'name': 'scientist_response', 'strict': True, 'schema': schema}}
+        # Route only to providers that support the requested parameters.
+        # An unsupported model must fail explicitly, never silently downgrade.
+        payload['provider'] = {'require_parameters': True}
     http_request = Request(ENDPOINT, data=json.dumps(payload).encode(), headers={
         "Authorization": "Bearer " + key, "Content-Type": "application/json",
     }, method="POST")
@@ -45,14 +58,14 @@ def request_json(request: dict, system: str, expected_keys: set[str]) -> dict:
             raise RuntimeError("OpenRouter response is too large")
         data = json.loads(raw)
         choice = data["choices"][0]
+        usage = {k: v for k, v in data.get('usage', {}).items() if k in
+                 ('prompt_tokens', 'completion_tokens', 'total_tokens') and type(v) is int}
         if choice.get("finish_reason") == "length":
-            raise RuntimeError("OpenRouter response token limit")
+            raise OpenRouterFailure("OpenRouter response token limit", usage)
         content = json.loads(choice["message"]["content"])
         if not isinstance(content, dict) or set(content) != expected_keys:
             raise ValueError("Unexpected generated object")
-        usage = data.get("usage", {})
-        content["usage"] = {k: usage[k] for k in
-                            ("prompt_tokens", "completion_tokens", "total_tokens") if k in usage}
+        content["usage"] = usage
         return content
     except HTTPError as exc:
         raise RuntimeError(f"OpenRouter HTTP {exc.code}") from None
