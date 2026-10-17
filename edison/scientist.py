@@ -14,6 +14,8 @@ class KnowledgeBase:
         self.evidence = {}
         self.facts = {}
         self.studies = []
+        self.interpretations = []
+        self.research_runs = []
 
     def add_fact(self, entity, property_name, value, scope, evidence_ids):
         if not evidence_ids or any(i not in self.evidence for i in evidence_ids):
@@ -36,7 +38,8 @@ class KnowledgeBase:
 
     def report(self):
         return {'facts': list(self.facts.values()), 'evidence': list(self.evidence.values()),
-                'studies': list(self.studies)}
+                'studies': list(self.studies), 'interpretations': list(self.interpretations),
+                'research_runs': list(self.research_runs)}
 
     @classmethod
     def from_report(cls, report):
@@ -51,6 +54,13 @@ class KnowledgeBase:
             if key != fact['id']:
                 raise ValueError('Fact integrity check failed')
         result.studies = list(report['studies'])
+        result.interpretations = list(report.get('interpretations', []))
+        result.research_runs = list(report.get('research_runs', []))
+        for claim in result.interpretations:
+            if (claim.get('status') != 'llm_interpretation_unverified'
+                    or not claim.get('evidence_ids')
+                    or any(i not in result.evidence for i in claim['evidence_ids'])):
+                raise ValueError('Invalid saved interpretation')
         return result
 
 

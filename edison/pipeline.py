@@ -18,18 +18,26 @@ from .stalker import Stalker
 def run(profile: str, seed: int, budget: int, proposer=None, model_calls: int = 4,
         probe_messages: int = 512, holdout_messages: int = 8192,
         discovery: bool = False, discovery_interval: int = 2, scientist_budget: int = 512,
-        knowledge_report: dict | None = None) -> dict:
+        knowledge_report: dict | None = None, scientist_mode: str = 'fixed',
+        scientist_rounds: int = 2, scientist_tool_budget: int = 24) -> dict:
     if model_calls < 0:
         raise ValueError("Model call limit must be nonnegative")
     if discovery_interval <= 0:
         raise ValueError('Discovery interval must be positive')
+    if scientist_mode not in ('fixed', 'llm') or min(scientist_rounds, scientist_tool_budget) <= 0:
+        raise ValueError('Invalid scientist mode or research budgets')
     with EvaluatorProcess(profile, seed, budget, probe_messages, holdout_messages,
                           discovery=discovery, scientist_budget=scientist_budget) as evaluator:
         branches = Branches(evaluator.primitives)
         initial_catalog = asdict(evaluator.primitives)
         stalker = Stalker(evaluator) if discovery else None
         knowledge = KnowledgeBase.from_report(knowledge_report) if knowledge_report is not None else None
-        scientist = Scientist(evaluator.probe_entity, knowledge) if discovery else None
+        if discovery and scientist_mode == 'llm':
+            from .llm_scientist import LLMComponentScientist
+            scientist = LLMComponentScientist(evaluator.probe_entity, knowledge,
+                                               scientist_rounds, scientist_tool_budget)
+        else:
+            scientist = Scientist(evaluator.probe_entity, knowledge) if discovery else None
         priority = deque()
         expanded = set()
         events = []
@@ -114,6 +122,7 @@ def run(profile: str, seed: int, budget: int, proposer=None, model_calls: int = 
                 'knowledge': scientist.knowledge.report(),
                 'knowledge_sent_to_generator': False,
                 'knowledge_loaded': knowledge_report is not None,
+                'scientist_mode': scientist_mode,
             }
         return report
 
@@ -131,11 +140,18 @@ def main():
     parser.add_argument('--scientist-budget', type=int, default=512)
     parser.add_argument('--knowledge-in', help='Reuse a component knowledge JSON file')
     parser.add_argument('--knowledge-out', help='Save component knowledge separately')
+    parser.add_argument('--scientist-mode', choices=('fixed', 'llm'), default='fixed')
+    parser.add_argument('--scientist-rounds', type=int, default=2)
+    parser.add_argument('--scientist-tool-budget', type=int, default=24)
     args = parser.parse_args()
     if args.budget <= 0 or args.model_calls < 0 or args.discovery_interval <= 0 or args.scientist_budget < 0:
         parser.error("Budget must be positive; model calls must be nonnegative")
     if (args.knowledge_in or args.knowledge_out) and not args.discover:
         parser.error('Knowledge files require --discover')
+    if args.scientist_mode == 'llm' and not args.discover:
+        parser.error('LLM component scientist requires --discover')
+    if args.scientist_mode == 'llm' and not os.environ.get('OPENROUTER_API_KEY'):
+        parser.error('Configure OPENROUTER_API_KEY securely for the scientist')
     proposer = None
     if args.provider == "openrouter":
         if not os.environ.get("OPENROUTER_API_KEY"):
@@ -146,7 +162,9 @@ def main():
     report = run(args.profile, args.seed, args.budget, proposer, args.model_calls,
                  discovery=args.discover, discovery_interval=args.discovery_interval,
                  scientist_budget=args.scientist_budget,
-                 knowledge_report=json.loads(Path(args.knowledge_in).read_text()) if args.knowledge_in else None)
+                 knowledge_report=json.loads(Path(args.knowledge_in).read_text()) if args.knowledge_in else None,
+                 scientist_mode=args.scientist_mode, scientist_rounds=args.scientist_rounds,
+                 scientist_tool_budget=args.scientist_tool_budget)
     if args.knowledge_out:
         Path(args.knowledge_out).write_text(json.dumps(report['discovery']['knowledge'], indent=2) + '\n')
     report["provider"] = args.provider

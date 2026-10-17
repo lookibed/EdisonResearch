@@ -13,16 +13,21 @@ DEFAULT_MODEL = "openai/gpt-4.1-mini"
 
 
 def generate(request: dict) -> dict:
+    return request_json(request, (
+        "You generate research proposals. Return only a JSON object matching the "
+        "response_schema in the user request. Do not include examples or commentary. "
+        "You have no experiment history. Do not claim your proposals were tested."), {'constructions'})
+
+
+def request_json(request: dict, system: str, expected_keys: set[str]) -> dict:
+    """Shared transport; different agents keep independent prompts and histories."""
     key = os.environ.get("OPENROUTER_API_KEY")
     if not key:
         raise RuntimeError("OPENROUTER_API_KEY is not configured")
     payload = {
         "model": os.environ.get("EDISON_MODEL") or DEFAULT_MODEL,
         "messages": [
-            {"role": "system", "content": (
-                "You generate research proposals. Return only a JSON object matching the "
-                "response_schema in the user request. Do not include examples or commentary. "
-                "You have no experiment history. Do not claim your proposals were tested.")},
+            {"role": "system", "content": system},
             {"role": "user", "content": json.dumps(request)},
         ],
         "response_format": {"type": "json_object"},
@@ -43,7 +48,7 @@ def generate(request: dict) -> dict:
         if choice.get("finish_reason") == "length":
             raise RuntimeError("OpenRouter response token limit")
         content = json.loads(choice["message"]["content"])
-        if not isinstance(content, dict) or set(content) != {"constructions"}:
+        if not isinstance(content, dict) or set(content) != expected_keys:
             raise ValueError("Unexpected generated object")
         usage = data.get("usage", {})
         content["usage"] = {k: usage[k] for k in
