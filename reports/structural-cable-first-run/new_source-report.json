@@ -1,0 +1,487 @@
+{
+  "entities": [
+    {
+      "id": "S17",
+      "description": "Лабораторный образец с внешней маркировкой M7; в обзоре длина 1000 мм, внешняя граница радиусом ~125 мкм.",
+      "evidence_refs": [
+        "START",
+        "O01",
+        "O02",
+        "O03"
+      ]
+    },
+    {
+      "id": "M7",
+      "description": "Обозначение модели/маркировки; типовое описание M7 не задаёт фактические условия S17.",
+      "evidence_refs": [
+        "START",
+        "D03"
+      ]
+    },
+    {
+      "id": "V04",
+      "description": "Прозрачная ячейка вокруг участка S17; доступна установка температуры 20/40 °C.",
+      "evidence_refs": [
+        "O01",
+        "A01"
+      ]
+    },
+    {
+      "id": "U09",
+      "description": "Прозрачное содержимое ячейки, соприкасающееся с S17; доступен отклик материала.",
+      "evidence_refs": [
+        "O01",
+        "O07"
+      ]
+    },
+    {
+      "id": "P-A",
+      "description": "Полимер P-A; эталонный отклик [0.1,0.1,0.8,0.3,0.2] при 20 °C.",
+      "evidence_refs": [
+        "D02",
+        "D03"
+      ]
+    },
+    {
+      "id": "P-B",
+      "description": "Полимер P-B; эталонный отклик совпадает с P-A в открытом наборе.",
+      "evidence_refs": [
+        "D02",
+        "D04"
+      ]
+    },
+    {
+      "id": "GeO2",
+      "description": "Оксидная добавка GeO2, эталон X; отклик [0.4,0.8,0.3,0.3,0.1].",
+      "evidence_refs": [
+        "D02"
+      ]
+    },
+    {
+      "id": "glass",
+      "description": "Кварцевое стекло, эталон G; отклик [0.9,0.2,0.1,0.05,0.05].",
+      "evidence_refs": [
+        "D02"
+      ]
+    },
+    {
+      "id": "water",
+      "description": "Вода, эталон W; отклик [0.05,0.7,0.03,0.02,0.01].",
+      "evidence_refs": [
+        "D02"
+      ]
+    },
+    {
+      "id": "salt",
+      "description": "NaCl, эталон N; отклик [0.8,0.05,0.02,0.3,0.4].",
+      "evidence_refs": [
+        "D02"
+      ]
+    },
+    {
+      "id": "catalog:root",
+      "description": "Каталог доступных документов; ревизия 1 содержит calibration/references/model-M7, ревизия 2 добавляет batch-S17.",
+      "evidence_refs": [
+        "START",
+        "D00-A",
+        "D00-B"
+      ]
+    },
+    {
+      "id": "doc:calibration@1",
+      "description": "Документ калибровки и пределов приборов; задаёт разрешение профиля, допуск material_response, неполноту библиотеки и ограничения pulse_trace.",
+      "evidence_refs": [
+        "D01"
+      ]
+    },
+    {
+      "id": "doc:references@1",
+      "description": "Справочник эталонных откликов материалов при 20 °C; открытый набор, не полный список.",
+      "evidence_refs": [
+        "D02"
+      ]
+    },
+    {
+      "id": "doc:model-M7@1",
+      "description": "Типовое описание модели M7; внешнее покрытие P-A в типовом исполнении, пример в сухом воздухе; S17 не указан.",
+      "evidence_refs": [
+        "D03"
+      ]
+    },
+    {
+      "id": "doc:batch-S17@1",
+      "description": "Запись о партии B17 для конкретного S17; сообщение изготовителя: внешнее покрытие P-B.",
+      "evidence_refs": [
+        "D04"
+      ]
+    }
+  ],
+  "assertions": [
+    {
+      "statement": "S17 — лабораторный образец с внешней маркировкой M7; в обзоре длина 1000 мм.",
+      "relation": "has_identity",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        },
+        {
+          "role": "marking",
+          "entity_id": "M7"
+        }
+      ],
+      "evidence_refs": [
+        "START",
+        "O01"
+      ],
+      "origin": "observation",
+      "scope": "Обзорный кадр, state-0; распознавание изображений не проверялось."
+    },
+    {
+      "statement": "Вокруг участка S17 видны прозрачная ячейка V04 и прозрачное содержимое U09, соприкасающееся с S17.",
+      "relation": "surrounds",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        },
+        {
+          "role": "cell",
+          "entity_id": "V04"
+        },
+        {
+          "role": "contents",
+          "entity_id": "U09"
+        }
+      ],
+      "evidence_refs": [
+        "O01"
+      ],
+      "origin": "observation",
+      "scope": "Обзорный кадр, state-0; аннотация ручная."
+    },
+    {
+      "statement": "Внешняя граница S17 в обзоре локализована в интервале радиусов 124.9–125.1 мкм.",
+      "relation": "has_outer_boundary",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O01"
+      ],
+      "origin": "observation",
+      "scope": "Обзорный кадр; меньшие радиальные неоднородности не разрешены."
+    },
+    {
+      "statement": "Радиальный профиль S17 при x=0 показывает переходы контраста около r≈4 мкм, r≈62.5 мкм и r≈125 мкм.",
+      "relation": "radial_transitions",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O02"
+      ],
+      "origin": "observation",
+      "scope": "Одно сечение x=0, state-0; осевая симметрия и непрерывность между сечениями не измерялись."
+    },
+    {
+      "statement": "Радиальный профиль S17 при x=500 совпадает по возвращённым точкам с профилем при x=0.",
+      "relation": "axial_similarity",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O02",
+        "O03"
+      ],
+      "origin": "observation",
+      "scope": "Два заданных сечения; непрерывность между ними не измерялась."
+    },
+    {
+      "statement": "Отклик материала S17 при x=0, radius_um=2: q1..q5 = [0.88,0.224,0.108,0.06,0.052].",
+      "relation": "material_response_at",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O04"
+      ],
+      "origin": "observation",
+      "scope": "state-0, x=0, radius_um=2; калибровка D01."
+    },
+    {
+      "statement": "Отклик материала S17 при x=0, radius_um=20: q1..q5 = [0.9,0.2,0.1,0.05,0.05].",
+      "relation": "material_response_at",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O05"
+      ],
+      "origin": "observation",
+      "scope": "state-0, x=0, radius_um=20; калибровка D01."
+    },
+    {
+      "statement": "Отклик материала S17 при x=0, radius_um=90: q1..q5 = [0.1,0.1,0.8,0.3,0.2].",
+      "relation": "material_response_at",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O06"
+      ],
+      "origin": "observation",
+      "scope": "state-0, x=0, radius_um=90; калибровка D01."
+    },
+    {
+      "statement": "Отклик U09: q1..q5 = [0.065,0.687,0.0298,0.0256,0.0178].",
+      "relation": "material_response",
+      "participants": [
+        {
+          "role": "contents",
+          "entity_id": "U09"
+        }
+      ],
+      "evidence_refs": [
+        "O07"
+      ],
+      "origin": "observation",
+      "scope": "state-0; калибровка D01."
+    },
+    {
+      "statement": "Импульсный отклик S17 при 20 °C: выход задержан относительно входа на 5.0 нс для трёх импульсов.",
+      "relation": "pulse_delay",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O08"
+      ],
+      "origin": "observation",
+      "scope": "state-0, 20 °C; записываются только вход и выход, путь внутри не наблюдается."
+    },
+    {
+      "statement": "Нагрев V04 до 40 °C переводит состояние state-0 в state-1; идентичность S17, V04, U09 сохраняется.",
+      "relation": "temperature_intervention",
+      "participants": [
+        {
+          "role": "cell",
+          "entity_id": "V04"
+        },
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        },
+        {
+          "role": "contents",
+          "entity_id": "U09"
+        }
+      ],
+      "evidence_refs": [
+        "A01"
+      ],
+      "origin": "observation",
+      "scope": "Одно вмешательство; другие настройки приборов не менялись."
+    },
+    {
+      "statement": "Импульсный отклик S17 при 40 °C: выход задержан на 5.01 нс для трёх импульсов.",
+      "relation": "pulse_delay",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O09"
+      ],
+      "origin": "observation",
+      "scope": "state-1, 40 °C; сравнение с O08 даёт сдвиг +0.01 нс."
+    },
+    {
+      "statement": "Типовое описание M7 сообщает, что в типовом исполнении внешнее покрытие изготовлено из P-A; S17 и его фактические условия в документе не указаны.",
+      "relation": "source_report",
+      "participants": [
+        {
+          "role": "model",
+          "entity_id": "M7"
+        },
+        {
+          "role": "material",
+          "entity_id": "P-A"
+        }
+      ],
+      "evidence_refs": [
+        "D03"
+      ],
+      "origin": "source_report",
+      "scope": "Типовое исполнение M7; не утверждение о конкретном S17."
+    },
+    {
+      "statement": "Запись о партии S17 сообщает, что для внешнего покрытия S17 использован полимер P-B; это сообщение изготовителя, не независимый анализ.",
+      "relation": "source_report",
+      "participants": [
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        },
+        {
+          "role": "material",
+          "entity_id": "P-B"
+        }
+      ],
+      "evidence_refs": [
+        "D04"
+      ],
+      "origin": "source_report",
+      "scope": "Партия B17; проверка состава не выполнена."
+    },
+    {
+      "statement": "В открытом наборе эталонов P-A и P-B имеют одинаковый отклик [0.1,0.1,0.8,0.3,0.2] при 20 °C.",
+      "relation": "reference_equivalence",
+      "participants": [
+        {
+          "role": "material",
+          "entity_id": "P-A"
+        },
+        {
+          "role": "material",
+          "entity_id": "P-B"
+        }
+      ],
+      "evidence_refs": [
+        "D02"
+      ],
+      "origin": "source_report",
+      "scope": "Открытый набор эталонов; не полный список материалов."
+    },
+    {
+      "statement": "Отклик внешней зоны S17 при radius_um=90 совпадает с эталонным откликом P-A/P-B в пределах возвращённых значений.",
+      "relation": "matches_reference",
+      "participants": [
+        {
+          "role": "sample_zone",
+          "entity_id": "S17"
+        },
+        {
+          "role": "reference",
+          "entity_id": "P-A"
+        },
+        {
+          "role": "reference",
+          "entity_id": "P-B"
+        }
+      ],
+      "evidence_refs": [
+        "O06",
+        "D02"
+      ],
+      "origin": "hypothesis",
+      "scope": "state-0, x=0, radius_um=90; совпадение не устанавливает единственность состава (D01)."
+    },
+    {
+      "statement": "Отклик U09 не совпадает с откликом внешней зоны S17 radius_um=90 в возвращённых значениях.",
+      "relation": "differs_from",
+      "participants": [
+        {
+          "role": "contents",
+          "entity_id": "U09"
+        },
+        {
+          "role": "sample_zone",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "O07",
+        "O06"
+      ],
+      "origin": "observation",
+      "scope": "state-0; сравнение по q1..q5."
+    },
+    {
+      "statement": "Смешение в material_response этой фикстуры задано как сумма откликов компонентов с массовыми долями; это условие макета, не закон реальной спектроскопии.",
+      "relation": "instrument_assumption",
+      "participants": [
+        {
+          "role": "document",
+          "entity_id": "doc:calibration@1"
+        }
+      ],
+      "evidence_refs": [
+        "D01"
+      ],
+      "origin": "source_report",
+      "scope": "Учебная фикстура; библиотека эталонов неполна."
+    },
+    {
+      "statement": "Пространственное распределение добавки внутри измеряемого пятна не различается прибором material_response.",
+      "relation": "instrument_limitation",
+      "participants": [
+        {
+          "role": "document",
+          "entity_id": "doc:calibration@1"
+        }
+      ],
+      "evidence_refs": [
+        "D01"
+      ],
+      "origin": "source_report",
+      "scope": "Учебный прибор; не утверждение о реальном образце."
+    },
+    {
+      "statement": "Запросы чтения material:P-A и повторный отклик S17 radius_um=90 при 40 °C вернули fixture_not_specified; это означает отсутствие записи в ручной таблице, а не физическую невозможность.",
+      "relation": "unresolved_request",
+      "participants": [
+        {
+          "role": "request",
+          "entity_id": "material:P-A"
+        },
+        {
+          "role": "sample",
+          "entity_id": "S17"
+        }
+      ],
+      "evidence_refs": [
+        "START"
+      ],
+      "origin": "unresolved",
+      "scope": "Ответы fixture_not_specified не имеют record_id; алгоритм обработки запросов отсутствует."
+    }
+  ],
+  "open_questions": [
+    "Каков фактический состав внешнего покрытия S17: P-B по D04 или P-A по типовому D03? Сообщение изготовителя D04 не подтверждено независимым анализом.",
+    "Можно ли различить P-A и P-B по доступным откликам, если в D02 они совпадают, а прямое чтение material:P-A вернуло fixture_not_specified?",
+    "Сохраняется ли совпадение внешней зоны S17 с P-A/P-B при 40 °C? Запрос material_response radius_um=90 в state-1 вернул fixture_not_specified.",
+    "Является ли наблюдаемая радиальная структура S17 осесимметричной и непрерывной между x=0 и x=500? O02/O03 не измеряли это.",
+    "Какие материалы соответствуют внутренним зонам S17 (r≈2–4, 4–62.5, 62.5–125 мкм) и U09? Открытый набор D02 неполон, а смешение задано условно.",
+    "Что означает сдвиг задержки с 5.0 до 5.01 нс при 40 °C: температурный эффект, разрешение 0.001 нс или иное? Нужны повторные/контрольные измерения."
+  ],
+  "summary": "Структурный отчёт по синтетической фикстуре structural-stalker-cable-v1 (START). S17 — образец с маркировкой M7, окружённый ячейкой V04 и содержимым U09 (O01). Наблюдения O02/O03 дают одинаковый радиальный профиль при x=0 и x=500 с переходами около 4, 62.5 и 125 мкм; O04–O06 дают отклики зон, O06 совпадает с эталонами P-A/P-B из D02. D03 сообщает типовое покрытие P-A для M7, D04 — покрытие P-B для партии S17; это источник-сообщения, не независимая проверка. D01 ограничивает интерпретацию: смешение условно, библиотека неполна, пространственное распределение добавки не различается. A01/O09 показывают нагрев до 40 °C и задержку 5.01 нс вместо 5.0 нс. Запросы к material:P-A и повторный radius_um=90 при 40 °C вернули fixture_not_specified; это не физическая невозможность. Главные нерешённости: состав покрытия S17, различие P-A/P-B, температурная проверка внешней зоны, осевая непрерывность и природа сдвига задержки.",
+  "usage": {
+    "prompt_tokens": 20439,
+    "completion_tokens": 5570,
+    "total_tokens": 26009
+  }
+}
