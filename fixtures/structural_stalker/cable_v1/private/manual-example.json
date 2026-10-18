@@ -1,0 +1,393 @@
+{
+  "fixture_id": "structural-stalker-cable-v1",
+  "status": "handwritten_example_not_algorithm_output",
+  "purpose": "Один допустимый отчёт для ручного обсуждения. Имена, число узлов и формы отношений не являются эталоном точного совпадения.",
+  "base": {
+    "entities": [
+      {
+        "id": "sample",
+        "meaning": "S17, конкретный физический образец",
+        "basis": [
+          "O01"
+        ]
+      },
+      {
+        "id": "center",
+        "meaning": "Центральная область в измеренных сечениях",
+        "basis": [
+          "O02",
+          "O03"
+        ]
+      },
+      {
+        "id": "annulus",
+        "meaning": "Окружающая центральную область",
+        "basis": [
+          "O02",
+          "O03"
+        ]
+      },
+      {
+        "id": "outer",
+        "meaning": "Внешняя область образца",
+        "basis": [
+          "O02",
+          "O03"
+        ]
+      },
+      {
+        "id": "center-material",
+        "meaning": "Материал центральной области",
+        "basis": [
+          "O04"
+        ]
+      },
+      {
+        "id": "annulus-material",
+        "meaning": "Материал окружающей области",
+        "basis": [
+          "O05"
+        ]
+      },
+      {
+        "id": "outer-material",
+        "meaning": "Материал внешней области, неустановленный A/B",
+        "basis": [
+          "O06"
+        ]
+      },
+      {
+        "id": "vessel",
+        "meaning": "V04, конкретная ячейка",
+        "basis": [
+          "O01"
+        ]
+      },
+      {
+        "id": "medium",
+        "meaning": "U09, окружающая смесь",
+        "basis": [
+          "O01",
+          "O07"
+        ]
+      },
+      {
+        "id": "transmission",
+        "meaning": "Наблюдаемый процесс передачи импульсов",
+        "basis": [
+          "O08"
+        ]
+      },
+      {
+        "id": "input-events",
+        "meaning": "Зарегистрированные входные события",
+        "basis": [
+          "O08"
+        ]
+      },
+      {
+        "id": "output-events",
+        "meaning": "Зарегистрированные выходные события",
+        "basis": [
+          "O08"
+        ]
+      },
+      {
+        "id": "interface",
+        "meaning": "Граница центральной и окружающей областей в наблюдаемых профилях",
+        "basis": [
+          "O02",
+          "O03"
+        ]
+      },
+      {
+        "id": "model",
+        "meaning": "M7, модель изделия; не сам экземпляр S17",
+        "basis": [
+          "D03"
+        ]
+      }
+    ],
+    "assertions": [
+      {
+        "id": "C1",
+        "relation": "part_of",
+        "participants": {
+          "part": "center",
+          "whole": "sample"
+        },
+        "evidence_refs": [
+          "O01",
+          "O02",
+          "O03"
+        ],
+        "origin": "interpretation_of_observations",
+        "scope": "Два измеренных сечения; разные физические области, а не три названия материала."
+      },
+      {
+        "id": "C2",
+        "relation": "part_of",
+        "participants": {
+          "part": "annulus",
+          "whole": "sample"
+        },
+        "evidence_refs": [
+          "O01",
+          "O02",
+          "O03"
+        ],
+        "origin": "interpretation_of_observations",
+        "scope": "Два измеренных сечения; разные физические области, а не три названия материала."
+      },
+      {
+        "id": "C3",
+        "relation": "part_of",
+        "participants": {
+          "part": "outer",
+          "whole": "sample"
+        },
+        "evidence_refs": [
+          "O01",
+          "O02",
+          "O03"
+        ],
+        "origin": "interpretation_of_observations",
+        "scope": "Два измеренных сечения; разные физические области, а не три названия материала."
+      },
+      {
+        "id": "C4",
+        "relation": "made_of",
+        "participants": {
+          "region": "center",
+          "material_portion": "center-material"
+        },
+        "evidence_refs": [
+          "O04"
+        ],
+        "origin": "interpretation_of_observations",
+        "scope": "Локальный отклик в указанной точке state-0."
+      },
+      {
+        "id": "C5",
+        "relation": "made_of",
+        "participants": {
+          "region": "annulus",
+          "material_portion": "annulus-material"
+        },
+        "evidence_refs": [
+          "O05"
+        ],
+        "origin": "interpretation_of_observations",
+        "scope": "Локальный отклик в указанной точке state-0."
+      },
+      {
+        "id": "C6",
+        "relation": "made_of",
+        "participants": {
+          "region": "outer",
+          "material_portion": "outer-material"
+        },
+        "evidence_refs": [
+          "O06"
+        ],
+        "origin": "interpretation_of_observations",
+        "scope": "Локальный отклик в указанной точке state-0."
+      },
+      {
+        "id": "C7",
+        "relation": "composition_candidate",
+        "participants": {
+          "material": "center-material"
+        },
+        "evidence_refs": [
+          "O04",
+          "D01",
+          "D02"
+        ],
+        "origin": "hypothesis",
+        "reference_model": {
+          "material:glass": 0.96,
+          "material:additive": 0.04
+        },
+        "scope": "Совместимая линейная смесь данных эталонов при 20 C; единственность не установлена."
+      },
+      {
+        "id": "C8",
+        "relation": "material_candidate",
+        "participants": {
+          "material": "annulus-material"
+        },
+        "evidence_refs": [
+          "O05",
+          "D01",
+          "D02"
+        ],
+        "origin": "hypothesis",
+        "compatible_reference": "material:glass"
+      },
+      {
+        "id": "C9",
+        "relation": "material_alternatives",
+        "participants": {
+          "material": "outer-material"
+        },
+        "evidence_refs": [
+          "O06",
+          "D01",
+          "D02"
+        ],
+        "origin": "unresolved",
+        "alternatives": [
+          "material:P-A",
+          "material:P-B"
+        ]
+      },
+      {
+        "id": "C10",
+        "relation": "immersed_in",
+        "participants": {
+          "object": "sample",
+          "medium": "medium"
+        },
+        "evidence_refs": [
+          "O01"
+        ],
+        "origin": "interpretation_of_observation"
+      },
+      {
+        "id": "C11",
+        "relation": "contained_in",
+        "participants": {
+          "content": "medium",
+          "container": "vessel"
+        },
+        "evidence_refs": [
+          "O01"
+        ],
+        "origin": "interpretation_of_observation"
+      },
+      {
+        "id": "C12",
+        "relation": "composition_candidate",
+        "participants": {
+          "material": "medium"
+        },
+        "evidence_refs": [
+          "O07",
+          "D01",
+          "D02"
+        ],
+        "origin": "hypothesis",
+        "reference_model": {
+          "material:water": 0.98,
+          "material:salt": 0.02
+        },
+        "scope": "Совместимость в условной модели эталонов; не полный доказанный состав."
+      },
+      {
+        "id": "C13",
+        "relation": "process_participants",
+        "participants": {
+          "process": "transmission",
+          "input": "input-events",
+          "output": "output-events",
+          "specimen": "sample"
+        },
+        "evidence_refs": [
+          "O08"
+        ],
+        "origin": "interpretation_of_observation"
+      },
+      {
+        "id": "C14",
+        "relation": "observed_delays",
+        "participants": {
+          "process": "transmission",
+          "specimen": "sample"
+        },
+        "evidence_refs": [
+          "O08",
+          "A01",
+          "O09",
+          "A02",
+          "O10"
+        ],
+        "origin": "observation_summary",
+        "states": {
+          "state-0": {
+            "temperature_C": 20,
+            "delay_ns": 5.0
+          },
+          "state-1": {
+            "temperature_C": 40,
+            "delay_ns": 5.01
+          },
+          "state-2": {
+            "temperature_C": 20,
+            "delay_ns": 5.0
+          }
+        },
+        "scope": "Эта установка и эти эпизоды; прямой механизм действия среды не установлен."
+      },
+      {
+        "id": "C15",
+        "relation": "interface_between",
+        "participants": {
+          "interface": "interface",
+          "side_1": "center",
+          "side_2": "annulus"
+        },
+        "evidence_refs": [
+          "O02",
+          "O03"
+        ],
+        "origin": "interpretation_of_observations",
+        "scope": "Наблюдаемые скачки радиального отклика, без установленного оптического механизма."
+      },
+      {
+        "id": "C16",
+        "relation": "document_reports",
+        "participants": {
+          "subject": "model"
+        },
+        "evidence_refs": [
+          "D03"
+        ],
+        "origin": "source_report",
+        "reported": {
+          "typical_outer_material": "material:P-A",
+          "illustrated_environment": "dry_air"
+        },
+        "applies_to_S17": "not_established"
+      }
+    ],
+    "open_questions": [
+      "Как распределена добавка внутри измеряемого пятна?",
+      "Сохраняется ли строение между двумя измеренными сечениями?",
+      "Какой из совместимых материалов A/B использован во внешней области?",
+      "Каков механизм изменения времени передачи при нагреве?",
+      "Какие другие материалы вне библиотеки могли бы дать те же отклики?"
+    ]
+  },
+  "new_source_delta": {
+    "retains_all_base_evidence": true,
+    "assertion": {
+      "relation": "manufacturer_reports",
+      "participants": {
+        "subject": "outer-material"
+      },
+      "reported_material": "material:P-B",
+      "evidence_refs": [
+        "D04"
+      ],
+      "origin": "source_report"
+    },
+    "still_true": "O06 не различает P-A/P-B. Документ даёт сообщение о партии, не новый независимый анализ."
+  },
+  "not_claimed": [
+    "Внутреннее распределение добавки установлено.",
+    "Известны все части и вещества.",
+    "Измеренная идентификация материалов уникальна.",
+    "Свойства типового M7 автоматически верны для S17."
+  ]
+}

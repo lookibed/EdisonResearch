@@ -1,0 +1,144 @@
+{
+  "fixture_id": "structural-stalker-cable-v1",
+  "status": "manual_fixture_no_runtime",
+  "data_origin": "synthetic_authored",
+  "task": "Исследуйте устройство образца S17 и его окружение. Сохраняйте найденные объекты, связи, основания и открытые вопросы. Различайте наблюдения, сообщения источников и гипотезы. Порядок, число объектов и глубина разбиения не заданы.",
+  "initial_state": {
+    "state_ref": "state-0",
+    "phase": "base"
+  },
+  "known_resources": [
+    {
+      "ref": "S17",
+      "description": "Лабораторный образец с внешней маркировкой M7. Внутреннее устройство не сообщается."
+    },
+    {
+      "ref": "catalog:root",
+      "description": "Каталог доступных документов и калибровок; содержимое может обновляться."
+    }
+  ],
+  "tools": [
+    {
+      "name": "read",
+      "description": "Прочитать ресурс по уже известной ссылке. Ответ содержит ревизию источника.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resource_ref"
+        ],
+        "properties": {
+          "resource_ref": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "observe",
+      "description": "Получить данные доступного прибора. Координаты задаются относительно образца; части и их названия не являются параметрами.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "target_ref",
+          "method",
+          "parameters"
+        ],
+        "properties": {
+          "target_ref": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "overview",
+              "radial_profile",
+              "material_response"
+            ]
+          },
+          "parameters": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "name": "pulse_trace",
+      "description": "Ввести оптические импульсы во входной порт и записать время входа и выхода с общими часами.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "target_ref"
+        ],
+        "properties": {
+          "target_ref": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "set_temperature",
+      "description": "Задать температуру доступной ячейки. Меняет состояние; идентичность образца сохраняется.",
+      "arguments": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "target_ref",
+          "temperature_C"
+        ],
+        "properties": {
+          "target_ref": {
+            "type": "string"
+          },
+          "temperature_C": {
+            "type": "number",
+            "enum": [
+              20,
+              40
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "instrument_access": {
+    "S17": {
+      "overview": [
+        {}
+      ],
+      "radial_profile": [
+        {
+          "x_mm": 0
+        },
+        {
+          "x_mm": 500
+        }
+      ],
+      "material_response": [
+        {
+          "x_mm": 0,
+          "radius_um": 2
+        },
+        {
+          "x_mm": 0,
+          "radius_um": 20
+        },
+        {
+          "x_mm": 0,
+          "radius_um": 90
+        }
+      ],
+      "pulse_trace": true
+    },
+    "newly_exposed_resource_capabilities": "Возвращаются в конкретном ответе прибора."
+  },
+  "budgets": {
+    "base_tool_calls": 18,
+    "new_source_additional_tool_calls": 3
+  },
+  "repeat_semantics": "Повтор в том же состоянии и ревизии источника возвращает ту же запись. Изменение состояния или ревизии источника требует новой записи. Эти данные детерминированы и не задают статистику независимых шумовых повторов.",
+  "undefined_requests": "Запрос вне ручной таблицы означает fixture_not_specified, а не физическую невозможность. Алгоритм обработки запросов пока отсутствует."
+}

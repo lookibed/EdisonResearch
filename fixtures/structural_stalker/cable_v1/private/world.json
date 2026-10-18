@@ -1,0 +1,341 @@
+{
+  "fixture_id": "structural-stalker-cable-v1",
+  "truth_origin": "Ручная конструкция авторов; генератора мира и физического решателя нет.",
+  "nodes": [
+    {
+      "id": "w:sample",
+      "kind_hint": "physical_instance",
+      "label": "Образец S17"
+    },
+    {
+      "id": "w:core",
+      "kind_hint": "physical_region",
+      "label": "Центральная область"
+    },
+    {
+      "id": "w:clad",
+      "kind_hint": "physical_region",
+      "label": "Окружающая центральную область"
+    },
+    {
+      "id": "w:coat",
+      "kind_hint": "physical_region",
+      "label": "Внешняя защитная область"
+    },
+    {
+      "id": "w:core-material",
+      "kind_hint": "material_portion",
+      "label": "Материал центральной области"
+    },
+    {
+      "id": "w:clad-material",
+      "kind_hint": "material_portion",
+      "label": "Материал окружающей области"
+    },
+    {
+      "id": "w:coat-material",
+      "kind_hint": "material_portion",
+      "label": "Материал внешней области"
+    },
+    {
+      "id": "w:glass",
+      "kind_hint": "material_type",
+      "label": "Эталонный тип G"
+    },
+    {
+      "id": "w:additive",
+      "kind_hint": "material_type",
+      "label": "Эталонный тип X"
+    },
+    {
+      "id": "w:polymer-a",
+      "kind_hint": "material_type",
+      "label": "P-A"
+    },
+    {
+      "id": "w:polymer-b",
+      "kind_hint": "material_type",
+      "label": "P-B"
+    },
+    {
+      "id": "w:cell",
+      "kind_hint": "physical_instance",
+      "label": "Ячейка V04"
+    },
+    {
+      "id": "w:medium",
+      "kind_hint": "material_portion",
+      "label": "Окружающая смесь U09"
+    },
+    {
+      "id": "w:water",
+      "kind_hint": "material_type",
+      "label": "Вода"
+    },
+    {
+      "id": "w:salt",
+      "kind_hint": "material_type",
+      "label": "NaCl"
+    },
+    {
+      "id": "w:process",
+      "kind_hint": "process",
+      "label": "Передача оптического импульса"
+    },
+    {
+      "id": "w:input",
+      "kind_hint": "event_family",
+      "label": "Входные импульсы"
+    },
+    {
+      "id": "w:output",
+      "kind_hint": "event_family",
+      "label": "Выходные импульсы"
+    },
+    {
+      "id": "w:boundary",
+      "kind_hint": "interface",
+      "label": "Граница центральной и окружающей областей"
+    },
+    {
+      "id": "w:model",
+      "kind_hint": "design_type",
+      "label": "Модель изделия M7"
+    }
+  ],
+  "relations": [
+    {
+      "relation": "part_of",
+      "participants": {
+        "part": "w:core",
+        "whole": "w:sample"
+      }
+    },
+    {
+      "relation": "part_of",
+      "participants": {
+        "part": "w:clad",
+        "whole": "w:sample"
+      }
+    },
+    {
+      "relation": "part_of",
+      "participants": {
+        "part": "w:coat",
+        "whole": "w:sample"
+      }
+    },
+    {
+      "relation": "made_of",
+      "participants": {
+        "object": "w:core",
+        "material": "w:core-material"
+      }
+    },
+    {
+      "relation": "made_of",
+      "participants": {
+        "object": "w:clad",
+        "material": "w:clad-material"
+      }
+    },
+    {
+      "relation": "made_of",
+      "participants": {
+        "object": "w:coat",
+        "material": "w:coat-material"
+      }
+    },
+    {
+      "relation": "has_component_type",
+      "participants": {
+        "mixture": "w:core-material",
+        "component_type": "w:glass"
+      },
+      "mass_fraction": 0.96
+    },
+    {
+      "relation": "has_component_type",
+      "participants": {
+        "mixture": "w:core-material",
+        "component_type": "w:additive"
+      },
+      "mass_fraction": 0.04
+    },
+    {
+      "relation": "has_component_type",
+      "participants": {
+        "mixture": "w:clad-material",
+        "component_type": "w:glass"
+      },
+      "mass_fraction": 1
+    },
+    {
+      "relation": "has_component_type",
+      "participants": {
+        "mixture": "w:coat-material",
+        "component_type": "w:polymer-b"
+      },
+      "mass_fraction": 1
+    },
+    {
+      "relation": "has_component_type",
+      "participants": {
+        "mixture": "w:medium",
+        "component_type": "w:water"
+      },
+      "mass_fraction": 0.98
+    },
+    {
+      "relation": "has_component_type",
+      "participants": {
+        "mixture": "w:medium",
+        "component_type": "w:salt"
+      },
+      "mass_fraction": 0.02
+    },
+    {
+      "relation": "contained_in",
+      "participants": {
+        "content": "w:medium",
+        "container": "w:cell"
+      }
+    },
+    {
+      "relation": "immersed_in",
+      "participants": {
+        "object": "w:sample",
+        "medium": "w:medium"
+      }
+    },
+    {
+      "relation": "interface_between",
+      "participants": {
+        "interface": "w:boundary",
+        "side_1": "w:core",
+        "side_2": "w:clad"
+      }
+    },
+    {
+      "relation": "process_participants",
+      "participants": {
+        "process": "w:process",
+        "input": "w:input",
+        "output": "w:output",
+        "specimen": "w:sample"
+      }
+    },
+    {
+      "relation": "instance_of",
+      "participants": {
+        "instance": "w:sample",
+        "type": "w:model"
+      }
+    }
+  ],
+  "geometry": {
+    "length_mm": 1000,
+    "regions": [
+      {
+        "entity": "w:core",
+        "r_um": [
+          0,
+          4
+        ]
+      },
+      {
+        "entity": "w:clad",
+        "r_um": [
+          4,
+          62.5
+        ]
+      },
+      {
+        "entity": "w:coat",
+        "r_um": [
+          62.5,
+          125
+        ]
+      }
+    ],
+    "hidden_assumptions": [
+      "В этом мире области непрерывны по длине; доступные два сечения сами по себе этого не доказывают."
+    ]
+  },
+  "states": [
+    {
+      "ref": "state-0",
+      "temperature_C": 20,
+      "epoch": 0,
+      "delay_ns": 5.0
+    },
+    {
+      "ref": "state-1",
+      "temperature_C": 40,
+      "epoch": 1,
+      "delay_ns": 5.01
+    },
+    {
+      "ref": "state-2",
+      "temperature_C": 20,
+      "epoch": 2,
+      "delay_ns": 5.0
+    }
+  ],
+  "observation_model": {
+    "material_rule": "Линейная смесь эталонов из D02; условный прибор, заданный в D01.",
+    "actual_materials": {
+      "core": {
+        "material:glass": 0.96,
+        "material:additive": 0.04
+      },
+      "clad": {
+        "material:glass": 1
+      },
+      "coat": {
+        "material:P-B": 1
+      },
+      "medium": {
+        "material:water": 0.98,
+        "material:salt": 0.02
+      }
+    }
+  },
+  "observational_equivalences": [
+    {
+      "id": "EQ-coating",
+      "phase": "base",
+      "alternatives": [
+        "Покрытие P-A",
+        "Покрытие P-B"
+      ],
+      "same_records": [
+        "O06"
+      ],
+      "oracle_choice": "P-B",
+      "required_behavior": "Сохранить неоднозначность. D04 позднее сообщает P-B, но не превращается в независимое измерение."
+    },
+    {
+      "id": "EQ-additive-layout",
+      "phase": "all",
+      "alternatives": [
+        "Однородное распределение добавки внутри пятна",
+        "Мелкие неоднородности с тем же усреднённым откликом"
+      ],
+      "same_records": [
+        "O04"
+      ],
+      "oracle_choice": "Однородное распределение",
+      "required_behavior": "Не угадывать скрытый выбор; данных о пространственном распределении нет."
+    }
+  ],
+  "forbidden_leaks": [
+    "Файлы private целиком",
+    "Идентификаторы w:*",
+    "Скрытые точные радиусы",
+    "Истинное соответствие покрытия P-B до D04",
+    "Ручной пример отчёта",
+    "Правильный порядок запросов"
+  ],
+  "comparison_policy": "Узлы и отношения скрытого графа — справка оценщику. Точного совпадения ID, словаря, числа узлов и всех скрытых сущностей не требуется."
+}
