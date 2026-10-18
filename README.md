@@ -5,6 +5,12 @@
 прототип генерации ветвей. Адаптер OpenRouter проверен живыми запросами.
 Преимущество генератора и zero-shot способность пока не установлены.
 
+[Анимационный разбор принципа — MP4, 80 секунд](docs/edison-explained.mp4) ·
+[Плеер с главами](docs/edison-animation.html) ·
+[Раскадровка](docs/edison-animation-storyboard.jpg).
+Русские подписи, без озвучки. Пересобрать: `python scripts/animate_edison.py`
+(Pillow, FFmpeg и шрифты DejaVu Sans).
+
 ## Сталкер и учёный-тестер
 
 Добавлен экспериментальный [LLM-учёный](docs/llm-scientist.md): модель сама

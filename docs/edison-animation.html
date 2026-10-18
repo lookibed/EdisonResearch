@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Эдисон — как обнаруживаются свойства</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0b1220;color:#eff5fc}
+body{max-width:1160px;margin:0 auto;padding:34px 24px}header{display:flex;justify-content:space-between;gap:24px;align-items:start}
+.tag{color:#58d8ee;font-weight:650;font-size:13px;letter-spacing:.12em}h1{font-size:clamp(26px,4vw,42px);margin:12px 0}p{color:#a0b2ca;line-height:1.6}
+video{display:block;width:100%;border-radius:18px;background:#0b1220;border:1px solid #2a3d56;margin:24px 0 18px}
+a{color:#65e1b0}nav{display:flex;flex-wrap:wrap;gap:8px}button,.download{font:inherit;padding:10px 14px;border:1px solid #2a3d56;border-radius:10px;background:#152237;color:#eff5fc;cursor:pointer;text-decoration:none}
+button:hover,button:focus-visible{border-color:#58d8ee;color:#58d8ee}.note{padding:16px 20px;border-left:3px solid #ffca78;background:#152237;border-radius:8px;margin-top:26px}
+footer{font-size:13px;color:#a0b2ca;margin-top:30px}
+</style>
+<header><div><span class="tag">EDISONRESEARCH / АНИМАЦИОННАЯ ИНФОГРАФИКА</span>
+<h1>Как Эдисон обнаруживает свойства</h1>
+<p>80 секунд · русские подписи · без озвучки · MP4, 1280 × 720</p></div></header>
+<video id="film" controls playsinline preload="metadata" poster="edison-animation-poster.jpg">
+<source src="edison-explained.mp4" type="video/mp4">Откройте файл edison-explained.mp4 в видеоплеере.
+</video>
+<nav aria-label="Главы ролика">
+<button data-time="0">00:00 Принцип</button><button data-time="6">00:06 Сталкер</button>
+<button data-time="14">00:14 Гипотезы</button><button data-time="22">00:22 Контракт</button>
+<button data-time="30">00:30 Исполнитель</button><button data-time="38">00:38 Память</button>
+<button data-time="47">00:47 Независимость</button><button data-time="56">00:56 Ветвление</button>
+<button data-time="64">01:04 Результаты</button><button data-time="74">01:14 Что дальше</button>
+</nav>
+<p><a class="download" href="edison-explained.mp4" download>Скачать MP4</a> &nbsp; <a href="edison-animation-storyboard.jpg">Все кадры сюжета</a></p>
+<div class="note">Наблюдения и объяснения — разные записи. Переход к строгому JSON помогает исполнению опыта, но не доказывает истинность гипотезы. Цифры в ролике взяты из живой проверки v3; все 38 измерений воспроизведены, два раунда оборвались по токенам.</div>
+<footer>Работает без сети. Для локального просмотра держите HTML, MP4 и JPG в одной папке.<br>
+Исходник: scripts/animate_edison.py. Данные: reports/research-v3-summary.json.</footer>
+<script>
+const film=document.getElementById('film');
+document.querySelectorAll('[data-time]').forEach(button=>button.addEventListener('click',()=>{film.currentTime=Number(button.dataset.time);film.play().catch(()=>{});}));
+</script>
+</html>
