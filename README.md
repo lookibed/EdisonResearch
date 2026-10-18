@@ -5,6 +5,7 @@
 прототип генерации ветвей. Адаптер OpenRouter проверен живыми запросами.
 Преимущество генератора и zero-shot способность пока не установлены.
 
+[Самостоятельный HTML-аниматик — один файл, без сети](docs/edison-animatic.html) ·
 [Анимационный разбор принципа — MP4, 80 секунд](docs/edison-explained.mp4) ·
 [Плеер с главами](docs/edison-animation.html) ·
 [Раскадровка](docs/edison-animation-storyboard.jpg).

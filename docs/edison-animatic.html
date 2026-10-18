@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Эдисон — аниматик в одном HTML</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--card:#152237;--edge:#2a3d56;--text:#eff5fc;--muted:#a0b2ca;--cyan:#58d8ee;--green:#65e1b0;--amber:#ffca78;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--text);margin:0;padding:28px 24px 36px}.app{max-width:1280px;margin:auto}.eyebrow{font-size:12px;letter-spacing:.15em;color:var(--cyan);font-weight:700}header{display:flex;align-items:center;justify-content:space-between;gap:20px}h1{font-size:clamp(23px,3vw,37px);letter-spacing:-.035em;margin:9px 0}header p{color:var(--muted);font-size:14px;margin:0 0 20px;line-height:1.6}.offline{border:1px solid var(--edge);border-radius:30px;padding:8px 13px;white-space:nowrap;font-size:12px;color:var(--green)}.screen{border:1px solid var(--edge);border-radius:18px;overflow:hidden;background:var(--bg);position:relative}canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:17px 0}button,select{border:1px solid var(--edge);background:var(--card);color:var(--text);padding:10px 14px;border-radius:9px;font:inherit;font-size:14px;cursor:pointer}button:hover,button:focus-visible,select:focus-visible{border-color:var(--cyan)}button[aria-current="true"]{border-color:var(--cyan);color:var(--cyan);background:#173145}.primary{background:var(--cyan);color:var(--bg);font-weight:750;min-width:116px}input[type=range]{accent-color:var(--cyan);flex:1;min-width:130px;cursor:pointer}#clock{font-variant-numeric:tabular-nums;font-size:14px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 20px}nav button{font-size:13px;padding:8px 11px}.explain{padding:18px 21px;border-left:3px solid var(--green);border-radius:8px;background:var(--card);line-height:1.65;min-height:90px}#description{margin:0;font-size:16px}.fine{font-size:12px;color:var(--muted);margin-top:11px;line-height:1.6}footer{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:22px;color:var(--muted);font-size:12px}footer p{max-width:850px;line-height:1.6}.screen:fullscreen{border:0;border-radius:0;display:grid;place-items:center}.screen:fullscreen canvas{width:100vw;max-height:100vh;object-fit:contain}@media(max-width:650px){body{padding:18px 12px}.offline{display:none}header p{font-size:12px}.controls{gap:8px}button,select{font-size:12px;padding:9px}#clock{font-size:12px}.explain{padding:14px;font-size:14px}footer{align-items:start;flex-direction:column}nav{gap:5px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><div><span class="eyebrow">EDISONRESEARCH / ЖИВАЯ ИНФОГРАФИКА</span><h1>Как Эдисон обнаруживает свойства</h1><p>80 секунд · 10 сцен · русские подписи · без озвучки</p></div><span class="offline">● Один файл · без интернета</span></header>
+<section class="screen" id="screen" aria-label="Анимация принципа работы Эдисона">
+<canvas id="stage" width="1280" height="720" role="img" aria-label="Анимированная схема исследования: Сталкер, гипотезы, опыты, память, независимый генератор"></canvas>
+</section>
+<div class="controls">
+<button id="play" class="primary" aria-label="Пауза">Ⅱ Пауза</button>
+<button id="restart" aria-label="Начать сначала">↺</button>
+<input id="seek" type="range" min="0" max="80" step="0.01" value="0" aria-label="Время анимации в секундах">
+<span id="clock">00:00 / 01:20</span>
+<select id="speed" aria-label="Скорость воспроизведения"><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option></select>
+<button id="full" aria-label="Полный экран">⛶</button>
+</div>
+<nav id="chapters" aria-label="Перейти к сцене"></nav>
+<section class="explain"><p id="description"></p><div class="fine" id="scope"></div></section>
+<footer><p>Пробел — пауза. ← / → — перемотка на 5 секунд. Все рисунки и движение создаются внутри этого HTML: видео, соседние файлы, шрифты из сети и библиотеки не нужны.<br>Результаты — из живой проверки v3. Воспроизводимость измерений не доказывает истинность интерпретаций.</p><button id="save">↓ Сохранить HTML</button></footer>
+</main>
+<script>
+'use strict';
+const C={bg:'#0b1220',panel:'#152237',edge:'#2a3d56',white:'#eff5fc',muted:'#a0b2ca',cyan:'#58d8ee',green:'#65e1b0',amber:'#ffca78',purple:'#b5a0ff'};
+const scenes=[
+ {duration:6,tag:'ЭДИСОН',title:'Как система обнаруживает свойства',name:'Принцип',caption:'LLM предлагает объяснение. Оно должно выдержать встречу со средой.',note:'Схема текущего прототипа. Универсальность и zero-shot способность пока не доказаны.'},
+ {duration:8,tag:'01 / СТАЛКЕР',title:'Найти то, что можно исследовать',name:'Сталкер',caption:'Сначала система узнаёт, что можно вызвать и как с этим взаимодействовать.',note:'Сейчас Сталкер использует локальный источник сущностей, а не весь интернет.'},
+ {duration:8,tag:'02 / УЧЁНЫЙ',title:'Конкурирующие объяснения',name:'Гипотезы',caption:'Какая проба даст разные результаты при разных объяснениях?',note:'Гипотезы и входы выбирает LLM. Программист задаёт доступные действия и пределы среды.'},
+ {duration:8,tag:'03 / КОНТРАКТ',title:'Превратить вопрос в исполнимый опыт',name:'JSON и код',caption:'Ошибка формата → точная диагностика → одна попытка исправления.',note:'JSON Schema проверяет структуру. Синтаксис и ссылки на существующие измерения проверяются отдельно.'},
+ {duration:8,tag:'04 / ИСПОЛНИТЕЛЬ',title:'Ответ даёт среда',name:'Опыт',caption:'LLM не может заменить реальное измерение своим рассказом.',note:'Пример [2, 3] → 13 взят из живого журнала неизвестной функции v3.'},
+ {duration:9,tag:'05 / ПАМЯТЬ',title:'Измерение и объяснение — разные записи',name:'Память',caption:'Память хранит исходные ответы, область проверки и непроверенные объяснения.',note:'Точный повтор запроса берётся из памяти. Независимой проверки обобщений пока нет.'},
+ {duration:9,tag:'06 / НЕЗАВИСИМОСТЬ',title:'Два контура с разными контекстами',name:'Независимость',caption:'Генератор не получает историю опытов, накопленные свойства и оценки.',note:'Доступные примитивы общие. Исследовательские контексты разделены. Планировщика-агента нет.'},
+ {duration:8,tag:'07 / ВЕТВЛЕНИЕ',title:'Неудача не стирает остальные пути',name:'Ветви',caption:'Неудача не вычёркивает ветвь. Ответвления растут и от прежних узлов.',note:'Чередование предложений LLM и очереди FIFO сохраняет широту в заданной грамматике. Бесконечная полнота этим не доказана.'},
+ {duration:10,tag:'08 / ЖИВАЯ ПРОВЕРКА',title:'Что получилось на самом деле',name:'Результаты',caption:'Все три обзора завершены. Два ответа оборвались даже на 8192 токенах.',note:'38 измерений воспроизведены: функция — 12, битовый преобразователь — 16, физика — 10. Это не проверка истинности обобщений.'},
+ {duration:6,tag:'ЭДИСОН / СЕЙЧАС',title:'Вопросы выбирает LLM. Измерения даёт среда.',name:'Что дальше',caption:'Мы задаём инструменты. Учёный выбирает, что выяснять.',note:'Нужно устранить обрывы ответов и добавить независимую проверку новых прогнозов. Гипотеза ещё не закон.'}
+];
+let end=0;scenes.forEach(s=>{s.start=end;end+=s.duration;});
+const canvas=document.getElementById('stage'),d=canvas.getContext('2d'),seek=document.getElementById('seek'),play=document.getElementById('play');
+const nav=document.getElementById('chapters');nav.replaceChildren();
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let time=0,playing=!reduced,speed=1,previous=null,current=-1,raf=0;
+function ease(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);}
+function txt(x,y,text,size=24,color=C.white,bold=false){d.fillStyle=color;d.font=`${bold?'700':'400'} ${size}px system-ui, sans-serif`;d.textBaseline='top';d.fillText(text,x,y);}
+function wrap(text,x,y,width,size=22,color=C.muted,bold=false,gap=9){d.font=`${bold?'700':'400'} ${size}px system-ui, sans-serif`;let line='';for(const word of text.split(/\s+/)){const trial=line?line+' '+word:word;if(d.measureText(trial).width>width&&line){txt(x,y,line,size,color,bold);y+=size+gap;line=word;}else line=trial;}if(line)txt(x,y,line,size,color,bold);return y+size+gap;}
+function round(x,y,w,h,r,fill,stroke=null,line=1){d.beginPath();d.moveTo(x+r,y);d.arcTo(x+w,y,x+w,y+h,r);d.arcTo(x+w,y+h,x,y+h,r);d.arcTo(x,y+h,x,y,r);d.arcTo(x,y,x+w,y,r);d.closePath();if(fill){d.fillStyle=fill;d.fill();}if(stroke){d.strokeStyle=stroke;d.lineWidth=line;d.stroke();}}
+function box(x,y,w,h,title,body='',accent=C.cyan,size=25){round(x,y,w,h,18,C.panel,C.edge,2);round(x+1,y+18,4,h-36,2,accent);txt(x+22,y+22,title,size,accent,true);if(body)wrap(body,x+22,y+65,w-44,22);}
+function line(a,b,color,width=3){d.beginPath();d.moveTo(...a);d.lineTo(...b);d.lineWidth=width;d.strokeStyle=color;d.stroke();}
+function arrow(a,b,p=1,color=C.cyan,particle=null){line(a,b,C.edge);const e=[a[0]+(b[0]-a[0])*p,a[1]+(b[1]-a[1])*p];line(a,e,color);if(p>.98){const k=Math.atan2(b[1]-a[1],b[0]-a[0]);d.beginPath();d.moveTo(...b);d.lineTo(b[0]-12*Math.cos(k-.45),b[1]-12*Math.sin(k-.45));d.lineTo(b[0]-12*Math.cos(k+.45),b[1]-12*Math.sin(k+.45));d.closePath();d.fillStyle=color;d.fill();}if(particle!==null){const q=particle%1;circle(a[0]+(b[0]-a[0])*q,a[1]+(b[1]-a[1])*q,6,color);}}
+function circle(x,y,r,color){d.beginPath();d.arc(x,y,r,0,Math.PI*2);d.fillStyle=color;d.fill();}
+function footer(s){round(48,586,1184,85,16,'#111d2e');wrap(s.caption,70,605,1138,23,C.white,false,5);}
+function render(){
+ let i=scenes.findIndex(s=>time<s.start+s.duration);if(i<0)i=scenes.length-1;
+ const s=scenes[i],t=time-s.start,p=ease(t/1.5),flow=t*.3;
+ if(current!==i){current=i;document.getElementById('description').textContent=s.caption;document.getElementById('scope').textContent=s.note;nav.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-current',String(i===j)));canvas.setAttribute('aria-label',s.title+'. '+s.caption);}
+ d.globalAlpha=1;d.fillStyle=C.bg;d.fillRect(0,0,1280,720);
+ for(let x=48;x<1280;x+=48)for(let y=40;y<580;y+=48){d.fillStyle='#1a2a40';d.fillRect(x,y,1.5,1.5);}
+ // Fade the content on chapter boundaries; controls and description stay legible.
+ d.globalAlpha=.18+.82*Math.min(ease(t/.4),ease((s.duration-t)/.4));
+ txt(48,30,s.tag,17,C.cyan,true);txt(48,77,s.title,i===9?33:36,C.white,true);txt(1120,31,String(i+1).padStart(2,'0')+' / 10',16,C.muted);
+ if(i===0){
+  txt(48,165,'СВОБОДНЫЙ ВОПРОС → ПРОВЕРЯЕМЫЙ ОПЫТ',24,C.purple,true);
+  [['Инфополе','Доступные сущности'],['Сталкер','Находит и подключает'],['Учёный','Ставит вопросы'],['Опыт','Получает измерения'],['Память','Хранит свидетельства']].forEach(([a,b],j)=>{const x=48+j*244;box(x,250,210,178,a,b,j<3?C.cyan:C.green,23);if(j<4)arrow([x+214,333],[x+240,333],ease((t-j*.3)/.7),C.cyan,flow);});
+ }else if(i===1){
+  round(48,160,647,390,20,'#101d30',C.edge,2);txt(72,182,'ЛОКАЛЬНОЕ ИНФОПОЛЕ',18,C.muted,true);
+  for(let j=0;j<9;j++){const x=78+(j%3)*192,y=239+Math.floor(j/3)*92;round(x,y,160,62,12,C.panel,j===4?C.green:C.edge,j===4?3:1);txt(x+15,y+20,'сущность '+(j+1),17,j===4?C.green:C.muted);}
+  const sx=70+((t/5)%1)*570;line([sx,222],[sx,534],C.cyan,2);
+  box(780,225,452,208,'Новая сущность','Известен интерфейс: encode / decode. Внутренний механизм скрыт.',C.green);
+  arrow([688,355],[775,325],p,C.cyan,flow);txt(800,470,'СТАЛКЕР НЕ РАНЖИРУЕТ ПОЛЬЗУ',18,C.cyan,true);
+ }else if(i===2){
+  box(48,245,370,222,'Чёрный ящик','Можно передать биты и получить ответ. Что происходит внутри?');
+  [['Гипотеза A','Копирует вход без изменений.'],['Гипотеза B','Добавляет избыточные биты.'],['Гипотеза C','Восстанавливает данные после повреждения.']].forEach(([a,b],j)=>{const y=166+j*130;box(560,y,672,114,a,b,C.purple,23);arrow([423,350],[553,y+57],ease((t-j*.35)/1.2),C.purple,flow+j*.2);});
+ }else if(i===3){
+  box(48,166,514,369,'Структурированный ответ','',C.purple);
+  ['{','  "question": "Что изменится?",','  "hypotheses": [ ... ],','  "experiment": "Python-код",','  "interpretations": [ ... ]','}'].forEach((a,j)=>txt(76,247+j*38,a,22,j===3?C.green:C.white));
+  arrow([568,345],[664,345],p,C.cyan,flow);
+  [['JSON Schema','Поля и типы ответа'],['Синтаксис Python','Код можно разобрать'],['Ссылки на измерения','Нельзя выдумать свидетельство']].forEach(([a,b],j)=>box(678,166+j*124,554,110,a,b,C.green,24));
+ }else if(i===4){
+  box(48,245,300,230,'Вопрос модели','Вызвать неизвестную функцию на [2, 3].',C.purple);
+  box(480,197,332,318,'Изолированный опыт','Python вызывает инструмент среды. Без сети, ключей и файлов проекта.');
+  box(940,245,292,230,'Ответ среды','Вход: [2, 3]. Результат: 13.',C.green);
+  arrow([354,350],[473,350],p,C.purple,flow);arrow([818,350],[934,350],ease((t-.6)/1.3),C.green,flow);
+  txt(503,449,'ИЗМЕРЕНИЕ ЗАПИСЫВАЕТ',16,C.green,true);txt(503,476,'ДОВЕРЕННЫЙ ИНСТРУМЕНТ',16,C.green,true);
+ }else if(i===5){
+  box(48,175,557,211,'НАБЛЮДЕНИЕ','На вход [2, 3] инструмент вернул 13. Это результат конкретного записанного опыта.',C.green);
+  box(675,175,557,211,'ИНТЕРПРЕТАЦИЯ','Возможно, это сумма квадратов: 2² + 3² = 13. На других входах ещё нужно проверять.',C.amber);
+  txt(422,431,'ИЗМЕРЕНИЕ ≠ ЗАКОН',31,C.white,true);
+  arrow([1196,413],[1196,545],p,C.amber,flow);arrow([1196,545],[78,545],p,C.cyan,flow*.5);
+  txt(119,505,'Новый опыт ищет контрпример → объяснение пересматривается',23,C.cyan);
+ }else if(i===6){
+  txt(50,158,'КОНТУР ИССЛЕДОВАНИЯ СВОЙСТВ',18,C.cyan,true);
+  [[48,'Учёный','Выбирает гипотезы'],[484,'Опыт','Возвращает измерения'],[920,'Память','Хранит свидетельства']].forEach(([x,a,b])=>box(x,202,312,128,a,b,C.cyan,24));
+  arrow([366,266],[478,266],p,C.cyan,flow);arrow([802,266],[914,266],p,C.green,flow);
+  line([48,369],[1232,369],C.edge,2);txt(50,390,'КОНТУР ПОИСКА КОМБИНАЦИЙ',18,C.purple,true);
+  [[48,'Генератор','Предлагает сочетания'],[484,'Ветви','Сохраняют варианты'],[920,'Испытатель','Измеряет результат']].forEach(([x,a,b])=>box(x,433,312,126,a,b,C.purple,24));
+  arrow([366,495],[478,495],p,C.purple,flow);arrow([802,495],[914,495],p,C.purple,flow);
+ }else if(i===7){
+  txt(48,162,'ВЕТВИ ОСТАЮТСЯ В ОЧЕРЕДИ',18,C.cyan,true);
+  const points=[[100,353],[335,239],[335,466],[600,193],[600,308],[600,425],[600,531],[874,165],[874,230],[874,303],[874,371],[874,450],[874,529],[1170,180],[1170,260],[1170,407],[1170,520]];
+  [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[3,8],[4,9],[4,10],[5,11],[6,12],[7,13],[9,14],[11,15],[12,16]].forEach(([a,b],j)=>arrow(points[a],points[b],ease((t-j*.12)/1),j%3?C.green:C.purple));
+  points.forEach(([x,y],j)=>{if(t>j*.1){circle(x,y,15,C.bg);circle(x,y,12,j===4?C.amber:C.green);}});txt(387,336,'неудачный опыт',17,C.amber);
+ }else if(i===8){
+  [['Функция',12,false],['Битовый код',16,true],['Физика',10,false]].forEach(([a,n,ok],j)=>{const x=48+j*403;box(x,176,378,278,a,'',ok?C.green:C.cyan);txt(x+24,247,String(Math.round(n*ease(t/2.2))),68,C.white,true);txt(x+24,332,'измерений',22,C.muted);txt(x+24,391,ok?'Все этапы прошли':'Обрыв 2-го раунда',21,ok?C.green:C.amber,true);});
+  txt(48,488,'38 / 38',40,C.green,true);txt(265,498,'ответов совпали при воспроизведении',26);
+ }else{
+  txt(48,178,'НАЙТИ → СПРОСИТЬ → ИЗМЕРИТЬ → ПЕРЕСМОТРЕТЬ',29,C.cyan,true);
+  box(48,262,557,238,'УЖЕ РАБОТАЕТ','LLM выбирает вопросы и пишет исполняемые опыты. Измерения имеют проверяемое происхождение.',C.green);
+  box(675,262,557,238,'ЕЩЁ НУЖНО ДОВЕСТИ','Обрывы длинных ответов и независимую проверку новых прогнозов. Универсальность не доказана.',C.amber);
+ }
+ footer(s);d.globalAlpha=1;
+ for(let j=0;j<10;j++)circle(547+j*21,692,3.5,j===i?C.cyan:C.edge);
+ d.fillStyle=C.edge;d.fillRect(0,712,1280,8);d.fillStyle=C.cyan;d.fillRect(0,712,1280*time/end,8);
+ seek.value=String(time);document.getElementById('clock').textContent=fmt(time)+' / '+fmt(end);
+}
+function fmt(value){const n=Math.floor(value);return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
+function setPlay(value){playing=value;previous=null;play.textContent=playing?'Ⅱ Пауза':'▶ Смотреть';play.setAttribute('aria-label',playing?'Пауза':'Смотреть');}
+function jump(value){time=Math.max(0,Math.min(end,value));previous=null;render();}
+scenes.forEach((s,i)=>{const b=document.createElement('button');b.textContent=fmt(s.start)+' '+s.name;b.addEventListener('click',()=>{jump(s.start+.65);});nav.appendChild(b);});
+play.addEventListener('click',()=>{if(time>=end)jump(0);setPlay(!playing);});
+document.getElementById('restart').addEventListener('click',()=>{jump(0);setPlay(true);});
+seek.addEventListener('input',()=>jump(Number(seek.value)));
+document.getElementById('speed').addEventListener('change',e=>{speed=Number(e.target.value);previous=null;});
+document.getElementById('full').addEventListener('click',()=>{const el=document.getElementById('screen');if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});else if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});});
+document.getElementById('save').addEventListener('click',()=>{const blob=new Blob(['<!doctype html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='edison-animatic.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+document.addEventListener('keydown',e=>{if(/INPUT|SELECT|BUTTON/.test(e.target.tagName))return;if(e.code==='Space'){e.preventDefault();if(time>=end)jump(0);setPlay(!playing);}if(e.code==='ArrowRight'){e.preventDefault();jump(time+5);}if(e.code==='ArrowLeft'){e.preventDefault();jump(time-5);}});
+document.addEventListener('visibilitychange',()=>{previous=null;});
+function tick(now){if(playing&&!document.hidden){if(previous!==null)time=Math.min(end,time+Math.min(.1,(now-previous)/1000)*speed);previous=now;if(time>=end)setPlay(false);}else previous=null;render();raf=requestAnimationFrame(tick);}
+setPlay(playing);render();raf=requestAnimationFrame(tick);
+</script>
+</body>
+</html>
