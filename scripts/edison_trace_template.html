@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Эдисон изнутри — побитовая трассировка реального опыта</title>
+<style>
+:root{color-scheme:dark;--bg:#090e17;--panel:#121e2d;--edge:#293c50;--text:#eff5fb;--muted:#9aacbf;--green:#64dfad;--blue:#63cbff;--amber:#ffca72;--pink:#ee93ba;--purple:#b9a0ff;font-family:system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;padding:22px;background:var(--bg);color:var(--text)}main{max-width:1420px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:20px}.eyebrow{font-size:12px;color:var(--green);letter-spacing:.13em;font-weight:700}h1{font-size:clamp(23px,3vw,38px);letter-spacing:-.035em;margin:7px 0}header p{color:var(--muted);font-size:14px;margin:0 0 20px;line-height:1.6}.badge{font-size:12px;border:1px solid var(--edge);border-radius:30px;padding:9px 13px;color:var(--green);white-space:nowrap}.screen{border:1px solid var(--edge);border-radius:15px;overflow:hidden;background:var(--bg)}canvas{display:block;width:100%;aspect-ratio:1280/760}.controls{display:flex;align-items:center;gap:10px;margin:13px 0;flex-wrap:wrap}button,select{font:inherit;font-size:13px;color:var(--text);background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:9px 12px;cursor:pointer}button:hover,button:focus-visible{border-color:var(--blue)}.primary{background:var(--green);color:var(--bg);font-weight:750;min-width:115px}input[type=range]{flex:1;min-width:120px;accent-color:var(--green)}#clock{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 18px}button[aria-current=true]{color:var(--green);border-color:var(--green)}.state{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:12px}.panel{padding:16px;border:1px solid var(--edge);border-radius:11px;background:var(--panel);min-width:0}.label{font-size:11px;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:9px}#explanation{line-height:1.65;font-size:15px;margin:0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 ui-monospace,Consolas,monospace;margin:0}#vars{color:var(--green)}#event{color:var(--blue)}.secondary{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.6}.data{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.scroll{max-height:440px;overflow:auto}details summary{cursor:pointer;color:var(--blue);font-size:14px;padding:3px 0 13px}.code-line{display:block;padding:1px 6px;border-left:2px solid transparent}.code-line.active{background:#1d3647;border-color:var(--green);color:var(--green)}#ledger{display:flex;flex-direction:column;gap:4px}.entry{display:grid;grid-template-columns:40px 1fr;gap:8px;padding:6px;font:12px/1.5 ui-monospace,monospace;border-bottom:1px solid #233449}.entry.current{background:#203247;border-radius:6px}.ok{color:var(--green)}.err{color:var(--amber)}.live-chip{font-variant-numeric:tabular-nums;color:var(--green)}footer{color:var(--muted);font-size:12px;line-height:1.7;margin:20px 0;display:flex;justify-content:space-between;gap:20px}.screen:fullscreen{display:grid;place-items:center;border:0;border-radius:0}.screen:fullscreen canvas{max-height:100vh;width:100vw;object-fit:contain}@media(max-width:750px){body{padding:12px}.badge{display:none}.state,.data{grid-template-columns:1fr}header p{font-size:12px}.controls{gap:6px}footer{flex-direction:column}.panel{padding:13px}}
+</style></head><body><main>
+<header class="top"><div><span class="eyebrow">РЕАЛЬНЫЙ ЖУРНАЛ → ДВИЖЕНИЕ ДАННЫХ → ВНУТРЕННИЕ ВЫЧИСЛЕНИЯ</span><h1>Как Эдисон обнаружил исправление бита</h1><p>20 вызовов из живого запуска bits v3. Входы, переменные, промежуточные значения и ответы. Один HTML, без сети.</p></div><span class="badge">● Данные проверены воспроизведением</span></header>
+<section class="screen" id="screen"><canvas id="stage" width="1280" height="760" role="img" aria-label="Пошаговая трассировка реального запуска Эдисона"></canvas></section>
+<div class="controls"><button class="primary" id="play">Ⅱ Пауза</button><button id="back" aria-label="Предыдущий шаг">← Шаг</button><button id="next" aria-label="Следующий шаг">Шаг →</button><input id="seek" aria-label="Время" type="range" min="0" step="0.01"><span id="clock"></span><select id="speed" aria-label="Скорость"><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option></select><button id="full" aria-label="Полный экран">⛶</button></div>
+<nav id="chapters" aria-label="Этапы разбора"></nav>
+<div class="state"><section class="panel"><div class="label" id="mode">ПОЯСНЕНИЕ ТЕКУЩЕГО ШАГА</div><p id="explanation"></p></section><section class="panel"><div class="label">ПЕРЕМЕННЫЕ / СОСТОЯНИЕ</div><pre id="vars"></pre></section><section class="panel"><div class="label">ЗАПРОС И ОТВЕТ / ПРОИСХОЖДЕНИЕ</div><pre id="event"></pre></section></div>
+<div class="secondary">Синие сцены — данные, доступные Эдисону. Янтарные — разбор кода среды для зрителя: он не передавался модели. Порядок вызовов взят из журнала; длительность сцен выбрана для объяснения. Этот стенд запускался через edison.lab, без Сталкера.</div>
+<div class="data"><details class="panel" open><summary>Накопленный журнал: <span id="counts" class="live-chip"></span></summary><div id="ledger" class="scroll"></div></details><details class="panel"><summary>Реальный Python, написанный моделью · раунд <span id="codeRound">1</span></summary><pre id="code" class="scroll"></pre><p class="secondary">Текст сохранён в отчёте. Подсветка показывает обрабатываемый вызов; это иллюстративное сопоставление строк, не профилировщик Python.</p></details></div>
+<footer><span>Источник: reports/research-bits-v3.json. Внутренний алгоритм: edison/world.py и edison/transforms.py.<br>Пробел — пауза; ← / → — шаг. Кнопки и ползунок позволяют остановить любое промежуточное вычисление.</span><button id="save">↓ Сохранить этот HTML</button></footer>
+</main>
+<script id="trace-data" type="application/json">__TRACE_DATA__</script>
+<script>
+'use strict';
+const DATA=JSON.parse(document.getElementById('trace-data').textContent),CALLS=DATA.calls,DEC=DATA.decoder;
+const C={bg:'#090e17',panel:'#121e2d',edge:'#293c50',text:'#eff5fb',muted:'#9aacbf',green:'#64dfad',blue:'#63cbff',amber:'#ffca72',pink:'#ee93ba',purple:'#b9a0ff'};
+const cv=document.getElementById('stage'),ctx=cv.getContext('2d');
+const phases=[];let total=0;
+function add(kind,duration,title,info={}){phases.push({kind,duration,title,start:total,...info});total+=duration;}
+add('context',7,'Что вошло в первый запрос модели',{chapter:'Вход LLM',done:0});
+add('hyp1',8,'Ответ LLM: три гипотезы и программа',{chapter:'Первый ответ',done:0});
+for(let n=0;n<12;n++){
+ add('call',3.4,'Вызов '+(n+1)+' / 20',{call:n,done:n,chapter:n===0?'Раунд 1':null});
+ if(n===2){add('pad',6,'Откуда взялось 1110000?',{done:3,chapter:'Внутри encode'});add('layout',6,'Четыре бита занимают позиции 3, 5, 6, 7',{done:3});for(let j=0;j<3;j++)add('encodeParity',4.5,'Считаем контрольный бит '+[1,2,4][j],{done:3,parity:j});}
+}
+add('feedback',8,'Что именно вернулось модели перед раундом 2',{done:12,chapter:'Обратная связь'});
+add('hyp2',8,'Второй ответ: проверить исправление ошибки',{done:12,chapter:'Второй ответ'});
+for(let n=12;n<20;n++){
+ add('call',3.4,'Вызов '+(n+1)+' / 20',{call:n,done:n,chapter:n===12?'Раунд 2':null});
+ if(n===17){add('contrast',6,'Модель сама задала два входа: разница в бите 7',{done:18,chapter:'Внутри decode'});for(let j=0;j<3;j++)add('check',7,'Декодер: проверка позиций по маске '+[1,2,4][j],{done:18,check:j});add('syndrome',6,'Три проверки указывают на позицию 7',{done:18});add('flip',6,'Исправление: word[6] ^= 1',{done:18});add('extract',7,'Извлечение позиций 3, 5, 6, 7',{done:18});}
+}
+add('finish',10,'Как наблюдения превратились в объяснение',{done:20,chapter:'Итог и память'});
+const seek=document.getElementById('seek');seek.max=total;
+let time=0,playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,rate=1,last=null,lastIndex=-1,lastCount=-1,lastCodeRound=0;
+function clamp(x){return Math.max(0,Math.min(1,x));}function ease(x){x=clamp(x);return x*x*(3-2*x);}function mix(a,b,t){return a+(b-a)*ease(t);}function format(n){n=Math.floor(n);return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
+function font(s=24,bold=false,mono=false){return `${bold?700:400} ${s}px ${mono?'ui-monospace,Consolas,monospace':'system-ui,sans-serif'}`;}
+function text(x,y,s,size=24,color=C.text,bold=false,mono=false){ctx.font=font(size,bold,mono);ctx.fillStyle=color;ctx.textBaseline='top';ctx.fillText(String(s),x,y);}
+function wrap(s,x,y,width,size=23,color=C.muted,bold=false){let line='';ctx.font=font(size,bold);for(const w of s.split(/\s+/)){const a=line?line+' '+w:w;if(ctx.measureText(a).width>width&&line){text(x,y,line,size,color,bold);y+=size+9;line=w;}else line=a;}if(line)text(x,y,line,size,color,bold);}
+function rect(x,y,w,h,fill=C.panel,stroke=C.edge,r=14){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}}
+function line(x,y,a,b,color=C.edge,width=2){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(a,b);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();}
+function dot(x,y,r,color){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
+function arrow(x,y,a,b,color=C.blue){line(x,y,a,b,color,3);const q=Math.atan2(b-y,a-x);line(a,b,a-12*Math.cos(q-.45),b-12*Math.sin(q-.45),color,3);line(a,b,a-12*Math.cos(q+.45),b-12*Math.sin(q+.45),color,3);}
+function chip(x,y,value,{color=C.blue,label='',small=false,active=false}={}){const w=small?39:68,h=small?47:72;rect(x,y,w,h,active?'#26394c':C.panel,color,10);text(x+(small?12:22),y+(small?10:13),value,small?24:38,color,true,true);if(label)text(x+6,y-25,label,15,C.muted,false,true);return {x,y,w,h};}
+function bits(arr,x,y,{step=86,color=C.blue,labels=null,highlight=-1,small=false}={}){arr.forEach((b,j)=>chip(x+j*step,y,b,{color:j===highlight?C.pink:color,label:labels?labels[j]:'',small,active:j===highlight}));}
+function moving(value,a,b,p,color=C.green){const x=mix(a[0],b[0],p),y=mix(a[1],b[1],p);chip(x,y,value,{color});}
+function label(x,y,s,color=C.muted){text(x,y,s,17,color,true);}
+function subtitle(s,color=C.text){rect(35,659,1210,70,'#101a29',null);wrap(s,55,677,1170,22,color);}
+function positions(){return ['1 / p₁','2 / p₂','3 / a','4 / p₄','5 / b','6 / c','7 / d'];}
+function summary(count){const list=CALLS.slice(0,count);return {observations:list.filter(c=>c.status==='ok').length,errors:list.filter(c=>c.status!=='ok').length};}
+function showState(p,local){const q=clamp(local/p.duration),internal=['pad','layout','encodeParity','contrast','check','syndrome','flip','extract'].includes(p.kind);let done=p.done;if(p.kind==='call'&&q>.76)done++;
+ const s=summary(done);document.getElementById('counts').textContent=`${s.observations} измерений · ${s.errors} ошибок инструмента`;
+ let explanation='',variables={},event={};
+ if(p.kind==='context'){explanation='Модель получила только контракт encode / decode и пустую историю. На этом стенде сущность передана напрямую адаптером LabBackend.';variables={observations:[],remaining_unique_tool_calls:24};event={entity:DATA.entity,tools:DATA.tools.map(t=>t.name)};}
+ if(p.kind==='hyp1'){explanation='В сохранённом ответе модель предложила тождественное преобразование, добавление избыточности и блочный код. Затем написала два цикла: 7 вызовов encode и 5 decode.';variables={hypotheses:3,planned_calls:12,interpretations:[]};event={question:DATA.rounds[0].question};}
+ if(p.kind==='call'){const c=CALLS[p.call];explanation=c.status==='ok'?`Реальный вызов №${c.number}, раунд ${c.round}. Вход из программы модели проходит через инструмент; ответ сохраняется как ${c.alias}.`:'Реальный вызов отклонён инструментом. В журнале записан tool_error; записи успешного измерения и evidence_id у этого ответа нет.';variables={tool:c.tool,bits:c.input,status:q>.76?c.status:'вызов выполняется',observations:s.observations,tool_errors:s.errors};event={request:{tool:c.tool,arguments:{bits:c.input}},...(q>.76?{response:c.status==='ok'?c.result:{status:'tool_error'},evidence_id:c.evidence_id}: {})};}
+ if(p.kind==='pad'){explanation='Смотрим в код среды, не в мысли LLM. HammingTransform дополняет [1] тремя нулями до четырёх бит. Поэтому декодирование позже вернёт 1000, а не исходную длину 1.';variables={input:[1],padding:3,padded:[1,0,0,0]};event={source:'edison/transforms.py',expression:'padded = bits + [0] * (-len(bits) % 4)'};}
+ if(p.kind==='layout'){explanation='Исходные a,b,c,d занимают позиции 3,5,6,7. Позиции 1,2,4 оставлены для контрольных битов.';variables={a:1,b:0,c:0,d:0,data_positions:[3,5,6,7]};event={layout:['p1','p2','a','p4','b','c','d']};}
+ if(p.kind==='encodeParity'){const j=p.parity;explanation='Контрольный бит вычисляется XOR трёх информационных битов. Движущиеся значения — реальные операнды выражения из encode().';variables={parity_position:[1,2,4][j],operands:[[1,0,0],[1,0,0],[0,0,0]][j],result:[1,1,0][j],word:[1,1,1,0,0,0,0]};event={source:'edison/world.py: encode',formula:['a ^ b ^ d','a ^ c ^ d','b ^ c ^ d'][j]};}
+ if(p.kind==='feedback'){explanation='Перед вторым ответом модель действительно получила 8 измерений и 4 ошибки инструмента. Кодирование изменило длину; пустой decode принят, короткие непустые входы отвергнуты.';variables={observations:8,tool_errors:4,remaining_unique_tool_calls:12};event={phase:DATA.rounds[1].request.phase,previous_question:DATA.rounds[0].question};}
+ if(p.kind==='hyp2'){explanation='Название Hamming появилось в реальном втором ответе модели. Она запланировала чистый и отличающийся одним битом входы, чтобы отличить исправление от простого обратного преобразования.';variables={hypotheses:['Hamming с исправлением','Hamming без исправления','Другой блочный код'],planned_calls:8};event={question:DATA.rounds[1].question};}
+ if(p.kind==='contrast'){explanation='В Python модели оба вектора заданы явно. Случайный шум здесь не моделировался: седьмой бит второго входа равен 1 вместо 0.';variables={control:[1,1,1,0,0,0,0],test:[1,1,1,0,0,0,1],different_position:7};event={control_evidence:'E12',test_evidence:'E14',both_results:[1,0,0,0]};}
+ if(p.kind==='check'){const check=DEC.checks[p.check],n=Math.min(4,Math.floor(clamp((q-.1)/.75)*4));explanation='Разбор decode() для зрителя. Цикл выбирает позиции, у которых установлен соответствующий бит номера, и последовательно складывает их XOR. Показан накопитель parity после каждого операнда.';variables={mask:check.mask,positions:check.operations.map(o=>o.position),visited:n,parity:n?check.operations[n-1].after:0,syndrome_before:p.check?DEC.checks[p.check-1].syndrome:0,syndrome_after:check.syndrome};event={source:'edison/world.py: decode',condition:'if position & mask',operation:'parity ^= bit'};}
+ if(p.kind==='syndrome'){explanation='Все три проверки вернули 1. Декодер объединяет маски 1,2,4 операцией OR: syndrome = 7. Это номер повреждённой позиции, а не значение самого бита.';variables={parity_mask1:1,parity_mask2:1,parity_mask4:1,syndrome_binary:'111',syndrome_decimal:7};event={operation:'syndrome |= mask',next:'word[syndrome - 1] ^= 1'};}
+ if(p.kind==='flip'){explanation='Синдром 7 указывает на седьмую позицию, индекс 6 в Python. Единственное изменение слова: 1 XOR 1 = 0.';variables={syndrome:7,index:6,before:[1,1,1,0,0,0,1],after:[1,1,1,0,0,0,0]};event={source:'edison/world.py: decode',operation:'word[6] ^= 1'};}
+ if(p.kind==='extract'){explanation='Из исправленного слова выбираются позиции 3,5,6,7. Получается 1000. Именно этот внешний ответ реально сохранён в E14; промежуточные проверки были вычислены для анимации из кода среды.';variables={corrected:DEC.corrected,data_positions:DEC.data_positions,result:DEC.result};event={evidence_id:CALLS[17].evidence_id,result:CALLS[17].result};}
+ if(p.kind==='finish'){explanation='Записаны 16 успешных измерений и 4 ошибки инструмента. Два выбранных входа декодируются одинаково; модель объяснила это исправлением одиночного бита в Hamming(7,4). Это объяснение имеет статус llm_interpretation_unverified.';variables={observations:16,tool_errors:4,model_rounds:2,review:'ok',interpretation_status:'llm_interpretation_unverified'};event={control:{input:'1110000',output:'1000',evidence:'E12'},changed:{input:'1110001',output:'1000',evidence:'E14'}};}
+ document.getElementById('explanation').textContent=explanation;document.getElementById('vars').textContent=JSON.stringify(variables,null,2);document.getElementById('event').textContent=JSON.stringify(event,null,2);document.getElementById('mode').textContent=internal?'ВНУТРЕННИЙ КОД СРЕДЫ · РАЗБОР ДЛЯ ЗРИТЕЛЯ':'ДАННЫЕ, ДОСТУПНЫЕ ЭДИСОНУ';document.getElementById('mode').style.color=internal?C.amber:C.blue;
+ if(done!==lastCount){const el=document.getElementById('ledger');el.replaceChildren();CALLS.slice(0,done).forEach((c,j)=>{const row=document.createElement('div');row.className='entry'+(j===done-1?' current':'');const a=document.createElement('span');a.className=c.status==='ok'?'ok':'err';a.textContent=c.alias||'ERR';const b=document.createElement('span');b.textContent=`${c.tool}(${JSON.stringify(c.input)}) → ${c.status==='ok'?JSON.stringify(c.result.bits):'tool_error'}`;row.append(a,b);el.append(row);});el.scrollTop=el.scrollHeight;lastCount=done;}
+ const round=(p.call!==undefined?CALLS[p.call].round:['feedback','hyp2','contrast','check','syndrome','flip','extract','finish'].includes(p.kind)?2:1);if(round!==lastCodeRound){const el=document.getElementById('code');el.replaceChildren();DATA.rounds[round-1].program.split('\n').forEach((s,j)=>{const span=document.createElement('span');span.className='code-line';span.textContent=String(j+1).padStart(2,' ')+'  '+s;el.append(span);});document.getElementById('codeRound').textContent=round;lastCodeRound=round;}
+ document.querySelectorAll('#code .code-line').forEach(el=>el.classList.toggle('active',p.kind==='call'&&el.textContent.includes('r = call')));
+}
+function draw(p,t){
+ const q=clamp(t/p.duration),internal=['pad','layout','encodeParity','contrast','check','syndrome','flip','extract'].includes(p.kind);
+ ctx.fillStyle=C.bg;ctx.fillRect(0,0,1280,760);for(let x=35;x<1280;x+=42)for(let y=130;y<655;y+=42){ctx.fillStyle='#152131';ctx.fillRect(x,y,1,1);}
+ text(35,24,internal?'ВНУТРИ ПРЕОБРАЗОВАТЕЛЯ · ВИДНО ЗРИТЕЛЮ':'РЕАЛЬНЫЙ ЖУРНАЛ · ВИДНО ЭДИСОНУ',16,internal?C.amber:C.blue,true);text(35,60,p.title,32,C.text,true);text(1147,26,String(phases.indexOf(p)+1).padStart(2,'0')+' / '+phases.length,15,C.muted);
+ if(p.kind==='context'){
+  rect(35,160,480,350);label(58,184,'КОНТРАКТ ИНСТРУМЕНТОВ');text(60,232,'encode({bits: [...]})',27,C.blue,true,true);text(60,280,'decode({bits: [...]})',27,C.blue,true,true);text(60,365,'observations = []',24,C.green,false,true);text(60,415,'Бюджет: 24 попытки',23);
+  rect(792,210,450,260);label(818,236,'ВХОДНОЙ КОНТЕКСТ LLM');wrap('Что делают эти операции? Выбери вопросы, гипотезы и опыты.',818,282,395,28,C.text);arrow(525,330,780,330);rect(mix(530,688,q),310,88,42,'#193248',C.blue);text(mix(539,696,q),319,'JSON',21,C.blue,true);
+  subtitle('В запросе нет ни слова Hamming, ни формулы кодирования. Только публичный интерфейс.');
+ }else if(p.kind==='hyp1'||p.kind==='hyp2'){
+  const second=p.kind==='hyp2';const labels=second?['H1: блочный код с исправлением','H2: тот же код без исправления','H3: другая раскладка битов']:['H1: тождественное преобразование','H2: добавление избыточности','H3: фиксированный блочный код'];
+  labels.forEach((a,j)=>{const y=170+j*122;rect(35,y,720,99);text(59,y+24,a,26,j===0?C.green:C.purple,true);});
+  rect(803,170,439,345);label(828,195,'НАПИСАННАЯ ПРОГРАММА');text(830,245,second?'8 вызовов':'12 вызовов',38,C.green,true);wrap(second?'Два явно заданных входа: 1110000 и 1110001. Сравнить ответы decode.':'7 входов для encode. Затем 5 входов для decode. Ответы собрать в probes.',830,315,380,25,C.text);
+  subtitle(second?'Эта гипотеза записана в реальном втором ответе. Она ещё должна пройти опыт.':'Это реальные гипотезы первого ответа, кратко переведённые на русский.');
+ }else if(p.kind==='call'){
+  const c=CALLS[p.call],out=c.result&&c.result.bits,arrival=ease((q-.1)/.36),returning=ease((q-.49)/.3);
+  label(35,137,`РАУНД ${c.round} · ИТЕРАЦИЯ ${c.round===1?c.number:c.number-12} · ${c.tool.toUpperCase()}`,C.blue);
+  rect(35,185,340,325);label(57,210,'1. АРГУМЕНТ ИЗ ПРОГРАММЫ');text(58,258,'bits =',24,C.muted,false,true);
+  if(c.input.length<=7)bits(c.input,58,312,{step:42,small:true});else{bits(c.input.slice(0,7),58,302,{step:42,small:true});bits(c.input.slice(7),58,372,{step:42,small:true});}if(!c.input.length)text(60,325,'[]',40,C.blue,true,true);
+  rect(489,227,274,220,C.panel,q>.35?C.blue:C.edge);text(520,257,c.tool+'()',34,C.blue,true,true);wrap('Инструмент среды',519,320,210,23);arrow(383,340,480,340);arrow(773,340,863,340,C.green);
+  rect(875,185,369,325);label(897,210,'2. ОТВЕТ ИНСТРУМЕНТА');
+  if(q>.5){ctx.globalAlpha=returning;text(897,259,c.status==='ok'?'status: ok':'status: tool_error',24,c.status==='ok'?C.green:C.amber,true,true);if(out&&out.length){bits(out.slice(0,7),897,320,{step:45,small:true,color:C.green});if(out.length>7)bits(out.slice(7),897,390,{step:45,small:true,color:C.green});}else if(out)text(899,325,'[]',40,C.green,true,true);else wrap('Успешного результата нет.',897,325,310,24,C.amber);ctx.globalAlpha=1;}
+  if(q<.5){const x=mix(385,442,arrival);dot(x,340,8,C.blue);}else dot(mix(780,859,returning),340,8,C.green);
+  if(q>.76){rect(225,548,835,75,'#132b27',C.green);text(248,568,c.status==='ok'?`${c.alias} ← ${c.tool}(${JSON.stringify(c.input)}) → ${JSON.stringify(out)}`:'tool_errors.append({tool: "decode", status: "tool_error"})',c.input.length>7?18:21,c.status==='ok'?C.green:C.amber,false,true);}
+  subtitle(c.status==='ok'?`Фиксируется конкретный ответ. evidence_id: ${c.evidence_id.slice(0,18)}…`:'Короткий непустой вектор отвергнут. Здесь нет ни выходных битов, ни evidence_id.');
+ }else if(p.kind==='pad'){
+  label(55,161,'ВХОД encode([1])');chip(90,230,1,{color:C.blue,label:'исходный бит'});label(460,161,'padded = [1] + [0, 0, 0]',C.amber);
+  [1,0,0,0].forEach((b,j)=>chip(470+j*145,330,b,{color:j?C.muted:C.blue,label:['a','b','c','d'][j]}));moving(1,[90,230],[470,330],clamp(q*1.8),C.blue);
+  text(455,478,'-len([1]) % 4 = 3',30,C.amber,true,true);subtitle('Длина 1 дополняется до 4. Декодер вернёт 4 бита: длина исходного входа отдельно не передана.');
+ }else if(p.kind==='layout'){
+  label(55,154,'ИНФОРМАЦИОННЫЕ БИТЫ a, b, c, d');bits([1,0,0,0],175,225,{step:165,labels:['a','b','c','d']});
+  label(55,380,'СЛОВО ИЗ 7 ПОЗИЦИЙ',C.amber);bits(['?','?',1,'?',0,0,0],295,445,{step:93,labels:positions(),color:C.amber});
+  [2,4,5,6].forEach((pos,j)=>moving([1,0,0,0][j],[175+j*165,225],[295+pos*93,445],clamp(q*1.4),C.blue));
+  subtitle('Позиции 1, 2, 4 займут контрольные биты. Остальные позиции получают исходные значения.');
+ }else if(p.kind==='encodeParity'){
+  const j=p.parity,groups=[[0,1,3],[0,2,3],[1,2,3]],vals=[1,0,0,0],g=groups[j],mask=[1,2,4][j],done=Math.min(3,Math.floor(q*4));
+  label(55,151,'ОПЕРАНДЫ ИЗ ИСХОДНОГО БЛОКА');bits(vals,110,218,{step:170,labels:['a','b','c','d']});
+  rect(847,212,350,160,C.panel,C.amber);text(870,237,'p'+mask+' = XOR',28,C.amber,true,true);text(870,289,g.map(n=>vals[n]).join(' ⊕ ')+' = '+(g.reduce((a,n)=>a^vals[n],0)),29,C.text,true,true);
+  g.forEach((n,k)=>{if(q>k*.2)moving(vals[n],[110+n*170,218],[860+k*90,410],clamp((q-k*.2)/.3),C.blue);});
+  const word=[1,1,1,0,0,0,0].map((b,n)=>[0,1,3].includes(n)&&[0,1,3].indexOf(n)>j?'?':b);bits(word,295,537,{step:93,labels:positions(),color:C.amber,highlight:mask-1});
+  subtitle('encode([1]) получает слово 1110000. Именно его вернул инструмент в E3.');
+ }else if(p.kind==='feedback'){
+  label(45,152,'ВТОРОЙ ЗАПРОС LLM: НАКОПЛЕННЫЕ ДАННЫЕ');
+  const rows=[['E2','encode([0])','0000000'],['E3','encode([1])','1110000'],['E4','encode([0,1])','1001100'],['E7','encode([1,1])','0111100'],['ERR','decode([0])','tool_error']];
+  rows.forEach((r,j)=>{const y=207+j*68;rect(45,y,810,52);text(60,y+12,r[0],22,r[0]==='ERR'?C.amber:C.green,true,true);text(140,y+12,r[1],23,C.text,false,true);text(585,y+12,r[2],23,r[0]==='ERR'?C.amber:C.blue,true,true);});
+  rect(914,210,328,320);text(940,241,'8 измерений',32,C.green,true);text(940,301,'4 ошибки',32,C.amber,true);wrap('Изменение длины противоречит гипотезе простого копирования.',940,375,280,24,C.text);
+  subtitle('Модель получает конкретные векторы и ошибки, а не готовый список свойств и не внутренний код.');
+ }else if(p.kind==='contrast'){
+  label(55,153,'КОНТРОЛЬНЫЙ ВХОД В РЕАЛЬНОЙ ПРОГРАММЕ');bits([1,1,1,0,0,0,0],190,225,{step:130,labels:['1','2','3','4','5','6','7']});
+  label(55,385,'ВТОРОЙ ВХОД: ОТЛИЧАЕТСЯ ПОЗИЦИЯ 7',C.pink);bits([1,1,1,0,0,0,1],190,455,{step:130,highlight:6});arrow(1004,310,1004,444,C.pink);text(1060,352,'0 → 1',28,C.pink,true,true);
+  subtitle('Это два явно заданных вызова decode. Анимация показывает различие входов, а не случайный шум.');
+ }else if(p.kind==='check'){
+  const check=DEC.checks[p.check],n=Math.min(4,Math.floor(clamp((q-.1)/.75)*4)),active=check.operations[Math.min(n,3)],acc=n?check.operations[n-1].after:0;
+  label(45,142,'ВХОДНОЕ СЛОВО · НУМЕРАЦИЯ С 1');bits(DEC.input,130,213,{step:140,labels:['1','2','3','4','5','6','7'],highlight:6});
+  check.operations.forEach((o,k)=>{const x=130+(o.position-1)*140;line(x+34,293,x+34,360,k<n?C.green:C.edge,3);dot(x+34,360,7,k<n?C.green:C.edge);if(k===n&&n<4)moving(o.bit,[x,213],[785,444],clamp((q-.1)/.75*4-n),C.blue);});
+  label(45,392,'ВЫБРАНЫ ПОЗИЦИИ: '+check.operations.map(o=>o.position).join(', '),C.amber);text(45,440,'mask = '+check.mask,31,C.amber,true,true);text(45,490,'position & mask ≠ 0',25,C.muted,false,true);
+  rect(730,414,490,194,C.panel,C.amber);text(757,436,'parity = '+acc,38,C.green,true,true);text(757,499,check.operations.slice(0,n).map(o=>o.bit).join(' ⊕ ')||'0 (начальное)',26,C.text,true,true);text(757,550,n+' / 4 битов обработано',20,C.muted);
+  subtitle('Накопитель обновляется после каждого выбранного бита. Итог этой проверки: '+check.parity+'.');
+ }else if(p.kind==='syndrome'){
+  const checks=DEC.checks;checks.forEach((c,j)=>{const x=100+j*345;rect(x,180,285,235);label(x+24,205,'ПРОВЕРКА mask = '+c.mask,C.amber);text(x+107,272,c.parity,76,C.green,true,true);text(x+23,365,'вес: '+c.mask,22,C.muted,false,true);});
+  text(185,479,'1 × 1 + 1 × 2 + 1 × 4 = 7',41,C.amber,true,true);text(405,554,'111₂ = 7₁₀',39,C.green,true,true);subtitle('Синдром 7 указывает на позицию 7. В Python это индекс syndrome - 1 = 6.');
+ }else if(p.kind==='flip'){
+  label(45,150,'ПОЛУЧЕННОЕ СЛОВО');bits(DEC.input,130,228,{step:140,labels:['1','2','3','4','5','6','7'],highlight:6});
+  label(45,405,'ПОСЛЕ word[6] ^= 1',C.green);bits(DEC.corrected,130,485,{step:140,color:C.green});
+  arrow(1004,311,1004,463,C.pink);text(780,367,'1 ⊕ 1 = 0',34,C.pink,true,true);subtitle('Переворачивается ровно один бит: 1110001 → 1110000.');
+ }else if(p.kind==='extract'){
+  label(45,147,'ИСПРАВЛЕННОЕ СЛОВО');bits(DEC.corrected,130,218,{step:140,labels:positions(),color:C.green});label(45,405,'ВЫБОР ИНФОРМАЦИОННЫХ ПОЗИЦИЙ 3, 5, 6, 7',C.blue);
+  [2,4,5,6].forEach((pos,j)=>{line(164+pos*140,299,358+j*150,482,C.edge,2);moving(DEC.corrected[pos],[130+pos*140,218],[324+j*150,487],clamp(q*1.4),C.green);});
+  if(q>.7)text(850,540,'→ result.bits = 1000',25,C.green,true,true);subtitle('Контрольный и изменённый входы дали один результат: 1000. Он записан в E12 и E14.');
+ }else if(p.kind==='finish'){
+  label(45,149,'ДВА КОНКРЕТНЫХ НАБЛЮДЕНИЯ');
+  [['E12','1110000','1000'],['E14','1110001','1000']].forEach((a,j)=>{const y=205+j*130;rect(45,y,1175,100);text(68,y+28,a[0],27,C.green,true,true);bits(a[1].split(''),175,y+25,{step:52,small:true,color:j?C.pink:C.blue});arrow(573,y+49,685,y+49);bits(a[2].split(''),729,y+25,{step:72,small:true,color:C.green});});
+  wrap('Объяснение модели: блочный код Hamming(7,4) с исправлением одиночного бита.',60,509,1160,28,C.text,true);text(60,603,'Статус: llm_interpretation_unverified',22,C.amber,false,true);subtitle('Показанное исправление реально наблюдалось. Все ошибки и все возможные входы этим опытом не проверены.');
+ }
+ ctx.fillStyle=C.edge;ctx.fillRect(0,750,1280,10);ctx.fillStyle=C.green;ctx.fillRect(0,750,1280*time/total,10);
+}
+function index(){let i=phases.findIndex(p=>time<p.start+p.duration);return i<0?phases.length-1:i;}
+function render(){const i=index(),p=phases[i],local=time-p.start;draw(p,local);showState(p,local);seek.value=time;document.getElementById('clock').textContent=format(time)+' / '+format(total);if(i!==lastIndex){lastIndex=i;const chapter=phases.slice(0,i+1).filter(x=>x.chapter).at(-1);document.querySelectorAll('#chapters button').forEach(b=>b.setAttribute('aria-current',String(Number(b.dataset.start)===chapter.start)));cv.setAttribute('aria-label',p.title);}}
+const nav=document.getElementById('chapters');nav.replaceChildren();phases.filter(p=>p.chapter).forEach(p=>{const b=document.createElement('button');b.dataset.start=p.start;b.textContent=p.chapter;b.addEventListener('click',()=>{jump(p.start);});nav.append(b);});
+function jump(n){time=Math.max(0,Math.min(total,n));last=null;render();}
+function setPlay(value){playing=value;last=null;document.getElementById('play').textContent=playing?'Ⅱ Пауза':'▶ Смотреть';}
+document.getElementById('play').onclick=()=>{if(time>=total)jump(0);setPlay(!playing);};
+function step(delta){setPlay(false);const i=index();jump(phases[Math.max(0,Math.min(phases.length-1,i+delta))].start+.03);}
+document.getElementById('back').onclick=()=>step(-1);document.getElementById('next').onclick=()=>step(1);seek.oninput=()=>jump(Number(seek.value));document.getElementById('speed').onchange=e=>{rate=Number(e.target.value);last=null;};
+document.getElementById('full').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});else document.getElementById('screen').requestFullscreen?.().catch(()=>{});};
+document.getElementById('save').onclick=()=>{const url=URL.createObjectURL(new Blob(['<!doctype html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='edison-trace.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+document.addEventListener('keydown',e=>{if(/INPUT|SELECT|BUTTON/.test(e.target.tagName))return;if(e.code==='Space'){e.preventDefault();setPlay(!playing);}if(e.code==='ArrowRight'){e.preventDefault();step(1);}if(e.code==='ArrowLeft'){e.preventDefault();step(-1);}});document.addEventListener('visibilitychange',()=>{last=null;});
+function tick(now){if(playing&&!document.hidden){if(last!==null)time=Math.min(total,time+Math.min(.1,(now-last)/1000)*rate);last=now;if(time>=total)setPlay(false);}else last=null;render();requestAnimationFrame(tick);}
+setPlay(playing);render();requestAnimationFrame(tick);
+</script></body></html>
