@@ -1,0 +1,10 @@
+{
+  "fixture_id": "structural-fixture-R42",
+  "authorship": "Authored before the v2 live trials.",
+  "expected_meaning": "В двух сечениях нет разрешённой внутренней радиальной границы. Нельзя объявлять три наблюдённых слоя. Все три точечных отклика совместимы с G; окружение совместимо с W. Это не доказательство полной однородности. Типовой паспорт и запись партии не отменяют наблюдений; расхождение сохранить.",
+  "rules": [
+    "Only two sampled sections; incomplete material library.",
+    "Document reports retain their scope and can disagree with observations.",
+    "No forced ontology, node count or chemical ground-truth guess."
+  ]
+}

@@ -1,0 +1,1539 @@
+{
+  "entities": [
+    {
+      "id": "S17",
+      "description": "Лабораторный образец с внешней маркировкой M7. Внутреннее устройство не сообщается.",
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    {
+      "id": "catalog:root",
+      "description": "Каталог доступных документов и калибровок; содержимое может обновляться.",
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    {
+      "description": "Catalog-listed document titled Instrument calibration and limits.",
+      "evidence_refs": [
+        "D00-A"
+      ],
+      "id": "doc:calibration@1"
+    },
+    {
+      "description": "Catalog-listed document titled Material reference responses.",
+      "evidence_refs": [
+        "D00-A"
+      ],
+      "id": "doc:references@1"
+    },
+    {
+      "description": "Catalog-listed document titled Typical description of model M7.",
+      "evidence_refs": [
+        "D00-A"
+      ],
+      "id": "doc:model-M7@1"
+    },
+    {
+      "description": "Material designation P-A cited by doc:model-M7@1 as the outer coating material of model M7.",
+      "evidence_refs": [
+        "C0002",
+        "D03"
+      ],
+      "id": "material:P-A"
+    },
+    {
+      "description": "Product model M7 as a class-level subject of doc:model-M7@1 claims.",
+      "evidence_refs": [
+        "C0002",
+        "D03"
+      ],
+      "id": "model-M7"
+    },
+    {
+      "description": "Transparent cell surrounding a section of sample S17, with capability to set temperature 20-40 C.",
+      "evidence_refs": [
+        "O01",
+        "C0003"
+      ],
+      "id": "V04"
+    },
+    {
+      "description": "Transparent medium filling the cell and contacting S17, observable via material_response.",
+      "evidence_refs": [
+        "O01",
+        "C0003"
+      ],
+      "id": "U09"
+    },
+    {
+      "description": "Candidate innermost radial zone of S17 at x_mm=0, r about 0-4.0 um, contrast 100.",
+      "evidence_refs": [
+        "O02",
+        "C0004"
+      ],
+      "id": "S17-zone-inner"
+    },
+    {
+      "description": "Candidate intermediate radial zone of S17 at x_mm=0, r about 4.0-62.5 um, contrast 160.",
+      "evidence_refs": [
+        "O02",
+        "C0004"
+      ],
+      "id": "S17-zone-middle"
+    },
+    {
+      "description": "Candidate outermost radial zone of S17 at x_mm=0, r about 62.5-125.0 um, contrast 230; the region whose material identity is at issue in Q3.",
+      "evidence_refs": [
+        "O02",
+        "C0004"
+      ],
+      "id": "S17-zone-outer"
+    },
+    {
+      "description": "Polymer reference designation listed in doc:references@1 with 20 C five-channel response [0.1,0.1,0.8,0.3,0.2].",
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "material:P-B"
+    },
+    {
+      "description": "The 20 C five-channel reference response set of doc:references@1, containing glass, GeO2 additive, P-A, P-B, water and NaCl entries.",
+      "evidence_refs": [
+        "D02",
+        "C0005"
+      ],
+      "id": "refset-20C"
+    },
+    {
+      "description": "Input port of sample S17 named S17:in, used as the pulse_trace entry point at 20 C.",
+      "evidence_refs": [
+        "C0013"
+      ],
+      "id": "S17-port-in"
+    },
+    {
+      "description": "Output port of sample S17 named S17:out, used as the pulse_trace exit point at 20 C.",
+      "evidence_refs": [
+        "C0013"
+      ],
+      "id": "S17-port-out"
+    },
+    {
+      "description": "Catalog-listed document 'Zapis o partii obraztsa S17' newly exposed by catalog:root revision 2; contents not yet read.",
+      "evidence_refs": [
+        "D00-B"
+      ],
+      "id": "doc:batch-S17@1"
+    }
+  ],
+  "assertions": [
+    {
+      "evidence_refs": [
+        "START"
+      ],
+      "id": "A0001",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        }
+      ],
+      "relation": "referenced_by_catalog",
+      "scope": "Initial public task statement only; no structural content yet observed.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "START lists S17 as an externally marked (M7) laboratory sample whose internal construction is not stated, and catalog:root as a possibly-updating catalog of available documents and calibrations.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D00-A",
+        "C0001"
+      ],
+      "id": "A0002",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog_resource"
+        },
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "listed_document"
+        }
+      ],
+      "relation": "referenced_by_catalog",
+      "scope": "catalog:root revision 1 listing",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "catalog:root revision 1 lists doc:calibration@1 titled Instrument calibration and limits.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D00-A",
+        "C0001"
+      ],
+      "id": "A0003",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog_resource"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "listed_document"
+        }
+      ],
+      "relation": "referenced_by_catalog",
+      "scope": "catalog:root revision 1 listing",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "catalog:root revision 1 lists doc:references@1 titled Material reference responses.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D00-A",
+        "C0001"
+      ],
+      "id": "A0004",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog_resource"
+        },
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "listed_document"
+        }
+      ],
+      "relation": "referenced_by_catalog",
+      "scope": "catalog:root revision 1 listing",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "catalog:root revision 1 lists doc:model-M7@1 titled Typical description of model M7.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D00-A",
+        "C0001"
+      ],
+      "id": "A0005",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "putative_document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "labeled_sample"
+        }
+      ],
+      "relation": "described_in",
+      "scope": "hypothesis only; no content of doc:model-M7@1 has been read",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "S17 carries external label M7, so doc:model-M7@1 may describe the model of which S17 is an instance, but this is an unverified hypothesis.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0002",
+        "D03"
+      ],
+      "id": "A0006",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "claiming_document"
+        },
+        {
+          "entity_id": "model-M7",
+          "role": "described_model"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "claimed_coating_material"
+        }
+      ],
+      "relation": "specifies_material",
+      "scope": "Typical execution of model M7 as stated in revision 1 of doc:model-M7@1.",
+      "state_refs": [],
+      "statement": "The document states that in the typical execution the outer coating of model M7 is made of P-A.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0002",
+        "D03"
+      ],
+      "id": "A0007",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "claiming_document"
+        },
+        {
+          "entity_id": "model-M7",
+          "role": "described_model"
+        }
+      ],
+      "relation": "specifies_environment",
+      "scope": "The example operating case given in revision 1 of doc:model-M7@1.",
+      "state_refs": [],
+      "statement": "The document states that in its described operating example the item is in dry air.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0002",
+        "D03"
+      ],
+      "id": "A0008",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "claiming_document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "excluded_subject"
+        }
+      ],
+      "relation": "scope_excludes_subject",
+      "scope": "Scope note of revision 1 of doc:model-M7@1.",
+      "state_refs": [],
+      "statement": "The document explicitly does not identify sample number S17 or its actual conditions, so its claims cannot be attached to S17 by identity.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O01",
+        "C0003"
+      ],
+      "id": "A0009",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "measured_object"
+        }
+      ],
+      "relation": "has_measured_dimension",
+      "scope": "Overview frame of S17 at state-0 (20 C); outer outline only, smaller radial features unresolved.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Overview of S17 in state-0 yields a measured outer outline radius interval of 124.9-125.1 um and a stated length of 1000 mm.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O01",
+        "C0003"
+      ],
+      "id": "A0010",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "V04",
+          "role": "surrounding_cell"
+        },
+        {
+          "entity_id": "S17",
+          "role": "contained_section"
+        }
+      ],
+      "relation": "surrounds",
+      "scope": "Overview visible-object annotation at state-0; recognizability of the fixture image is not verified.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "A transparent cell V04 surrounds a section of S17 and reports a temperature-setting capability of 20-40 C.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O01",
+        "C0003"
+      ],
+      "id": "A0011",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "U09",
+          "role": "contacting_medium"
+        },
+        {
+          "entity_id": "S17",
+          "role": "contacted_specimen"
+        }
+      ],
+      "relation": "contacts",
+      "scope": "Overview visible-object annotation at state-0.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "A transparent medium U09 inside the cell touches S17 and exposes a material_response observation method.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O02",
+        "C0004"
+      ],
+      "id": "A0012",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "specimen"
+        }
+      ],
+      "relation": "has_measured_dimension",
+      "scope": "Single non-destructive radial section at x_mm=0, state-0 (20 C); axial symmetry and inter-section continuity not measured.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "In state-0 at x_mm=0 the radial contrast profile of S17 changes value at about r=4.0 um (100 to 160), about r=62.5 um (160 to 230), and the outermost contrast drop 230 to 20 occurs at about r=125.0 um, matching the overview outer boundary of 124.9-125.1 um.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O02",
+        "C0004"
+      ],
+      "id": "A0013",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "specimen"
+        },
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "candidate part"
+        },
+        {
+          "entity_id": "S17-zone-middle",
+          "role": "candidate part"
+        },
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "candidate part"
+        }
+      ],
+      "relation": "has_radial_zone",
+      "scope": "Interpretation of contrast steps seen in one section; zones are contrast intervals, not confirmed discrete layers or materials.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "S17 can be decomposed at x_mm=0 into three contrast-delimited radial zones: inner r about 0-4.0 um (contrast 100), middle r about 4.0-62.5 um (contrast 160), and outer r about 62.5-125.0 um (contrast 230), outside which contrast 20 is attributed to the surrounding medium.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O02",
+        "C0004"
+      ],
+      "id": "A0014",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "candidate outer zone"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "claimed coating material"
+        }
+      ],
+      "relation": "has_part",
+      "scope": "Unresolved comparison: contrast value is not a material identity; the M7 document claim is class-level and its scope excludes S17.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Whether the outer contrast-230 zone of S17 corresponds to material P-A or to a different material is unresolved by the radial profile alone, because contrast units are not matched to any material reference in this record.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D02",
+        "C0005"
+      ],
+      "id": "A0015",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:references@1",
+          "role": "reporting_source"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:additive",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:water",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:salt",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "reports_reference_response",
+      "scope": "doc:references@1 revision 1, reference conditions 20 C, channels q1-q5; declared open set, not all world materials.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:references@1 reports five-channel 20 C responses for six references: glass [0.9,0.2,0.1,0.05,0.05], additive GeO2 [0.4,0.8,0.3,0.3,0.1], P-A [0.1,0.1,0.8,0.3,0.2], P-B [0.1,0.1,0.8,0.3,0.2], water [0.05,0.7,0.03,0.02,0.01], salt [0.8,0.05,0.02,0.3,0.4].",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D02",
+        "C0005"
+      ],
+      "id": "A0016",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:P-A",
+          "role": "designation_one"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "designation_two"
+        }
+      ],
+      "relation": "indistinguishable_in",
+      "scope": "Only within the doc:references@1 20 C five-channel reference set; other conditions or methods may separate them.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Material designations P-A and P-B carry the identical reference response vector [0.1,0.1,0.8,0.3,0.2] in doc:references@1, so this reference set cannot separate them.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O02",
+        "D02"
+      ],
+      "id": "A0017",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "subject_needing_measurement"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "comparison_source"
+        }
+      ],
+      "relation": "requires_measurement",
+      "scope": "x_mm=0, state-0, 20 C; contrast_units of the radial profile are not stated to be on the same scale as reference channel values.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The outer-zone contrast value 230 at x_mm=0 is not yet matched to any reference entry because the profile reports contrast units (100/160/230) while doc:references@1 reports channel values near 0-1; an in-situ material_response at the outer zone radius is needed.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O06",
+        "D02"
+      ],
+      "id": "A0018",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "measured_zone"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_entry"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_entry"
+        }
+      ],
+      "relation": "response_equals",
+      "scope": "state-0, 20 C, x_mm=0, radius 90 um within outer zone; reference table doc:references@1 rev 1",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The S17 outer-zone material_response [0.1,0.1,0.8,0.3,0.2] is identical to the doc:references@1 20 C entries for both P-A and P-B.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O06",
+        "D02",
+        "D03"
+      ],
+      "id": "A0019",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "candidate_coating"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "claimed_material"
+        }
+      ],
+      "relation": "specifies_material",
+      "scope": "Hypothesis only; P-A and P-B responses are identical at 20 C so the specific designation is unresolved.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The outer zone of S17 is consistent with a P-A/P-B family polymer, but the specific P-A claim of doc:model-M7@1 is not separable from P-B by current 20 C data.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O04",
+        "C0007"
+      ],
+      "id": "A0020",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "measured_zone"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "near_reference"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "contrast_reference"
+        }
+      ],
+      "relation": "response_resembles",
+      "scope": "Single material_response record at x_mm=0, r=2 um, state-0 (20 C).",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The inner zone of S17 returns [0.88,0.224,0.108,0.06,0.052], close to but not identical with the glass reference [0.9,0.2,0.1,0.05,0.05] and clearly different from the outer-zone P-A/P-B response [0.1,0.1,0.8,0.3,0.2].",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O06",
+        "O04",
+        "C0006",
+        "C0007"
+      ],
+      "id": "A0021",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "zone_a"
+        },
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "zone_b"
+        }
+      ],
+      "relation": "distinct_from",
+      "scope": "state-0 (20 C), x_mm=0; comparison of two material_response records.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The inner zone and the outer zone of S17 have measurably different five-channel responses at 20 C, so they are distinct layers rather than the same material at this section.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O05",
+        "D02"
+      ],
+      "id": "A0022",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17-zone-middle",
+          "role": "measured_zone"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "response_equals",
+      "scope": "state-0, 20 C, x_mm=0, r=20 um; single section, single reading.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The middle radial zone of S17 at x_mm=0 returns [0.9,0.2,0.1,0.05,0.05], identical to the quartz glass reference response of doc:references@1.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O04",
+        "D02"
+      ],
+      "id": "A0023",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "measured_zone"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "response_resembles",
+      "scope": "state-0, 20 C, x_mm=0, r=2 um; single section, single reading.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The inner radial zone of S17 at x_mm=0 returns [0.88,0.224,0.108,0.06,0.052], close to but not identical with the glass reference vector of doc:references@1.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O04",
+        "O05",
+        "O06"
+      ],
+      "id": "A0024",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "zone_a"
+        },
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "zone_b"
+        }
+      ],
+      "relation": "distinct_from",
+      "scope": "state-0, 20 C, x_mm=0; instrument channel vectors at r=2 um versus r=90 um.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The inner zone (r=2 um) and outer zone (r=90 um) of S17 return measurably different channel vectors, so the outer interval is not the same material as the inner interval at this section.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0009"
+      ],
+      "id": "A0025",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "access_limited_to",
+      "scope": "S17 material_response availability in state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The material_response request on S17 at x_mm=500, radius 90 um in state-0 returned fixture_not_specified; the fixture tabulates S17 material_response only at x_mm=0, so this is an access limitation of the contract, not a physical result about the specimen.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O02",
+        "O03"
+      ],
+      "id": "A0026",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "zone_at_section"
+        },
+        {
+          "entity_id": "S17-zone-middle",
+          "role": "zone_at_section"
+        },
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "zone_at_section"
+        }
+      ],
+      "relation": "has_radial_zone",
+      "scope": "Two radial_profile sections only, x_mm=0 and x_mm=500; no interpolation between them.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "radial_profile at x_mm=500 in state-0 returns the same contrast sequence 100/160/230 at the same r_um boundaries as at x_mm=0, so the zone pattern repeats at these two probed sections.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0009"
+      ],
+      "id": "A0027",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "target"
+        }
+      ],
+      "relation": "access_limited_to",
+      "scope": "Access contract metadata of the fixture, not a material property and not a physical result.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "material_response for S17 is tabulated only at x_mm=0; the x_mm=500 request returned fixture_not_specified, an access-table gap rather than a measurement.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O06",
+        "D02"
+      ],
+      "id": "A0028",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "observed_zone"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "reference"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference"
+        }
+      ],
+      "relation": "indistinguishable_in",
+      "scope": "Single 20 C five-channel signature at x_mm=0, r=90 um; open reference set, not all world materials.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The outer-zone signature [0.1,0.1,0.8,0.3,0.2] equals both the P-A and P-B reference vectors, so those two designations cannot be separated for this zone from this measurement alone.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D01"
+      ],
+      "id": "A0029",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "source"
+        },
+        {
+          "entity_id": "S17",
+          "role": "measured_subject"
+        }
+      ],
+      "relation": "states_tolerance_for",
+      "scope": "Contents of one document revision about this fixture's instrument methods, not a statement about S17 composition.",
+      "state_refs": [],
+      "statement": "doc:calibration@1 revision 1 states material_response absolute tolerance 0.001 per channel, radial_profile contrast repeatability 1 unit with a 5-unit resolvable step, additive mixing of component responses, and an incomplete reference library so a response match does not establish unique composition.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O04",
+        "D02",
+        "D01"
+      ],
+      "id": "A0030",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "measured_zone"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference"
+        }
+      ],
+      "relation": "distinct_from",
+      "scope": "Single 20 C five-channel signature at x_mm=0, r=2 um, judged against the stated 0.001 per-channel tolerance.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The inner-zone vector [0.88,0.224,0.108,0.06,0.052] differs from the glass reference [0.9,0.2,0.1,0.05,0.05] by up to 0.024 per channel, exceeding the stated 0.001 tolerance, so the inner zone is not the glass reference material.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O04",
+        "O05",
+        "D02",
+        "D01"
+      ],
+      "id": "A0031",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "measured_zone"
+        },
+        {
+          "entity_id": "S17-zone-middle",
+          "role": "measured_zone"
+        }
+      ],
+      "relation": "distinct_from",
+      "scope": "Single 20 C five-channel comparison at x_mm=0, r=2 um versus r=20 um.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Inner and middle zone vectors differ by 0.002 to 0.024 per channel, above the 0.001 tolerance, indicating a real inner/middle interface near r about 4 um at x_mm=0.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O06",
+        "D02",
+        "D01"
+      ],
+      "id": "A0032",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "measured_zone"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "reference"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference"
+        }
+      ],
+      "relation": "response_equals",
+      "scope": "One 20 C five-channel signature at x_mm=0, r=90 um, within the document's 0.001 per-channel tolerance.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The outer-zone vector [0.1,0.1,0.8,0.3,0.2] equals both the P-A and P-B reference vectors within tolerance, so the match holds but does not single out either polymer designation.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O02",
+        "O03",
+        "D01"
+      ],
+      "id": "A0033",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sectioned_sample"
+        },
+        {
+          "entity_id": "S17-zone-inner",
+          "role": "zone"
+        },
+        {
+          "entity_id": "S17-zone-middle",
+          "role": "zone"
+        },
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "zone"
+        }
+      ],
+      "relation": "has_radial_zone",
+      "scope": "Two probed sections x_mm=0 and x_mm=500 in state-0; no interpolation between sections.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "At both probed sections the contrast steps of 60 units (100 to 160 to 230) exceed the documented 5-unit resolvable step and 1-unit repeatability, so the three intervals are resolved boundaries rather than noise.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O07",
+        "D02",
+        "D01"
+      ],
+      "id": "A0034",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "U09",
+          "role": "observed_medium"
+        },
+        {
+          "entity_id": "material:water",
+          "role": "reference"
+        }
+      ],
+      "relation": "response_resembles",
+      "scope": "One 20 C five-channel reading of U09 in state-0, compared against the doc:references@1 water entry at the doc:calibration@1 tolerance of 0.001 per channel.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "U09 returns [0.065,0.687,0.0298,0.0256,0.0178] in state-0, close to the water reference [0.05,0.7,0.03,0.02,0.01] but differing by more than the stated 0.001 per-channel tolerance in q1, q2, q4 and q5, so it is not an exact water match.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O07",
+        "D02",
+        "D01"
+      ],
+      "id": "A0035",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "U09",
+          "role": "unidentified_medium"
+        }
+      ],
+      "relation": "requires_measurement",
+      "scope": "Only for identification within the open doc:references@1 list at 20 C; a missing entry is a table gap, not an impossibility.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "No entry of the listed 20 C reference set reproduces the U09 vector within 0.001 per channel, so the composition of the contacting medium is not identified by the current references and would need another measurement or an extended reference library.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O06",
+        "O07",
+        "D02",
+        "D01",
+        "D03"
+      ],
+      "id": "A0036",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "observed_zone"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "claimed_coating"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference"
+        }
+      ],
+      "relation": "requires_measurement",
+      "scope": "Identification of the S17 outer interval only, at one 20 C signature at x_mm=0, r=90 um; doc:model-M7@1 does not name S17.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Because the S17 outer-zone signature equals both the P-A and P-B reference vectors and doc:calibration@1 declares its reference library incomplete and response matching non-unique, deciding that S17's outer material is P-A rather than another equivalent material requires a measurement beyond the 20 C five-channel response.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O07",
+        "D03",
+        "D01"
+      ],
+      "id": "A0037",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "U09",
+          "role": "medium"
+        },
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "source_claim"
+        }
+      ],
+      "relation": "scope_excludes_subject",
+      "scope": "Comparison of the described operating example with the actually observed environment of S17; both are claims about conditions, not about sample identity.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "S17 is surrounded by the liquid-like medium U09, whereas doc:model-M7@1 describes M7 operating in dry air, so that document's environment claim does not transfer to S17's actual surroundings.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0013"
+      ],
+      "id": "A0038",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "S17-port-in",
+          "role": "input_port"
+        },
+        {
+          "entity_id": "S17-port-out",
+          "role": "output_port"
+        }
+      ],
+      "relation": "has_port",
+      "scope": "Only the two ports named in the pulse_trace record of state-0; port geometry and position on the sample are not reported.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "pulse_trace on S17 in state-0 identifies two accessible ports, S17:in as the input and S17:out as the output, with a shared clock.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0013",
+        "D01"
+      ],
+      "id": "A0039",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "S17-port-in",
+          "role": "input_port"
+        },
+        {
+          "entity_id": "S17-port-out",
+          "role": "output_port"
+        }
+      ],
+      "relation": "has_signal_transit_delay",
+      "scope": "One axial pulse path at 20 C; internal reflections are not observed, so this is a total input-to-output offset only.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Input pulses at 0, 100 and 200 ns produce exactly one output each at 5.0, 105.0 and 205.0 ns, a constant 5.0 ns delay with no secondary output events.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0011",
+        "D01"
+      ],
+      "id": "A0040",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "source"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "states_tolerance_for",
+      "scope": "Stated limits of the teaching fixture instruments; they describe the access/measurement contract, not the sample's material.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 states pulse_trace records only input and output with 0.001 ns resolution and that the pulse path inside the sample is not observed, radial_profile has 1-unit contrast repeatability and a 5-unit resolvable step, and material_response has 0.001 per-channel tolerance whose mixing rule is a fixture convention with an incomplete reference library.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0014"
+      ],
+      "id": "A0041",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "V04",
+          "role": "heated_cell"
+        },
+        {
+          "entity_id": "S17",
+          "role": "sample_in_cell"
+        },
+        {
+          "entity_id": "U09",
+          "role": "medium_in_cell"
+        }
+      ],
+      "relation": "records_state_transition",
+      "scope": "One actuator setting on V04; the fixture reports the transition as state-0 to state-1.",
+      "state_refs": [
+        "state-0",
+        "state-1"
+      ],
+      "statement": "Setting cell V04 to 40 C produced state-1 with cell_sensor_C and sample_sensor_C both 40, and the intervention record lists S17, V04 and U09 as identity-preserved.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0014",
+        "O08",
+        "D01"
+      ],
+      "id": "A0042",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample_under_test"
+        },
+        {
+          "entity_id": "S17-port-in",
+          "role": "entry_port"
+        },
+        {
+          "entity_id": "S17-port-out",
+          "role": "exit_port"
+        }
+      ],
+      "relation": "requires_measurement",
+      "scope": "Only the temperature dependence of the pulse transit; resolves nothing about the outer material designation.",
+      "state_refs": [
+        "state-1"
+      ],
+      "statement": "Whether the 5.0 ns input-to-output delay observed in state-0 changes at 40 C in state-1 is not yet measured.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O09",
+        "C0015"
+      ],
+      "id": "A0043",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "S17-port-in",
+          "role": "input_port"
+        },
+        {
+          "entity_id": "S17-port-out",
+          "role": "output_port"
+        }
+      ],
+      "relation": "has_signal_transit_delay",
+      "scope": "Single pulse_trace in state-1 (40 C), same ports and input schedule as state-0; one output event per input.",
+      "state_refs": [
+        "state-1"
+      ],
+      "statement": "pulse_trace of S17 in state-1 returns outputs at 5.01, 105.01 and 205.01 ns for inputs at 0, 100 and 200 ns, a constant 5.01 ns offset that is 0.01 ns longer than the 5.0 ns offset in state-0.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "A01",
+        "C0014"
+      ],
+      "id": "A0044",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "V04",
+          "role": "temperature_actuator"
+        },
+        {
+          "entity_id": "S17",
+          "role": "identity_preserved"
+        },
+        {
+          "entity_id": "U09",
+          "role": "identity_preserved"
+        }
+      ],
+      "relation": "records_state_transition",
+      "scope": "One intervention record A01; identity of S17, V04 and U09 declared preserved.",
+      "state_refs": [
+        "state-0",
+        "state-1"
+      ],
+      "statement": "set_temperature on V04 to 40 C moved the fixture from state-0 to state-1 with S17, V04 and U09 identity preserved and other instrument settings unchanged.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O09",
+        "C0015"
+      ],
+      "id": "A0045",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "S17-port-in",
+          "role": "entry_port"
+        },
+        {
+          "entity_id": "S17-port-out",
+          "role": "exit_port"
+        }
+      ],
+      "relation": "has_signal_transit_delay",
+      "scope": "Single pulse_trace record in state-1 (40 C) with ports S17:in and S17:out.",
+      "state_refs": [
+        "state-1"
+      ],
+      "statement": "pulse_trace of S17 in state-1 (40 C) shows one output per input with a constant 5.01 ns offset (inputs 0/100/200 ns, outputs 5.01/105.01/205.01 ns), versus 5.0 ns in state-0.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "A02",
+        "C0016"
+      ],
+      "id": "A0046",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "V04",
+          "role": "temperature_cell"
+        },
+        {
+          "entity_id": "S17",
+          "role": "preserved_identity"
+        },
+        {
+          "entity_id": "U09",
+          "role": "preserved_identity"
+        }
+      ],
+      "relation": "records_state_transition",
+      "scope": "Temperature-controller intervention A02; sample identity preserved.",
+      "state_refs": [
+        "state-1",
+        "state-2"
+      ],
+      "statement": "Returning cell V04 to 20 C moved the fixture from state-1 to state-2 while preserving identities S17, V04 and U09 and leaving other instrument settings unchanged.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O10"
+      ],
+      "id": "A0047",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "S17-port-in",
+          "role": "input_port"
+        },
+        {
+          "entity_id": "S17-port-out",
+          "role": "output_port"
+        }
+      ],
+      "relation": "has_signal_transit_delay",
+      "scope": "One pulse_trace episode in state-2 (20 C), three input events; only input and output recorded.",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "In state-2 pulse_trace reports output times 5.0, 105.0 and 205.0 ns for inputs 0, 100 and 200 ns via S17:in and S17:out, i.e. a constant 5.0 ns offset with one output per input.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O08",
+        "O09",
+        "O10"
+      ],
+      "id": "A0048",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "has_signal_transit_delay",
+      "scope": "Comparison across the three recorded episodes only; no independent repeats and no path geometry observed.",
+      "state_refs": [
+        "state-0",
+        "state-1",
+        "state-2"
+      ],
+      "statement": "The transit offset is 5.0 ns at 20 C (state-0 and state-2) and 5.01 ns at 40 C (state-1), so the 0.01 ns shift seen on heating was not reproduced after returning to 20 C and the sample identity was preserved throughout.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "C0017",
+        "C0013",
+        "C0015"
+      ],
+      "id": "A0049",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "target"
+        }
+      ],
+      "relation": "has_signal_transit_delay",
+      "scope": "Only for states state-0, state-1, state-2 of this fixture and port pair S17:in to S17:out.",
+      "state_refs": [
+        "state-0",
+        "state-1",
+        "state-2"
+      ],
+      "statement": "pulse_trace offset for S17 is 5.0 ns in state-0, 5.01 ns in state-1 and 5.0 ns again in state-2, so the 0.01 ns shift at 40 C reverses on return to 20 C within the stated 0.001 ns resolution.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "O10",
+        "C0013",
+        "C0015"
+      ],
+      "id": "A0050",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "S17-port-in",
+          "role": "entry_port"
+        },
+        {
+          "entity_id": "S17-port-out",
+          "role": "exit_port"
+        }
+      ],
+      "relation": "has_port",
+      "scope": "Pulse-clock records only; no port geometry reported.",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "In state-2 the pulse_trace of S17 again reports entry port S17:in and exit port S17:out with one output event per input pulse, unchanged across states.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D00-B"
+      ],
+      "id": "A0051",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "listed_document"
+        }
+      ],
+      "relation": "referenced_by_catalog",
+      "scope": "One catalog revision only; the listing does not certify the document's claims or that its subject is this physical S17.",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "catalog:root at revision 2 (D00-B) adds a fourth link doc:batch-S17@1 titled 'Zapis o partii obraztsa S17' while keeping doc:calibration@1, doc:references@1 and doc:model-M7@1.",
+      "supersedes": []
+    },
+    {
+      "evidence_refs": [
+        "D00-B",
+        "D00-A"
+      ],
+      "id": "A0052",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "candidate_source"
+        },
+        {
+          "entity_id": "S17-zone-outer",
+          "role": "outer_interval"
+        }
+      ],
+      "relation": "requires_measurement",
+      "scope": "Hypothesis about document content not yet read; no claim about actual sample composition.",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "If doc:batch-S17@1 states the batch materials of S17, it could separate the outer-interval P-A/P-B ambiguity and the axial interior description left open by the five-channel evidence.",
+      "supersedes": []
+    }
+  ],
+  "open_questions": [
+    "Исследуйте устройство образца S17 и его окружение. Сохраняйте найденные объекты, связи, основания и открытые вопросы. Различайте наблюдения, сообщения источников и гипотезы. Порядок, число объектов и глубина разбиения не заданы.",
+    "Does the outer surface or coating actually present on sample S17 correspond to the P-A claim made for model M7, or is the sample's outer material different?",
+    "What radial internal structure (interfaces, layer radii) does S17 show in state-0 at 20 C along its axis, and does any resolved outer interval correspond to the P-A coating claim for model M7 or to a different outer material?",
+    "Are the contrast zones uniform over the whole 1000 mm length of S17, or only between the two probed sections x_mm=0 and x_mm=500, given that material_response cannot be obtained away from x_mm=0?",
+    "Does the U09 deviation from the water reference beyond 0.001 per channel indicate a water-based medium carrying an additional component, and can the doc:calibration@1 additive mixing assumption resolve the composition from the observed five-channel vector alone?",
+    "Can the P-A outer-coating claim of doc:model-M7@1 be transferred to S17 at all, given that S17 is immersed in the water-like medium U09 rather than the dry air named in the document's described operating example?",
+    "Do the pulse_trace ports S17:in and S17:out lie on the probed sample axis, and does the single output event per input exclude detectable partial reflections from the radial interfaces at r about 4 um and about 62.5 um?",
+    "Given that P-A and P-B share one five-channel vector and doc:calibration@1 calls the reference library incomplete, could any accessible intervention (e.g. a temperature series of material_response, or an added reference entry) separate the outer-zone designation, or is the outer material identifiability bounded by the open reference set alone?",
+    "What parts, materials and conditions does doc:batch-S17@1 attribute to the S17 batch, and does it name an outer material separating P-A from P-B or describe an axial interior structure consistent with the 100/160/230 contrast zones?"
+  ],
+  "summary": "Incremental model-proposed research graph; provenance checked, truth unverified."
+}

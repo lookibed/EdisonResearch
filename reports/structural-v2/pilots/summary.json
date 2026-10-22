@@ -1,0 +1,142 @@
+[
+  {
+    "directory": "pilots/v2-registry",
+    "protocol": "structural-fixture-trial-v2",
+    "memory_mode": "registry",
+    "status": "partial",
+    "tool_calls": 5,
+    "model_calls": 11,
+    "errors": [
+      {
+        "turn": 3,
+        "status": "rejected",
+        "diagnostic": "Stable ID cannot be redefined; append a correction"
+      },
+      {
+        "turn": 5,
+        "status": "transport_error",
+        "diagnostic": "OpenRouter response token limit"
+      },
+      {
+        "turn": 8,
+        "status": "rejected",
+        "diagnostic": "Stable ID cannot be redefined; append a correction"
+      },
+      {
+        "turn": 10,
+        "status": "rejected",
+        "diagnostic": "Relation needs a definition"
+      },
+      {
+        "turn": 11,
+        "status": "transport_error",
+        "diagnostic": "OpenRouter response token limit"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 155637,
+      "completion_tokens": 35487,
+      "total_tokens": 191124
+    }
+  },
+  {
+    "directory": "pilots/v2-graph",
+    "protocol": "structural-fixture-trial-v2",
+    "memory_mode": "graph",
+    "status": "partial",
+    "tool_calls": 11,
+    "model_calls": 17,
+    "errors": [
+      {
+        "turn": 5,
+        "status": "rejected",
+        "diagnostic": "This slot is reserved for the oldest open question"
+      },
+      {
+        "turn": 13,
+        "status": "transport_error",
+        "diagnostic": "OpenRouter response token limit"
+      },
+      {
+        "turn": 15,
+        "status": "transport_error",
+        "diagnostic": "OpenRouter response token limit"
+      },
+      {
+        "turn": 16,
+        "status": "transport_error",
+        "diagnostic": "OpenRouter response token limit"
+      },
+      {
+        "turn": 17,
+        "status": "rejected",
+        "diagnostic": "Document or error alone is not a physical observation"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 577147,
+      "completion_tokens": 44416,
+      "total_tokens": 621563
+    }
+  },
+  {
+    "directory": "pilots/v21-registry",
+    "protocol": "structural-fixture-trial-v2.1",
+    "memory_mode": "registry",
+    "status": "completed",
+    "tool_calls": 6,
+    "model_calls": 12,
+    "errors": [
+      {
+        "turn": 5,
+        "status": "rejected",
+        "diagnostic": "Relation needs a definition: has_capability"
+      },
+      {
+        "turn": 6,
+        "status": "rejected",
+        "diagnostic": "Relation needs a definition: measured_property"
+      },
+      {
+        "turn": 10,
+        "status": "rejected",
+        "diagnostic": "Action question must be open"
+      },
+      {
+        "turn": 11,
+        "status": "rejected",
+        "diagnostic": "Document or error alone is not a physical observation"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 206030,
+      "completion_tokens": 19399,
+      "total_tokens": 225429
+    }
+  },
+  {
+    "directory": "pilots/v21-graph",
+    "protocol": "structural-fixture-trial-v2.1",
+    "memory_mode": "graph",
+    "status": "completed",
+    "tool_calls": 10,
+    "model_calls": 14,
+    "errors": [
+      {
+        "turn": 4,
+        "status": "rejected",
+        "diagnostic": "Relation needs a definition: observation_of"
+      },
+      {
+        "turn": 9,
+        "status": "rejected",
+        "diagnostic": "This slot is reserved for question ID Q-STRUCT"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 409764,
+      "completion_tokens": 29440,
+      "total_tokens": 439204
+    }
+  }
+]

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Эдисон — как растёт граф Сталкера</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1220;color:#e4edf7;font:15px system-ui,sans-serif}header{padding:18px 24px;border-bottom:1px solid #304159}h1{font-size:23px;margin:0 0 8px}p{margin:8px 0;line-height:1.5;color:#b7c8dc}button,select,input{font:inherit;color:inherit;background:#192a40;border:1px solid #405670;border-radius:7px;padding:8px;cursor:pointer}button:hover{background:#2b4260}.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 24px}.toolbar input[type=range]{flex:1;min-width:200px}.main{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:12px;padding:0 18px 18px}.graphbox{min-height:630px;height:70vh;border:1px solid #304159;border-radius:10px;position:relative;overflow:hidden;background:#0b1220;touch-action:none}.graphbox svg{width:100%;height:100%;display:block}.graphbox svg g.node,.graphbox svg g.edge{cursor:pointer}.graphbox svg .match polygon,.graphbox svg .match path,.graphbox svg .match ellipse{stroke:#ffec7c!important;stroke-width:4px!important}.overlay{position:absolute;left:12px;top:12px;z-index:1;display:flex;gap:6px}.side{max-height:70vh;overflow:auto;padding:0 5px}.card{padding:12px;margin-bottom:10px;border:1px solid #304159;border-radius:9px;background:#101d2f}h2{font-size:15px;margin:0 0 8px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,monospace;margin:0;color:#ccdaea}.badge{color:#75e7ad}small{line-height:1.5;color:#aabdd3}.legend{display:flex;gap:13px;flex-wrap:wrap;padding:0 24px 12px;font-size:12px}details{margin-top:10px}summary{cursor:pointer;color:#a4d7ff}.evidence{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}.evidence button{font-size:12px;padding:5px}#stepTitle{font-weight:600}#note{padding:0 24px 12px}.graphbox:fullscreen{height:100vh;width:100vw}.controls{padding:0 24px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}@media(max-width:900px){.main{grid-template-columns:1fr}.graphbox{height:58vh;min-height:400px}.side{max-height:none}.toolbar,header{padding-left:14px;padding-right:14px}}
+</style>
+<header><h1>Как Сталкер строит граф по данным</h1><p>Запись реальных ходов: полученные данные → предложенные сущности и связи → следующее действие. Число частей и химический ответ в промпт не передавались.</p><small>Зелёная рамка — добавление на этом ходе. Граф содержит интерпретации модели; проверка ссылок не подтверждает их истинность. Синтетический стенд, без доказательства универсальности.</small></header>
+<div class="toolbar"><select id="run" aria-label="Запуск"></select><button id="prev" aria-label="Предыдущий ход">←</button><button id="play">▶ Смотреть</button><button id="next" aria-label="Следующий ход">→</button><input id="step" type="range" min="0" value="0" aria-label="Ход"><span id="counter"></span><button id="last">Итог</button></div>
+<div class="controls"><label><input id="full" type="checkbox"> Все утверждения и документы</label><input id="search" placeholder="Поиск в узлах и связях" aria-label="Поиск"><button id="save">Скачать HTML</button><span id="counts" class="badge"></span></div>
+<div class="legend"><span style="color:#68cfff">● Наблюдение</span><span style="color:#ffd080">● Гипотеза</span><span style="color:#bdacff">● Сообщение источника</span><span style="color:#a3b2c5">● Не разрешено</span></div>
+<div id="note"><span id="stepTitle"></span><p id="question"></p></div>
+<div class="main"><div class="graphbox" id="graphbox"><div class="overlay"><button id="fit">Вписать</button><button id="zoomIn">+</button><button id="zoomOut">−</button><button id="screen">На весь экран</button></div><div id="graph" style="width:100%;height:100%"></div></div><aside class="side">
+<div class="card"><h2>1. Последние данные до обновления</h2><pre id="input"></pre></div>
+<div class="card"><h2>2. Что сохранилось в графе</h2><pre id="deltaSummary"></pre><details><summary>JSON модели: при отказе не применён</summary><pre id="delta"></pre></details></div>
+<div class="card"><h2>3. Следующее действие и новый ответ</h2><pre id="observation"></pre><small>Этот ответ может попасть в граф только на следующем принятом ходе.</small></div>
+<div class="card"><h2>Узел, связь или источник</h2><small>Нажмите на элемент графа, затем на ссылку свидетельства.</small><div id="refs" class="evidence"></div><pre id="inspector"></pre></div>
+</aside></div>
+<script id="data" type="application/octet-stream">__DATA__</script>
+<script>
+'use strict';
+let DATA;
+async function openRecording(){
+const archive=Uint8Array.from(atob(document.getElementById('data').textContent.trim()),c=>c.charCodeAt(0));
+DATA=JSON.parse(await new Response(new Blob([archive]).stream().pipeThrough(new DecompressionStream('gzip'))).text());
+boot();
+}
+function boot(){
+const $=id=>document.getElementById(id);
+let runIndex=0,index=0,timer=null,view=null,base=null,drag=null,activeProjection=null;
+const pretty=x=>JSON.stringify(x,null,2),run=()=>DATA.runs[runIndex],frame=()=>run().frames[index];
+$('run').replaceChildren();
+for(let i=0;i<DATA.runs.length;i++){let option=document.createElement('option');option.value=i;option.textContent=DATA.runs[i].label;$('run').append(option)}
+function stop(){if(timer)clearInterval(timer);timer=null;$('play').textContent='▶ Смотреть'}
+function setView(){const svg=$('graph').querySelector('svg');if(svg&&view)svg.setAttribute('viewBox',view.join(' '))}
+function fit(){if(base){view=base.slice();setView()}}
+function zoom(factor){if(!view)return;let [x,y,w,h]=view;view=[x+w*(1-factor)/2,y+h*(1-factor)/2,w*factor,h*factor];setView()}
+function inspect(meta){$('inspector').textContent=pretty(meta);$('refs').replaceChildren();for(const ref of meta.record?.evidence_refs||[]){let b=document.createElement('button');b.textContent=ref;b.onclick=()=>{$('inspector').textContent=pretty({evidence_ref:ref,record:run().evidence[ref]})};$('refs').append(b)}}
+function search(){const term=$('search').value.toLocaleLowerCase().trim();for(const node of $('graph').querySelectorAll('g.node,g.edge')){let meta=activeProjection.metadata[node.id];node.classList.toggle('match',Boolean(term&&meta&&pretty(meta).toLocaleLowerCase().includes(term)))}}
+function show(){const r=run(),f=frame();$('run').value=runIndex;$('step').max=r.frames.length-1;$('step').value=index;$('counter').textContent=`${index+1} / ${r.frames.length}`;$('counts').textContent=`Всего в памяти: ${f.entity_count} сущностей · ${f.claim_count} утверждений · ${f.question_count} вопросов`;$('stepTitle').textContent=`${r.label} · ${f.title} · ревизия ${f.revision}`;$('question').textContent=f.question||'Доступны только исходные публичные ссылки.';
+$('input').textContent=f.last_received?pretty(f.last_received):'START: исходный образец и каталог. Данных прибора ещё нет.';
+$('deltaSummary').textContent=f.status==='accepted'?Object.entries(f.delta).map(([k,v])=>`${k}: ${v.length}`).join('\n'):f.diagnostic||'Начальные идентичности из публичного ввода.';
+$('delta').textContent=pretty(f.delta);$('observation').textContent=f.next_observation?pretty(f.next_observation):f.status==='rejected'||f.status==='transport_error'?'Действие не выполнено. Граф сохранён.':'Нет нового действия на этом ходе.';
+activeProjection=$('full').checked?f.full_graph:f.graph;$('graph').innerHTML=activeProjection.svg;const svg=$('graph').querySelector('svg');base=svg.getAttribute('viewBox').split(/[ ,]+/).map(Number);fit();$('inspector').textContent='';$('refs').replaceChildren();search();
+}
+$('graph').addEventListener('click',e=>{if(drag?.moved)return;const node=e.target.closest('g.node,g.edge');if(node&&activeProjection.metadata[node.id])inspect(activeProjection.metadata[node.id])});
+$('graphbox').addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.12:.89)},{passive:false});
+$('graphbox').addEventListener('pointerdown',e=>{if(e.target.closest('button')||!view)return;drag={x:e.clientX,y:e.clientY,v:view.slice(),moved:false}});
+$('graphbox').addEventListener('pointermove',e=>{if(!drag||!e.buttons)return;const b=$('graphbox').getBoundingClientRect(),dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4){drag.moved=true;e.currentTarget.setPointerCapture(e.pointerId)}view=[drag.v[0]-dx*drag.v[2]/b.width,drag.v[1]-dy*drag.v[3]/b.height,drag.v[2],drag.v[3]];setView()});
+$('graphbox').addEventListener('pointerup',()=>{setTimeout(()=>drag=null,0)});
+$('prev').onclick=()=>{stop();index=Math.max(0,index-1);show()};$('next').onclick=()=>{stop();index=Math.min(run().frames.length-1,index+1);show()};$('last').onclick=()=>{stop();index=run().frames.length-1;show()};$('step').oninput=e=>{stop();index=+e.target.value;show()};$('run').onchange=e=>{stop();runIndex=+e.target.value;index=0;show()};$('full').onchange=show;$('search').oninput=search;$('fit').onclick=fit;$('zoomIn').onclick=()=>zoom(.8);$('zoomOut').onclick=()=>zoom(1.25);$('screen').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else $('graphbox').requestFullscreen()};
+$('play').onclick=()=>{if(timer){stop();return}if(index===run().frames.length-1)index=0;show();$('play').textContent='❚❚ Пауза';timer=setInterval(()=>{if(index>=run().frames.length-1){stop();return}index++;show()},2200)};
+$('save').onclick=()=>{const url=URL.createObjectURL(new Blob(['<!doctype html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='stalker-evolution.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click();if(e.key===' '){e.preventDefault();$('play').click()}});stop();show();
+}
+openRecording().catch(error=>{document.getElementById('counts').textContent='Не удалось открыть запись.';document.getElementById('inspector').textContent=String(error)});
+</script></html>

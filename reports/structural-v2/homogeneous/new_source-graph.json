@@ -1,0 +1,5546 @@
+{
+  "protocol": "structural-graph-v1",
+  "revision": 23,
+  "entities": {
+    "S17": {
+      "id": "S17",
+      "description": "Лабораторный образец с внешней маркировкой M7. Внутреннее устройство не сообщается.",
+      "identity_basis": "Public resource reference; not a structural discovery.",
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    "catalog:root": {
+      "id": "catalog:root",
+      "description": "Каталог доступных документов и калибровок; содержимое может обновляться.",
+      "identity_basis": "Public resource reference; not a structural discovery.",
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    "doc:calibration@1": {
+      "description": "Document linked from catalog:root revision 1, titled 'Calibration and instrument limits'.",
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "doc:calibration@1",
+      "identity_basis": "Catalog link reference doc:calibration@1; document contents not yet read."
+    },
+    "doc:references@1": {
+      "description": "Document linked from catalog:root revision 1, titled 'Reference material responses'.",
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "doc:references@1",
+      "identity_basis": "Catalog link reference doc:references@1; document contents not yet read."
+    },
+    "doc:model-M7@1": {
+      "description": "Document linked from catalog:root revision 1, titled 'Typical description of model M7'.",
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "doc:model-M7@1",
+      "identity_basis": "Catalog link reference doc:model-M7@1; document contents not yet read."
+    },
+    "model:M7": {
+      "description": "Product model M7 described in doc:model-M7@1; distinct from S17 instance.",
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "model:M7",
+      "identity_basis": "Document subject 'модель изделия M7' in D03."
+    },
+    "material:P-A": {
+      "description": "Coating material P-A named in doc:model-M7@1 typical version.",
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "material:P-A",
+      "identity_basis": "Named material in D03 claim."
+    },
+    "environment:dry_air": {
+      "description": "Dry air environment in the described example of model M7.",
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "environment:dry_air",
+      "identity_basis": "Environment named in D03 claim."
+    },
+    "instrument:teaching_fixture": {
+      "description": "Conditional instruments of this teaching fixture, whose limits are described in doc:calibration@1.",
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "instrument:teaching_fixture",
+      "identity_basis": "Document scope 'conditional instruments of this teaching fixture' in D01."
+    },
+    "material:glass": {
+      "description": "Quartz glass reference G in doc:references@1.",
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "material:glass",
+      "identity_basis": "Named reference material in D02 payload."
+    },
+    "material:additive": {
+      "description": "GeO2 oxide additive reference X in doc:references@1.",
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "material:additive",
+      "identity_basis": "Named reference material in D02 payload."
+    },
+    "material:P-B": {
+      "description": "Polymer P-B reference in doc:references@1.",
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "material:P-B",
+      "identity_basis": "Named reference material in D02 payload."
+    },
+    "material:water": {
+      "description": "Water reference W in doc:references@1.",
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "material:water",
+      "identity_basis": "Named reference material in D02 payload."
+    },
+    "V04": {
+      "description": "Transparent cell around the S17 section, visible in overview O01; supports set_temperature 20/40 C.",
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "V04",
+      "identity_basis": "Visible object ref V04 in overview O01 payload."
+    },
+    "U09": {
+      "description": "Transparent cell contents touching S17, visible in overview O01; supports material_response observation.",
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "U09",
+      "identity_basis": "Visible object ref U09 in overview O01 payload."
+    },
+    "instrument:pulse_clock": {
+      "description": "Pulse-clock instrument that produced pulse_trace record O08 for S17.",
+      "evidence_refs": [
+        "C0012",
+        "O08"
+      ],
+      "id": "instrument:pulse_clock",
+      "identity_basis": "source_ref 'instrument:pulse-clock' in O08 payload."
+    },
+    "S17:in": {
+      "description": "Input port of S17 named in pulse_trace O08.",
+      "evidence_refs": [
+        "C0012",
+        "O08"
+      ],
+      "id": "S17:in",
+      "identity_basis": "Port name 'S17:in' in O08 payload."
+    },
+    "S17:out": {
+      "description": "Output port of S17 named in pulse_trace O08.",
+      "evidence_refs": [
+        "C0012",
+        "O08"
+      ],
+      "id": "S17:out",
+      "identity_basis": "Port name 'S17:out' in O08 payload."
+    },
+    "actuator:temperature-controller": {
+      "description": "Temperature controller actuator that executed set_temperature C0014 on V04.",
+      "evidence_refs": [
+        "C0014",
+        "A01"
+      ],
+      "id": "actuator:temperature-controller",
+      "identity_basis": "source_ref 'actuator:temperature-controller' in A01 payload."
+    },
+    "doc:batch-S17@1": {
+      "description": "Document linked from catalog:root revision 2, titled 'Batch record of sample S17'; contents not yet read.",
+      "evidence_refs": [
+        "C0019",
+        "D00-B"
+      ],
+      "id": "doc:batch-S17@1",
+      "identity_basis": "Catalog link reference doc:batch-S17@1 in revision 2 payload D00-B."
+    },
+    "batch:B17": {
+      "description": "Batch B17 named as S17's batch in doc:batch-S17@1.",
+      "evidence_refs": [
+        "C0020",
+        "D04"
+      ],
+      "id": "batch:B17",
+      "identity_basis": "Batch field 'B17' in D04 payload for subject 'конкретный образец S17'."
+    }
+  },
+  "relation_types": {
+    "catalog_links": {
+      "description": "catalog:root lists a document reference in its revision payload.",
+      "id": "catalog_links"
+    },
+    "document_reports": {
+      "description": "A document report states a claim about a subject within its scope.",
+      "id": "document_reports"
+    },
+    "has_coating_material": {
+      "description": "A product model's external coating is made of a material.",
+      "id": "has_coating_material"
+    },
+    "document_scope_note": {
+      "description": "A document report includes a scope limitation about what it does not specify.",
+      "id": "document_scope_note"
+    },
+    "observation_reports": {
+      "description": "An instrument observation record states a measured fact about a subject.",
+      "id": "observation_reports"
+    },
+    "surrounds": {
+      "description": "An object encloses or is situated around another object.",
+      "id": "surrounds"
+    },
+    "response_matches_reference": {
+      "description": "An observed response matches a named reference material response within stated tolerance.",
+      "id": "response_matches_reference"
+    },
+    "access_failure": {
+      "description": "A tool call failed due to contract or protocol limits, not a physical measurement.",
+      "id": "access_failure"
+    },
+    "intervention_reports": {
+      "description": "An intervention record states a state transition and sensor readings for a target.",
+      "id": "intervention_reports"
+    },
+    "claims_conflict": {
+      "description": "Two document claims about the same subject are in tension because their scopes or stated materials differ.",
+      "id": "claims_conflict"
+    }
+  },
+  "assertions": {
+    "A-CAT-CAL": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "A-CAT-CAL",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "linked_document"
+        }
+      ],
+      "relation": "catalog_links",
+      "scope": "catalog:root revision 1 payload D00-A",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Catalog root revision 1 lists doc:calibration@1 titled 'Calibration and instrument limits'.",
+      "supersedes": []
+    },
+    "A-CAT-REF": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "A-CAT-REF",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "linked_document"
+        }
+      ],
+      "relation": "catalog_links",
+      "scope": "catalog:root revision 1 payload D00-A",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Catalog root revision 1 lists doc:references@1 titled 'Reference material responses'.",
+      "supersedes": []
+    },
+    "A-CAT-M7": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "A-CAT-M7",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "linked_document"
+        }
+      ],
+      "relation": "catalog_links",
+      "scope": "catalog:root revision 1 payload D00-A",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Catalog root revision 1 lists doc:model-M7@1 titled 'Typical description of model M7'.",
+      "supersedes": []
+    },
+    "A-D03-REP-PA": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "A-D03-REP-PA",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "model:M7",
+          "role": "subject_model"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "material"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:model-M7@1 revision 1 payload D03",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:model-M7@1 reports that in typical version the external coating is made of P-A.",
+      "supersedes": []
+    },
+    "A-D03-COAT-PA": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "A-D03-COAT-PA",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "model:M7",
+          "role": "model"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "material"
+        }
+      ],
+      "relation": "has_coating_material",
+      "scope": "doc:model-M7@1 revision 1 payload D03",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "In model M7 typical version, external coating material is P-A.",
+      "supersedes": []
+    },
+    "A-D03-DRYAIR": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "A-D03-DRYAIR",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "model:M7",
+          "role": "subject_model"
+        },
+        {
+          "entity_id": "environment:dry_air",
+          "role": "environment"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:model-M7@1 revision 1 payload D03",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:model-M7@1 reports that in the described example the product is in dry air.",
+      "supersedes": []
+    },
+    "A-D03-SCOPE": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "A-D03-SCOPE",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "unspecified_subject"
+        }
+      ],
+      "relation": "document_scope_note",
+      "scope": "doc:model-M7@1 revision 1 payload D03",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:model-M7@1 scope note states that S17 number and its actual conditions are not specified in the document.",
+      "supersedes": []
+    },
+    "A-D01-RADIAL": {
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "A-D01-RADIAL",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "instrument:teaching_fixture",
+          "role": "instrument"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:calibration@1 revision 1 payload D01",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 reports radial_profile limits: contrast repeatability 1 unit, resolvable step 5 units, and boundary localized only between adjacent readings.",
+      "supersedes": []
+    },
+    "A-D01-MATRESP": {
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "A-D01-MATRESP",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "instrument:teaching_fixture",
+          "role": "instrument"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:calibration@1 revision 1 payload D01",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 reports material_response absolute tolerance 0.001 per channel and that additive-with-mass-fractions mixing is a mock condition, not a law of real spectroscopy.",
+      "supersedes": []
+    },
+    "A-D01-UNIQ": {
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "A-D01-UNIQ",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "instrument:teaching_fixture",
+          "role": "instrument"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:calibration@1 revision 1 payload D01",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 states matching responses do not establish uniqueness of composition, the reference library is incomplete, and spatial distribution of additive within the measured spot is not distinguished.",
+      "supersedes": []
+    },
+    "A-D01-PULSE": {
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "A-D01-PULSE",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "instrument:teaching_fixture",
+          "role": "instrument"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:calibration@1 revision 1 payload D01",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 reports pulse_trace records only input and output on common ideal clocks at 0.001 ns resolution; the pulse path inside the sample is not observed.",
+      "supersedes": []
+    },
+    "A-D02-COND": {
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "A-D02-COND",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "instrument:teaching_fixture",
+          "role": "instrument"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:references@1 revision 1 payload D02",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:references@1 reports reference conditions at 20 C on channels q1-q5 and states the set is open, not all possible materials.",
+      "supersedes": []
+    },
+    "A-D02-REFS": {
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "A-D02-REFS",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:additive",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:water",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:references@1 revision 1 payload D02",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:references@1 reports responses at 20 C: glass [0.9,0.2,0.1,0.05,0.05], additive [0.4,0.8,0.3,0.3,0.1], P-A [0.1,0.1,0.8,0.3,0.2], P-B [0.1,0.1,0.8,0.3,0.2], water [0.05,0.7,0.03,0.02,0.01], salt [0.8,0.05,0.02,0.3,0.4].",
+      "supersedes": []
+    },
+    "A-D02-PA-PB": {
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "A-D02-PA-PB",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:references@1 revision 1 payload D02",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:references@1 reports P-A and P-B have identical response [0.1,0.1,0.8,0.3,0.2], so the reference library does not distinguish them.",
+      "supersedes": []
+    },
+    "A-O01-OUTLINE": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "A-O01-OUTLINE",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "overview observation O01, state-0, 20 C",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Overview O01 measures S17 external boundary radius interval 124.9-125.1 um; smaller radial inhomogeneities are not resolved in this frame.",
+      "supersedes": []
+    },
+    "A-O01-V04": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "A-O01-V04",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "V04",
+          "role": "surrounding_object"
+        },
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "surrounds",
+      "scope": "overview observation O01, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Overview O01 shows a transparent cell V04 around the S17 section.",
+      "supersedes": []
+    },
+    "A-O01-U09": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "A-O01-U09",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "U09",
+          "role": "surrounding_object"
+        },
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "overview observation O01, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Overview O01 shows transparent cell contents U09 touching S17.",
+      "supersedes": []
+    },
+    "A-O01-CAPS": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "A-O01-CAPS",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "V04",
+          "role": "cell"
+        },
+        {
+          "entity_id": "U09",
+          "role": "contents"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "overview observation O01 capability listing, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Overview O01 reports V04 supports set_temperature at 20/40 C and U09 supports material_response observation.",
+      "supersedes": []
+    },
+    "A-O02-PROFILE": {
+      "evidence_refs": [
+        "C0006",
+        "O02"
+      ],
+      "id": "A-O02-PROFILE",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "radial_profile observation O02, state-0, x_mm=0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Radial profile O02 at x=0 measures contrast 100 units from r=0 to 124.9 um, then 20 units at r=125.1 and 150 um; the boundary lies between 124.9 and 125.1 um.",
+      "supersedes": []
+    },
+    "A-O02-UNIFORM": {
+      "evidence_refs": [
+        "C0006",
+        "O02"
+      ],
+      "id": "A-O02-UNIFORM",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "radial_profile observation O02, state-0, x_mm=0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Radial profile O02 shows no resolved internal contrast step at sampled radii 0, 2, 3.9, 4.1, 20, 62.4, 62.6, 90 and 124.9 um; all sampled values are 100 units.",
+      "supersedes": []
+    },
+    "A-O02-SCOPE": {
+      "evidence_refs": [
+        "C0006",
+        "O02"
+      ],
+      "id": "A-O02-SCOPE",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "radial_profile observation O02 field note, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Radial profile O02 was measured on one section only; axial symmetry and continuity between sections were not measured.",
+      "supersedes": []
+    },
+    "A-O02-BOUNDARY": {
+      "evidence_refs": [
+        "C0006",
+        "O02",
+        "C0005",
+        "O01"
+      ],
+      "id": "A-O02-BOUNDARY",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "radial_profile O02 and overview O01, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The O02 boundary between 124.9 and 125.1 um is consistent with the O01 external boundary interval 124.9-125.1 um.",
+      "supersedes": []
+    },
+    "A-DREF3-DUP": {
+      "evidence_refs": [
+        "C0007",
+        "D-REF-3"
+      ],
+      "id": "A-DREF3-DUP",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "material:P-A resource revision 1 payload D-REF-3",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Reading material:P-A returns record D-REF-3, the same reference entry as D02, and its scope note states it is not a new chemical analysis of S17.",
+      "supersedes": []
+    },
+    "A-O04-VALUES": {
+      "evidence_refs": [
+        "C0008",
+        "O04"
+      ],
+      "id": "A-O04-VALUES",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "material_response observation O04, state-0, x_mm=0, radius_um=2",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Material_response O04 at S17 x=0, radius 2 um reports channel values [0.9,0.2,0.1,0.05,0.05] on q1-q5.",
+      "supersedes": []
+    },
+    "A-O04-GLASS-MATCH": {
+      "evidence_refs": [
+        "C0008",
+        "O04",
+        "C0004",
+        "D02"
+      ],
+      "id": "A-O04-GLASS-MATCH",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "response_matches_reference",
+      "scope": "comparison of O04 to doc:references@1 glass reference G, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "O04 response [0.9,0.2,0.1,0.05,0.05] at S17 x=0, radius 2 um matches material:glass reference G within reported tolerance; per D01 this match does not establish unique composition.",
+      "supersedes": []
+    },
+    "A-O06-VALUES": {
+      "evidence_refs": [
+        "C0009",
+        "O06"
+      ],
+      "id": "A-O06-VALUES",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "material_response observation O06, state-0, x_mm=0, radius_um=90",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Material_response O06 at S17 x=0, radius 90 um reports channel values [0.9,0.2,0.1,0.05,0.05] on q1-q5.",
+      "supersedes": []
+    },
+    "A-O06-GLASS-MATCH": {
+      "evidence_refs": [
+        "C0009",
+        "O06",
+        "C0004",
+        "D02"
+      ],
+      "id": "A-O06-GLASS-MATCH",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "response_matches_reference",
+      "scope": "comparison of O06 to doc:references@1 glass reference G, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "O06 response at S17 x=0, radius 90 um matches material:glass reference G within reported tolerance; per D01 this does not establish unique composition.",
+      "supersedes": []
+    },
+    "A-O04-O06-SAME": {
+      "evidence_refs": [
+        "C0009",
+        "O06",
+        "C0008",
+        "O04"
+      ],
+      "id": "A-O04-O06-SAME",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "material_response observations O04 and O06, state-0, x_mm=0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "O04 at radius 2 um and O06 at radius 90 um report identical channel values [0.9,0.2,0.1,0.05,0.05], so S17 interior composition is indistinguishable at these two radii within tolerance.",
+      "supersedes": []
+    },
+    "A-O03-PROFILE": {
+      "evidence_refs": [
+        "C0010",
+        "O03"
+      ],
+      "id": "A-O03-PROFILE",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "radial_profile observation O03, state-0, x_mm=500",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Radial profile O03 at x=500 measures contrast 100 units from r=0 to 124.9 um, then 20 units at r=125.1 and 150 um, with no resolved internal step at the sampled radii.",
+      "supersedes": []
+    },
+    "A-O02-O03-SAME": {
+      "evidence_refs": [
+        "C0010",
+        "O03",
+        "C0006",
+        "O02"
+      ],
+      "id": "A-O02-O03-SAME",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "radial_profile observations O02 (x=0) and O03 (x=500), state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "O02 and O03 report identical contrast values at all sampled radii, so the ~125 um boundary interval is the same at the two measured sections; only two of the 1000 mm length were sampled.",
+      "supersedes": []
+    },
+    "A-O05-VALUES": {
+      "evidence_refs": [
+        "C0011",
+        "O05"
+      ],
+      "id": "A-O05-VALUES",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "material_response observation O05, state-0, x_mm=0, radius_um=20",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Material_response O05 at S17 x=0, radius 20 um reports channel values [0.9,0.2,0.1,0.05,0.05] on q1-q5.",
+      "supersedes": []
+    },
+    "A-O05-GLASS-MATCH": {
+      "evidence_refs": [
+        "C0011",
+        "O05",
+        "C0004",
+        "D02"
+      ],
+      "id": "A-O05-GLASS-MATCH",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "response_matches_reference",
+      "scope": "comparison of O05 to doc:references@1 glass reference G, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "O05 response at S17 x=0, radius 20 um matches material:glass reference G within reported tolerance; per D01 this does not establish unique composition.",
+      "supersedes": []
+    },
+    "A-O04-O05-O06-SAME": {
+      "evidence_refs": [
+        "C0011",
+        "O05",
+        "C0008",
+        "O04",
+        "C0009",
+        "O06"
+      ],
+      "id": "A-O04-O05-O06-SAME",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "material_response observations O04, O05, O06, state-0, x_mm=0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "O04 (r=2), O05 (r=20) and O06 (r=90) all report identical channel values [0.9,0.2,0.1,0.05,0.05], so S17 interior is indistinguishable at these three radii within tolerance.",
+      "supersedes": []
+    },
+    "A-O08-TIMES": {
+      "evidence_refs": [
+        "C0012",
+        "O08"
+      ],
+      "id": "A-O08-TIMES",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "instrument:pulse_clock",
+          "role": "instrument"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "pulse_trace observation O08, state-0, 20 C",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "pulse_trace O08 records input times [0, 100, 200] ns and output times [5.0, 105.0, 205.0] ns at S17 ports S17:in and S17:out.",
+      "supersedes": []
+    },
+    "A-O08-DELAY": {
+      "evidence_refs": [
+        "C0012",
+        "O08",
+        "C0003",
+        "D01"
+      ],
+      "id": "A-O08-DELAY",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "instrument:pulse_clock",
+          "role": "instrument"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "pulse_trace observation O08, state-0, 20 C",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "O08 shows a constant 5.0 ns input-to-output delay for all three pulses, consistent with a fixed total path, but per D01 the internal path is not observed so no layer structure follows.",
+      "supersedes": []
+    },
+    "A-ERR13-FAIL": {
+      "evidence_refs": [
+        "ERROR-13"
+      ],
+      "id": "A-ERR13-FAIL",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "V04",
+          "role": "target_cell"
+        }
+      ],
+      "relation": "access_failure",
+      "scope": "failed set_temperature attempt ERROR-13, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "A set_temperature attempt (ERROR-13) failed with a protocol error and empty arguments; this is an access failure, not a physical measurement or a material impossibility.",
+      "supersedes": []
+    },
+    "A-ERR14-FAIL": {
+      "evidence_refs": [
+        "ERROR-14"
+      ],
+      "id": "A-ERR14-FAIL",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        }
+      ],
+      "relation": "access_failure",
+      "scope": "rejected candidate ERROR-14, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "A second attempt (ERROR-14) was rejected as a protocol error with graph_unchanged true, so the O08 pulse_trace assertions were not persisted by that attempt.",
+      "supersedes": []
+    },
+    "A-DREF4-DUP": {
+      "evidence_refs": [
+        "C0013",
+        "D-REF-4"
+      ],
+      "id": "A-DREF4-DUP",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "material:P-B resource revision 1 payload D-REF-4",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Reading material:P-B returns record D-REF-4, the same reference entry as D02, and its scope note states it is not a new chemical analysis of S17.",
+      "supersedes": []
+    },
+    "A-PA-PB-NODIFF": {
+      "evidence_refs": [
+        "C0013",
+        "D-REF-4",
+        "C0007",
+        "D-REF-3",
+        "C0004",
+        "D02"
+      ],
+      "id": "A-PA-PB-NODIFF",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "material:P-A D-REF-3 and material:P-B D-REF-4 resource reads, state-0",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Both resource reads return identical D02 entries with response [0.1,0.1,0.8,0.3,0.2], so the reference library supplies no additional data separating P-A from P-B.",
+      "supersedes": []
+    },
+    "A-C0014-TEMP": {
+      "evidence_refs": [
+        "C0014",
+        "A01"
+      ],
+      "id": "A-C0014-TEMP",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "actuator:temperature-controller",
+          "role": "actuator"
+        },
+        {
+          "entity_id": "V04",
+          "role": "cell"
+        },
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "U09",
+          "role": "contents"
+        }
+      ],
+      "relation": "intervention_reports",
+      "scope": "intervention record A01, state-0 to state-1",
+      "state_refs": [
+        "state-0",
+        "state-1"
+      ],
+      "statement": "set_temperature C0014 changed state-0 to state-1, cell and sample sensors read 40 C, and identity of S17, V04, U09 was preserved.",
+      "supersedes": []
+    },
+    "A-C0015-DUP": {
+      "evidence_refs": [
+        "C0015",
+        "D-REF-3"
+      ],
+      "id": "A-C0015-DUP",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "material:P-A resource read C0015 at state-1 (40 C), revision 1 payload D-REF-3",
+      "state_refs": [
+        "state-1"
+      ],
+      "statement": "Reading material:P-A at state-1 (40 C) returns the same D-REF-3 entry as at state-0, with reference_conditions 20 C and additional_data null, so the resource supplies no 40 C reference data.",
+      "supersedes": []
+    },
+    "A-O09-TIMES": {
+      "evidence_refs": [
+        "C0016",
+        "O09"
+      ],
+      "id": "A-O09-TIMES",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "instrument:pulse_clock",
+          "role": "instrument"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "pulse_trace observation O09, state-1, 40 C",
+      "state_refs": [
+        "state-1"
+      ],
+      "statement": "pulse_trace O09 at state-1 (40 C) records input times [0, 100, 200] ns and output times [5.01, 105.01, 205.01] ns at S17 ports S17:in and S17:out.",
+      "supersedes": []
+    },
+    "A-O09-DELAY-SHIFT": {
+      "evidence_refs": [
+        "C0016",
+        "O09",
+        "C0012",
+        "O08",
+        "C0003",
+        "D01"
+      ],
+      "id": "A-O09-DELAY-SHIFT",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "instrument:pulse_clock",
+          "role": "instrument"
+        }
+      ],
+      "relation": "observation_reports",
+      "scope": "comparison of pulse_trace O08 (state-0, 20 C) and O09 (state-1, 40 C)",
+      "state_refs": [
+        "state-0",
+        "state-1"
+      ],
+      "statement": "The constant input-to-output delay is 5.0 ns at 20 C and 5.01 ns at 40 C; the 0.01 ns shift is ten times the 0.001 ns clock resolution, so it is a resolved change, but per D01 the internal path is unobserved and no layer structure follows.",
+      "supersedes": []
+    },
+    "A-DREF2-DUP": {
+      "evidence_refs": [
+        "C0017",
+        "D-REF-2"
+      ],
+      "id": "A-DREF2-DUP",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:additive",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "material:additive resource read C0017 at state-1 (40 C), revision 1 payload D-REF-2",
+      "state_refs": [
+        "state-1"
+      ],
+      "statement": "Reading material:additive returns record D-REF-2, the same D02 entry with reference_conditions 20 C and additional_data null, so it supplies no 40 C data and is not a new analysis of S17.",
+      "supersedes": []
+    },
+    "A-REF-LIB-NO-CONSTRAINT": {
+      "evidence_refs": [
+        "C0017",
+        "D-REF-2",
+        "C0015",
+        "D-REF-3",
+        "C0013",
+        "D-REF-4",
+        "C0004",
+        "D02"
+      ],
+      "id": "A-REF-LIB-NO-CONSTRAINT",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:P-A",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:additive",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "resource reads of material:P-A, material:P-B and material:additive, state-0 and state-1",
+      "state_refs": [
+        "state-0",
+        "state-1"
+      ],
+      "statement": "All three resource reads return only their unchanged D02 entries with no additional data, so the open reference library provides no new constraint on S17's coating material.",
+      "supersedes": []
+    },
+    "A-C0018-TEMP": {
+      "evidence_refs": [
+        "C0018",
+        "A02"
+      ],
+      "id": "A-C0018-TEMP",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "actuator:temperature-controller",
+          "role": "actuator"
+        },
+        {
+          "entity_id": "V04",
+          "role": "cell"
+        },
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "U09",
+          "role": "contents"
+        }
+      ],
+      "relation": "intervention_reports",
+      "scope": "intervention record A02, state-1 to state-2",
+      "state_refs": [
+        "state-1",
+        "state-2"
+      ],
+      "statement": "set_temperature C0018 changed state-1 to state-2, cell and sample sensors read 20 C, and identity of S17, V04, U09 was preserved.",
+      "supersedes": []
+    },
+    "A-CAT-REV2-LINKS": {
+      "evidence_refs": [
+        "C0019",
+        "D00-B"
+      ],
+      "id": "A-CAT-REV2-LINKS",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "linked_document"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "linked_document"
+        },
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "linked_document"
+        }
+      ],
+      "relation": "catalog_links",
+      "scope": "catalog:root revision 2 payload D00-B",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "Catalog root revision 2 still lists doc:calibration@1, doc:references@1 and doc:model-M7@1 with unchanged titles.",
+      "supersedes": []
+    },
+    "A-CAT-REV2-BATCH": {
+      "evidence_refs": [
+        "C0019",
+        "D00-B"
+      ],
+      "id": "A-CAT-REV2-BATCH",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "linked_document"
+        }
+      ],
+      "relation": "catalog_links",
+      "scope": "catalog:root revision 2 payload D00-B",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "Catalog root revision 2 newly lists doc:batch-S17@1 titled 'Batch record of sample S17', a document absent from revision 1.",
+      "supersedes": []
+    },
+    "A-D04-PB-COATING": {
+      "evidence_refs": [
+        "C0020",
+        "D04"
+      ],
+      "id": "A-D04-PB-COATING",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject_sample"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "material"
+        },
+        {
+          "entity_id": "batch:B17",
+          "role": "batch"
+        }
+      ],
+      "relation": "document_reports",
+      "scope": "doc:batch-S17@1 revision 1 payload D04",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "doc:batch-S17@1 reports that S17 (batch B17) external coating is made of polymer P-B.",
+      "supersedes": []
+    },
+    "A-D04-VERIF": {
+      "evidence_refs": [
+        "C0020",
+        "D04"
+      ],
+      "id": "A-D04-VERIF",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject_sample"
+        }
+      ],
+      "relation": "document_scope_note",
+      "scope": "doc:batch-S17@1 revision 1 payload D04 verification_note",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "doc:batch-S17@1 verification note states the coating claim is a manufacturer statement, not an independent composition analysis.",
+      "supersedes": []
+    },
+    "A-D04-VS-D03-COATING": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0002",
+        "D03"
+      ],
+      "id": "A-D04-VS-D03-COATING",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject_sample"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "material"
+        }
+      ],
+      "relation": "claims_conflict",
+      "scope": "comparison of doc:model-M7@1 typical-version claim and doc:batch-S17@1 S17 batch claim",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "doc:model-M7@1 says the typical M7 coating is P-A while doc:batch-S17@1 says S17's coating is P-B; the scopes differ (typical model vs specific sample) so this is a tension, not a proven contradiction.",
+      "supersedes": []
+    },
+    "A-C0021-REPEAT": {
+      "evidence_refs": [
+        "C0021",
+        "D00-B",
+        "C0019"
+      ],
+      "id": "A-C0021-REPEAT",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "linked_document"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "linked_document"
+        },
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "linked_document"
+        },
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "linked_document"
+        }
+      ],
+      "relation": "catalog_links",
+      "scope": "catalog:root revision 2 payload D00-B re-read at state-2 (C0021)",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "Re-reading catalog:root at state-2 returns the same revision 2 payload D00-B as C0019, listing the same four documents, so no further catalog revision occurred in this window.",
+      "supersedes": []
+    },
+    "A-D04-NO-SERIAL": {
+      "evidence_refs": [
+        "C0020",
+        "D04"
+      ],
+      "id": "A-D04-NO-SERIAL",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:batch-S17@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject_sample"
+        },
+        {
+          "entity_id": "batch:B17",
+          "role": "batch"
+        }
+      ],
+      "relation": "document_scope_note",
+      "scope": "doc:batch-S17@1 revision 1 payload D04",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "doc:batch-S17@1 supplies batch B17 and a manufacturer coating claim but no serial number, no actual-condition data and no independent composition analysis.",
+      "supersedes": []
+    },
+    "A-PB-UNSAMPLED": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0004",
+        "D02",
+        "C0008",
+        "O04",
+        "C0011",
+        "O05",
+        "C0009",
+        "O06"
+      ],
+      "id": "A-PB-UNSAMPLED",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "sample"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reference_material"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "reference_material"
+        }
+      ],
+      "relation": "response_matches_reference",
+      "scope": "comparison of S17 interior material_response radii 2, 20, 90 um to P-B and glass references",
+      "state_refs": [
+        "state-2"
+      ],
+      "statement": "S17 interior responses at r=2, 20, 90 um match glass [0.9,0.2,0.1,0.05,0.05] and not P-B [0.1,0.1,0.8,0.3,0.2], so if the reported P-B coating exists it lies outside the sampled radii, near the unsampled ~125 um boundary.",
+      "supersedes": []
+    }
+  },
+  "questions": {
+    "QROOT": {
+      "id": "QROOT",
+      "text": "Исследуйте устройство образца S17 и его окружение. Сохраняйте найденные объекты, связи, основания и открытые вопросы. Различайте наблюдения, сообщения источников и гипотезы. Порядок, число объектов и глубина разбиения не заданы.",
+      "targets": [
+        "S17"
+      ],
+      "parent_ids": [],
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    "QDOC": {
+      "evidence_refs": [
+        "START"
+      ],
+      "id": "QDOC",
+      "parent_ids": [
+        "QROOT"
+      ],
+      "targets": [
+        "catalog:root"
+      ],
+      "text": "Какие документы, калибровки или материалы доступны через catalog:root и какие из них относятся к S17?"
+    },
+    "QMODEL": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "QMODEL",
+      "parent_ids": [
+        "QDOC",
+        "QROOT"
+      ],
+      "targets": [
+        "doc:model-M7@1",
+        "S17"
+      ],
+      "text": "What does doc:model-M7@1 report about model M7 and how, if at all, does it relate to S17's external marking M7?"
+    },
+    "QMAT": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "QMAT",
+      "parent_ids": [
+        "QMODEL",
+        "QDOC"
+      ],
+      "targets": [
+        "material:P-A",
+        "doc:references@1",
+        "S17"
+      ],
+      "text": "What does doc:references@1 report about material P-A responses, and can it constrain S17's coating?"
+    },
+    "QINSTR": {
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "QINSTR",
+      "parent_ids": [
+        "QDOC"
+      ],
+      "targets": [
+        "doc:calibration@1",
+        "S17"
+      ],
+      "text": "Do the reported instrument limits (resolvable step 5 units, tolerance 0.001, non-unique composition) constrain how S17 observations may be interpreted?"
+    },
+    "QSTRUCT": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "QSTRUCT",
+      "parent_ids": [
+        "QROOT"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "What is S17's internal radial structure, and how does the ~125 um external boundary relate to any coating or core?"
+    },
+    "QENV": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "QENV",
+      "parent_ids": [
+        "QROOT"
+      ],
+      "targets": [
+        "V04",
+        "U09",
+        "S17"
+      ],
+      "text": "What are V04 and U09, and how do temperature and material_response of U09 interact with S17?"
+    },
+    "QAXIAL": {
+      "evidence_refs": [
+        "C0006",
+        "O02"
+      ],
+      "id": "QAXIAL",
+      "parent_ids": [
+        "QSTRUCT"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "Does S17's radial profile vary with axial position x, and is the ~125 um boundary uniform along the length?"
+    },
+    "QCOATING": {
+      "evidence_refs": [
+        "C0006",
+        "O02",
+        "C0005",
+        "O01"
+      ],
+      "id": "QCOATING",
+      "parent_ids": [
+        "QSTRUCT",
+        "QMAT"
+      ],
+      "targets": [
+        "S17",
+        "U09"
+      ],
+      "text": "Is the contrast drop at ~125 um a coating boundary, and can material_response at U09 distinguish the coating material?"
+    },
+    "QINTERNAL": {
+      "evidence_refs": [
+        "C0006",
+        "O02",
+        "C0003",
+        "D01"
+      ],
+      "id": "QINTERNAL",
+      "parent_ids": [
+        "QSTRUCT"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "Are there any internal layers below the 5-unit resolvable step that the radial_profile instrument cannot resolve?"
+    },
+    "QCOMP": {
+      "evidence_refs": [
+        "C0006",
+        "C0007"
+      ],
+      "id": "QCOMP",
+      "parent_ids": [
+        "QSTRUCT",
+        "QCOATING"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "What does material_response at S17 radii report about internal composition or layers, and does it match any reference material?"
+    },
+    "QPULSE": {
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "QPULSE",
+      "parent_ids": [
+        "QSTRUCT",
+        "QINSTR"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "What do pulse_trace input/output times report for S17, and can they constrain internal path length or layer structure given that the internal path is not observed?"
+    },
+    "QPULSE-DELAY": {
+      "evidence_refs": [
+        "C0012",
+        "O08"
+      ],
+      "id": "QPULSE-DELAY",
+      "parent_ids": [
+        "QPULSE"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "What effective path or medium does the constant 5.0 ns delay imply, given that the internal pulse path is not observed?"
+    },
+    "QTEMP": {
+      "evidence_refs": [
+        "ERROR-13",
+        "START"
+      ],
+      "id": "QTEMP",
+      "parent_ids": [
+        "QENV",
+        "QROOT"
+      ],
+      "targets": [
+        "V04",
+        "U09",
+        "S17"
+      ],
+      "text": "What changes in S17, V04 and U09 observations at 40 C (state-1) and after return to 20 C (state-2)?"
+    },
+    "QCOATING-BOUNDARY": {
+      "evidence_refs": [
+        "C0008",
+        "O04",
+        "C0011",
+        "O05",
+        "C0009",
+        "O06"
+      ],
+      "id": "QCOATING-BOUNDARY",
+      "parent_ids": [
+        "QCOATING",
+        "QCOMP"
+      ],
+      "targets": [
+        "S17",
+        "U09"
+      ],
+      "text": "Can material_response sample the ~125 um boundary region at all, given that the available radii are 2, 20 and 90 um?"
+    },
+    "QMAT-TEMP": {
+      "evidence_refs": [
+        "C0014",
+        "A01"
+      ],
+      "id": "QMAT-TEMP",
+      "parent_ids": [
+        "QMAT"
+      ],
+      "targets": [
+        "material:P-A",
+        "S17"
+      ],
+      "text": "Does material:P-A reference response change at 40 C, and can it constrain S17's coating at state-1?"
+    },
+    "QPULSE-TEMP": {
+      "evidence_refs": [
+        "C0012",
+        "O08",
+        "C0014",
+        "A01"
+      ],
+      "id": "QPULSE-TEMP",
+      "parent_ids": [
+        "QPULSE-DELAY",
+        "QTEMP"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "Does the constant 5.0 ns pulse_trace input-to-output delay change at 40 C (state-1)?"
+    },
+    "QPULSE-TEMP-SHIFT": {
+      "evidence_refs": [
+        "C0016",
+        "O09",
+        "C0012",
+        "O08"
+      ],
+      "id": "QPULSE-TEMP-SHIFT",
+      "parent_ids": [
+        "QPULSE-TEMP",
+        "QPULSE-DELAY"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "Does the resolved 0.01 ns delay increase at 40 C indicate a temperature-dependent path or medium, given that the internal pulse path is not observed?"
+    },
+    "QPULSE-TEMP-REVERSIBILITY": {
+      "evidence_refs": [
+        "C0016",
+        "O09",
+        "C0012",
+        "O08"
+      ],
+      "id": "QPULSE-TEMP-REVERSIBILITY",
+      "parent_ids": [
+        "QPULSE-TEMP-SHIFT",
+        "QTEMP"
+      ],
+      "targets": [
+        "S17",
+        "V04"
+      ],
+      "text": "Does the resolved 0.01 ns pulse delay shift at 40 C revert when V04 returns to 20 C (state-2), indicating a reversible temperature-dependent path?"
+    },
+    "QMAT-UPDATE": {
+      "evidence_refs": [
+        "EVENT-new_source",
+        "C0001",
+        "D00-A"
+      ],
+      "id": "QMAT-UPDATE",
+      "parent_ids": [
+        "QMAT"
+      ],
+      "targets": [
+        "catalog:root",
+        "doc:references@1",
+        "S17"
+      ],
+      "text": "Has catalog:root or the reference library been revised in the new source window, and does any revision now constrain S17's coating material?"
+    },
+    "QS17-BATCH": {
+      "evidence_refs": [
+        "C0019",
+        "D00-B"
+      ],
+      "id": "QS17-BATCH",
+      "parent_ids": [
+        "QDOC",
+        "QROOT"
+      ],
+      "targets": [
+        "doc:batch-S17@1",
+        "S17"
+      ],
+      "text": "What does doc:batch-S17@1 report about S17's batch, serial number and actual conditions, and does it identify S17's coating material?"
+    },
+    "QCOATING-CONFLICT": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0002",
+        "D03"
+      ],
+      "id": "QCOATING-CONFLICT",
+      "parent_ids": [
+        "QS17-BATCH",
+        "QCOATING"
+      ],
+      "targets": [
+        "S17",
+        "material:P-A",
+        "material:P-B"
+      ],
+      "text": "Does the P-B batch claim for S17 conflict with the P-A typical-model claim, and can any observation test which material is actually at S17's ~125 um boundary?"
+    },
+    "QCOATING-PB-TEST": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0004",
+        "D02"
+      ],
+      "id": "QCOATING-PB-TEST",
+      "parent_ids": [
+        "QCOATING",
+        "QMAT"
+      ],
+      "targets": [
+        "S17",
+        "material:P-B",
+        "material:glass"
+      ],
+      "text": "Given that P-A and P-B have identical reference responses and S17's interior matches glass, can material_response at the boundary region distinguish a P-B coating from the glass-like interior?"
+    },
+    "QCOATING-PB-BOUNDARY": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0006",
+        "O02"
+      ],
+      "id": "QCOATING-PB-BOUNDARY",
+      "parent_ids": [
+        "QCOATING-PB-TEST",
+        "QCOATING-BOUNDARY"
+      ],
+      "targets": [
+        "S17",
+        "material:P-B"
+      ],
+      "text": "Is there any exposed method or radius that can sample the ~125 um boundary region to test whether a P-B coating is actually present on S17?"
+    }
+  },
+  "question_updates": {
+    "QU-QDOC-1": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "QU-QDOC-1",
+      "question_id": "QDOC",
+      "reason": "Catalog revision 1 exposes three document refs; their relation to S17 is not yet established.",
+      "status": "open"
+    },
+    "QU-QMODEL-2": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "QU-QMODEL-2",
+      "question_id": "QMODEL",
+      "reason": "D03 reports model M7 claims but explicitly does not specify S17 number or actual conditions, so relation to S17 is not established.",
+      "status": "answered"
+    },
+    "QU-QDOC-2": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "QU-QDOC-2",
+      "question_id": "QDOC",
+      "reason": "Model-M7 document read; calibration and reference documents remain unread for S17 relevance.",
+      "status": "open"
+    },
+    "QU-QDOC-3": {
+      "evidence_refs": [
+        "C0003",
+        "D01"
+      ],
+      "id": "QU-QDOC-3",
+      "question_id": "QDOC",
+      "reason": "Calibration document read; doc:references@1 still unread for S17 relevance.",
+      "status": "open"
+    },
+    "QU-QDOC-4": {
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "QU-QDOC-4",
+      "question_id": "QDOC",
+      "reason": "All three catalog documents are read; none explicitly identifies S17, so relation to S17 remains open pending S17 observation.",
+      "status": "open"
+    },
+    "QU-QMAT-2": {
+      "evidence_refs": [
+        "C0004",
+        "D02"
+      ],
+      "id": "QU-QMAT-2",
+      "question_id": "QMAT",
+      "reason": "Reference library read; P-A and P-B are indistinguishable, so it cannot uniquely identify S17 coating, which is still unobserved.",
+      "status": "open"
+    },
+    "QU-QDOC-5": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "QU-QDOC-5",
+      "question_id": "QDOC",
+      "reason": "All catalog documents read and S17 now observed; no document explicitly identifies S17, so relation remains open.",
+      "status": "open"
+    },
+    "QU-QROOT-1": {
+      "evidence_refs": [
+        "C0005",
+        "O01"
+      ],
+      "id": "QU-QROOT-1",
+      "question_id": "QROOT",
+      "reason": "Overview gives only external boundary ~125 um; internal structure still unresolved.",
+      "status": "open"
+    },
+    "QU-QSTRUCT-2": {
+      "evidence_refs": [
+        "C0006",
+        "O02"
+      ],
+      "id": "QU-QSTRUCT-2",
+      "question_id": "QSTRUCT",
+      "reason": "Radial profile at x=0 shows uniform contrast to 124.9 um and a drop to 20 outside; internal structure and axial variation remain unresolved.",
+      "status": "open"
+    },
+    "QU-QDOC-6": {
+      "evidence_refs": [
+        "C0006",
+        "O02"
+      ],
+      "id": "QU-QDOC-6",
+      "question_id": "QDOC",
+      "reason": "Catalog documents are read; material resources have not yet been read, so their relation to S17 remains open.",
+      "status": "open"
+    },
+    "QU-QMAT-3": {
+      "evidence_refs": [
+        "C0006",
+        "O02"
+      ],
+      "id": "QU-QMAT-3",
+      "question_id": "QMAT",
+      "reason": "Radial profile shows a boundary but material_response has not been measured; the reference library cannot distinguish P-A and P-B.",
+      "status": "open"
+    },
+    "QU-QDOC-7": {
+      "evidence_refs": [
+        "C0007",
+        "D-REF-3"
+      ],
+      "id": "QU-QDOC-7",
+      "question_id": "QDOC",
+      "reason": "All catalog documents and the material:P-A resource are read; none explicitly identifies S17, so the catalog-to-S17 relation is exhausted.",
+      "status": "answered"
+    },
+    "QU-QMAT-4": {
+      "evidence_refs": [
+        "C0007",
+        "D-REF-3"
+      ],
+      "id": "QU-QMAT-4",
+      "question_id": "QMAT",
+      "reason": "material:P-A read returns only the D02 entry; the library still cannot distinguish P-A from P-B and S17's coating is unmeasured.",
+      "status": "open"
+    },
+    "QU-QMAT-5": {
+      "evidence_refs": [
+        "C0008",
+        "O04"
+      ],
+      "id": "QU-QMAT-5",
+      "question_id": "QMAT",
+      "reason": "O04 at radius 2 matches glass, not P-A; P-A remains unobserved in S17, so QMAT remains open.",
+      "status": "open"
+    },
+    "QU-QCOATING-1": {
+      "evidence_refs": [
+        "C0008",
+        "O04"
+      ],
+      "id": "QU-QCOATING-1",
+      "question_id": "QCOATING",
+      "reason": "O04 samples only r=2 and matches glass; the ~125 um boundary region is not yet sampled.",
+      "status": "open"
+    },
+    "QU-QCOMP-1": {
+      "evidence_refs": [
+        "C0008",
+        "O04"
+      ],
+      "id": "QU-QCOMP-1",
+      "question_id": "QCOMP",
+      "reason": "O04 provides one radial composition point matching glass; radial variation remains unmeasured.",
+      "status": "open"
+    },
+    "QU-QMAT-6": {
+      "evidence_refs": [
+        "C0009",
+        "O06"
+      ],
+      "id": "QU-QMAT-6",
+      "question_id": "QMAT",
+      "reason": "O06 at radius 90 also matches glass, not P-A; P-A remains unobserved in S17.",
+      "status": "open"
+    },
+    "QU-QCOMP-2": {
+      "evidence_refs": [
+        "C0009",
+        "O06"
+      ],
+      "id": "QU-QCOMP-2",
+      "question_id": "QCOMP",
+      "reason": "Two interior radii (2 and 90 um) both match glass, but the ~125 um boundary region and any layer between are still unsampled.",
+      "status": "open"
+    },
+    "QU-QCOATING-2": {
+      "evidence_refs": [
+        "C0009",
+        "O06"
+      ],
+      "id": "QU-QCOATING-2",
+      "question_id": "QCOATING",
+      "reason": "O06 samples interior at r=90, not the boundary; the contrast drop at ~125 um is still not attributed to a coating material.",
+      "status": "open"
+    },
+    "QU-QAXIAL-1": {
+      "evidence_refs": [
+        "C0010",
+        "O03"
+      ],
+      "id": "QU-QAXIAL-1",
+      "question_id": "QAXIAL",
+      "reason": "Two sections (x=0 and x=500) give identical profiles, but axial symmetry and continuity between sections remain unmeasured.",
+      "status": "open"
+    },
+    "QU-QMAT-7": {
+      "evidence_refs": [
+        "C0009",
+        "O06",
+        "C0008",
+        "O04"
+      ],
+      "id": "QU-QMAT-7",
+      "question_id": "QMAT",
+      "reason": "Reference library cannot distinguish P-A from P-B, and material_response has sampled only interior radii (2, 90 um), not the ~125 um boundary region where a coating would sit.",
+      "status": "open"
+    },
+    "QU-QMAT-8": {
+      "evidence_refs": [
+        "C0011",
+        "O05"
+      ],
+      "id": "QU-QMAT-8",
+      "question_id": "QMAT",
+      "reason": "O05 at radius 20 also matches glass, not P-A; P-A remains unobserved in S17 and the library cannot separate P-A from P-B.",
+      "status": "open"
+    },
+    "QU-QCOMP-3": {
+      "evidence_refs": [
+        "C0011",
+        "O05"
+      ],
+      "id": "QU-QCOMP-3",
+      "question_id": "QCOMP",
+      "reason": "Three interior radii (2, 20, 90 um) all match glass; the ~125 um boundary region and any layer between remain unsampled.",
+      "status": "open"
+    },
+    "QU-QCOATING-3": {
+      "evidence_refs": [
+        "C0011",
+        "O05"
+      ],
+      "id": "QU-QCOATING-3",
+      "question_id": "QCOATING",
+      "reason": "O05 samples interior at r=20, not the boundary; the contrast drop at ~125 um is still not attributed to a coating material.",
+      "status": "open"
+    },
+    "QU-QPULSE-1": {
+      "evidence_refs": [
+        "C0012",
+        "O08"
+      ],
+      "id": "QU-QPULSE-1",
+      "question_id": "QPULSE",
+      "reason": "O08 gives only a constant 5.0 ns total delay; with the internal path unobserved it cannot resolve internal path length or layers.",
+      "status": "answered"
+    },
+    "QU-QMAT-9": {
+      "evidence_refs": [
+        "C0007",
+        "D-REF-3",
+        "C0004",
+        "D02"
+      ],
+      "id": "QU-QMAT-9",
+      "question_id": "QMAT",
+      "reason": "material_response radii available at state-0 (2, 20, 90 um) are exhausted and all match glass; reading material:P-B tests whether the library can separate P-A from P-B for any coating constraint.",
+      "status": "open"
+    },
+    "QU-QENV-1": {
+      "evidence_refs": [
+        "ERROR-13"
+      ],
+      "id": "QU-QENV-1",
+      "question_id": "QENV",
+      "reason": "Temperature states state-1/state-2 have not been exercised; the first set_temperature attempt failed as a protocol error, so V04/U09 behaviour under temperature remains open.",
+      "status": "open"
+    },
+    "QU-QMAT-10": {
+      "evidence_refs": [
+        "C0013",
+        "D-REF-4"
+      ],
+      "id": "QU-QMAT-10",
+      "question_id": "QMAT",
+      "reason": "material:P-B read returns only the D02 entry; the library still cannot separate P-A from P-B and S17's coating remains unmeasured.",
+      "status": "open"
+    },
+    "QU-QENV-2": {
+      "evidence_refs": [
+        "ERROR-13",
+        "ERROR-14",
+        "START"
+      ],
+      "id": "QU-QENV-2",
+      "question_id": "QENV",
+      "reason": "Temperature states state-1/state-2 remain unexercised; the next attempt uses explicit target_ref and temperature_C to avoid the earlier protocol error.",
+      "status": "open"
+    },
+    "QU-QENV-3": {
+      "evidence_refs": [
+        "C0014",
+        "A01"
+      ],
+      "id": "QU-QENV-3",
+      "question_id": "QENV",
+      "reason": "state-1 reached at 40 C with identity preserved; no observations at 40 C yet.",
+      "status": "open"
+    },
+    "QU-QTEMP-1": {
+      "evidence_refs": [
+        "C0014",
+        "A01"
+      ],
+      "id": "QU-QTEMP-1",
+      "question_id": "QTEMP",
+      "reason": "state-1 reached; observations at 40 C and return to state-2 remain pending.",
+      "status": "open"
+    },
+    "QU-QMAT-TEMP-1": {
+      "evidence_refs": [
+        "C0015",
+        "D-REF-3"
+      ],
+      "id": "QU-QMAT-TEMP-1",
+      "question_id": "QMAT-TEMP",
+      "reason": "material:P-A read at 40 C returns the unchanged 20 C entry with no additional data, so the reference library cannot constrain S17's coating at state-1.",
+      "status": "answered"
+    },
+    "QU-QTEMP-2": {
+      "evidence_refs": [
+        "C0014",
+        "A01",
+        "C0015"
+      ],
+      "id": "QU-QTEMP-2",
+      "question_id": "QTEMP",
+      "reason": "state-1 reached at 40 C; observe methods are unavailable at 40 C but pulse_trace is available, so the 40 C pulse response is the next discriminating measurement.",
+      "status": "open"
+    },
+    "QU-QPULSE-TEMP-1": {
+      "evidence_refs": [
+        "C0016",
+        "O09"
+      ],
+      "id": "QU-QPULSE-TEMP-1",
+      "question_id": "QPULSE-TEMP",
+      "reason": "O09 at 40 C gives 5.01 ns versus 5.0 ns at 20 C, a resolved 0.01 ns shift, so the delay does change with temperature.",
+      "status": "answered"
+    },
+    "QU-QTEMP-3": {
+      "evidence_refs": [
+        "C0016",
+        "O09"
+      ],
+      "id": "QU-QTEMP-3",
+      "question_id": "QTEMP",
+      "reason": "state-1 pulse response measured; observe methods are unavailable at 40 C and return to state-2 (20 C) is still pending.",
+      "status": "open"
+    },
+    "QU-QMAT-11": {
+      "evidence_refs": [
+        "C0016",
+        "O09"
+      ],
+      "id": "QU-QMAT-11",
+      "question_id": "QMAT",
+      "reason": "Reference reads P-A/P-B give no S17 coating constraint; the open reference set still contains additive, water and salt, so the library's coverage of possible coating materials is not yet exhausted.",
+      "status": "open"
+    },
+    "QU-QMAT-12": {
+      "evidence_refs": [
+        "C0017",
+        "D-REF-2"
+      ],
+      "id": "QU-QMAT-12",
+      "question_id": "QMAT",
+      "reason": "material:additive read returns only the D02 entry; the library still cannot separate P-A from P-B and S17's coating remains unmeasured.",
+      "status": "open"
+    },
+    "QU-QTEMP-4": {
+      "evidence_refs": [
+        "C0016",
+        "O09",
+        "C0017"
+      ],
+      "id": "QU-QTEMP-4",
+      "question_id": "QTEMP",
+      "reason": "state-1 pulse response measured and reference reads exhausted; return to 20 C (state-2) is still pending.",
+      "status": "open"
+    },
+    "QU-QTEMP-5": {
+      "evidence_refs": [
+        "C0018",
+        "A02"
+      ],
+      "id": "QU-QTEMP-5",
+      "question_id": "QTEMP",
+      "reason": "state-2 (20 C) reached with identity preserved; state-2 observations have not yet been taken.",
+      "status": "open"
+    },
+    "QU-QENV-4": {
+      "evidence_refs": [
+        "C0018",
+        "A02"
+      ],
+      "id": "QU-QENV-4",
+      "question_id": "QENV",
+      "reason": "V04 returned to 20 C; U09 material_response at state-2 is available but not yet measured.",
+      "status": "open"
+    },
+    "QU-QPULSE-TEMP-REVERSIBILITY-1": {
+      "evidence_refs": [
+        "C0018",
+        "A02",
+        "C0016",
+        "O09"
+      ],
+      "id": "QU-QPULSE-TEMP-REVERSIBILITY-1",
+      "question_id": "QPULSE-TEMP-REVERSIBILITY",
+      "reason": "state-2 reached, so the 40 C 5.01 ns delay can now be re-tested at 20 C; pulse_trace at state-2 not yet run.",
+      "status": "open"
+    },
+    "QU-QPULSE-TEMP-SHIFT-1": {
+      "evidence_refs": [
+        "C0018",
+        "A02",
+        "C0016",
+        "O09"
+      ],
+      "id": "QU-QPULSE-TEMP-SHIFT-1",
+      "question_id": "QPULSE-TEMP-SHIFT",
+      "reason": "The 0.01 ns shift is resolved but its temperature dependence cannot be attributed to a path or medium until the state-2 pulse_trace is compared.",
+      "status": "open"
+    },
+    "QU-QMAT-13": {
+      "evidence_refs": [
+        "EVENT-new_source"
+      ],
+      "id": "QU-QMAT-13",
+      "question_id": "QMAT",
+      "reason": "A new observation window opened and available sources may have updated; the reference library and catalog have not been re-read since revision 1, so QMAT remains open.",
+      "status": "open"
+    },
+    "QU-QMAT-UPDATE-1": {
+      "evidence_refs": [
+        "C0019",
+        "D00-B"
+      ],
+      "id": "QU-QMAT-UPDATE-1",
+      "question_id": "QMAT-UPDATE",
+      "reason": "Catalog:root was revised to revision 2 and adds a batch document, but no revision yet supplies a coating-material constraint for S17.",
+      "status": "open"
+    },
+    "QU-QDOC-8": {
+      "evidence_refs": [
+        "C0019",
+        "D00-B"
+      ],
+      "id": "QU-QDOC-8",
+      "question_id": "QDOC",
+      "reason": "Catalog revision 2 exposes a new unread document doc:batch-S17@1, so the catalog-to-S17 relation is reopened.",
+      "status": "open"
+    },
+    "QU-QROOT-2": {
+      "evidence_refs": [
+        "C0019",
+        "D00-B"
+      ],
+      "id": "QU-QROOT-2",
+      "question_id": "QROOT",
+      "reason": "A new source window added a batch record naming S17, so the sample's documented identity and conditions are again open.",
+      "status": "open"
+    },
+    "QU-QS17-BATCH-1": {
+      "evidence_refs": [
+        "C0020",
+        "D04"
+      ],
+      "id": "QU-QS17-BATCH-1",
+      "question_id": "QS17-BATCH",
+      "reason": "doc:batch-S17@1 gives batch B17 and a manufacturer claim that S17's external coating is P-B, but no serial number or independent analysis.",
+      "status": "answered"
+    },
+    "QU-QDOC-9": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0019",
+        "D00-B"
+      ],
+      "id": "QU-QDOC-9",
+      "question_id": "QDOC",
+      "reason": "All catalog revision-2 documents are read and doc:batch-S17@1 explicitly names S17, so the catalog-to-S17 document relation is established.",
+      "status": "answered"
+    },
+    "QU-QMAT-14": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0008",
+        "O04",
+        "C0011",
+        "O05",
+        "C0009",
+        "O06"
+      ],
+      "id": "QU-QMAT-14",
+      "question_id": "QMAT",
+      "reason": "The library cannot separate P-A from P-B, and the sampled interior radii (2, 20, 90 um) match glass, not P-B, so the reference set still does not constrain S17's coating.",
+      "status": "open"
+    },
+    "QU-QCOATING-4": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0006",
+        "O02"
+      ],
+      "id": "QU-QCOATING-4",
+      "question_id": "QCOATING",
+      "reason": "A coating material P-B is now reported for S17, but material_response radii available (2, 20, 90 um) do not sample the ~125 um boundary where that coating would sit.",
+      "status": "open"
+    },
+    "QU-QMAT-UPDATE-2": {
+      "evidence_refs": [
+        "C0021",
+        "D00-B",
+        "C0019"
+      ],
+      "id": "QU-QMAT-UPDATE-2",
+      "question_id": "QMAT-UPDATE",
+      "reason": "Catalog revision 2 adds only doc:batch-S17@1 and the reference library is unchanged, so no catalog or reference revision supplies a new coating constraint for S17.",
+      "status": "answered"
+    },
+    "QU-QCOATING-CONFLICT-1": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0002",
+        "D03"
+      ],
+      "id": "QU-QCOATING-CONFLICT-1",
+      "question_id": "QCOATING-CONFLICT",
+      "reason": "The P-A typical-model claim and the P-B batch claim remain in tension; no observation yet samples the boundary region where the coating would sit.",
+      "status": "open"
+    },
+    "QU-QCOATING-PB-TEST-1": {
+      "evidence_refs": [
+        "C0020",
+        "D04",
+        "C0008",
+        "O04",
+        "C0011",
+        "O05",
+        "C0009",
+        "O06"
+      ],
+      "id": "QU-QCOATING-PB-TEST-1",
+      "question_id": "QCOATING-PB-TEST",
+      "reason": "Available material_response radii (2, 20, 90 um) all match glass and none samples the ~125 um boundary, so the P-B claim is currently untestable with the exposed methods.",
+      "status": "open"
+    }
+  },
+  "states": {
+    "state-0": {
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    "state-1": {
+      "evidence_refs": [
+        "C0014"
+      ]
+    },
+    "state-2": {
+      "evidence_refs": [
+        "C0018"
+      ]
+    }
+  },
+  "events": [
+    {
+      "revision": 1,
+      "turn": 1,
+      "delta": {
+        "assertions": [],
+        "entities": [],
+        "question_updates": [],
+        "questions": [
+          {
+            "evidence_refs": [
+              "START"
+            ],
+            "id": "QDOC",
+            "parent_ids": [
+              "QROOT"
+            ],
+            "targets": [
+              "catalog:root"
+            ],
+            "text": "Какие документы, калибровки или материалы доступны через catalog:root и какие из них относятся к S17?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 2,
+      "turn": 2,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "A-CAT-CAL",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              },
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "linked_document"
+              }
+            ],
+            "relation": "catalog_links",
+            "scope": "catalog:root revision 1 payload D00-A",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Catalog root revision 1 lists doc:calibration@1 titled 'Calibration and instrument limits'.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "A-CAT-REF",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "linked_document"
+              }
+            ],
+            "relation": "catalog_links",
+            "scope": "catalog:root revision 1 payload D00-A",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Catalog root revision 1 lists doc:references@1 titled 'Reference material responses'.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "A-CAT-M7",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              },
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "linked_document"
+              }
+            ],
+            "relation": "catalog_links",
+            "scope": "catalog:root revision 1 payload D00-A",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Catalog root revision 1 lists doc:model-M7@1 titled 'Typical description of model M7'.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Document linked from catalog:root revision 1, titled 'Calibration and instrument limits'.",
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "doc:calibration@1",
+            "identity_basis": "Catalog link reference doc:calibration@1; document contents not yet read."
+          },
+          {
+            "description": "Document linked from catalog:root revision 1, titled 'Reference material responses'.",
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "doc:references@1",
+            "identity_basis": "Catalog link reference doc:references@1; document contents not yet read."
+          },
+          {
+            "description": "Document linked from catalog:root revision 1, titled 'Typical description of model M7'.",
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "doc:model-M7@1",
+            "identity_basis": "Catalog link reference doc:model-M7@1; document contents not yet read."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "QU-QDOC-1",
+            "question_id": "QDOC",
+            "reason": "Catalog revision 1 exposes three document refs; their relation to S17 is not yet established.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "QMODEL",
+            "parent_ids": [
+              "QDOC",
+              "QROOT"
+            ],
+            "targets": [
+              "doc:model-M7@1",
+              "S17"
+            ],
+            "text": "What does doc:model-M7@1 report about model M7 and how, if at all, does it relate to S17's external marking M7?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "catalog:root lists a document reference in its revision payload.",
+            "id": "catalog_links"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 3,
+      "turn": 3,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "A-D03-REP-PA",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "model:M7",
+                "role": "subject_model"
+              },
+              {
+                "entity_id": "material:P-A",
+                "role": "material"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:model-M7@1 revision 1 payload D03",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:model-M7@1 reports that in typical version the external coating is made of P-A.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "A-D03-COAT-PA",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "model:M7",
+                "role": "model"
+              },
+              {
+                "entity_id": "material:P-A",
+                "role": "material"
+              }
+            ],
+            "relation": "has_coating_material",
+            "scope": "doc:model-M7@1 revision 1 payload D03",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "In model M7 typical version, external coating material is P-A.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "A-D03-DRYAIR",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "model:M7",
+                "role": "subject_model"
+              },
+              {
+                "entity_id": "environment:dry_air",
+                "role": "environment"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:model-M7@1 revision 1 payload D03",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:model-M7@1 reports that in the described example the product is in dry air.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "A-D03-SCOPE",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "unspecified_subject"
+              }
+            ],
+            "relation": "document_scope_note",
+            "scope": "doc:model-M7@1 revision 1 payload D03",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:model-M7@1 scope note states that S17 number and its actual conditions are not specified in the document.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Product model M7 described in doc:model-M7@1; distinct from S17 instance.",
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "model:M7",
+            "identity_basis": "Document subject 'модель изделия M7' in D03."
+          },
+          {
+            "description": "Coating material P-A named in doc:model-M7@1 typical version.",
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "material:P-A",
+            "identity_basis": "Named material in D03 claim."
+          },
+          {
+            "description": "Dry air environment in the described example of model M7.",
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "environment:dry_air",
+            "identity_basis": "Environment named in D03 claim."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "QU-QMODEL-2",
+            "question_id": "QMODEL",
+            "reason": "D03 reports model M7 claims but explicitly does not specify S17 number or actual conditions, so relation to S17 is not established.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "QU-QDOC-2",
+            "question_id": "QDOC",
+            "reason": "Model-M7 document read; calibration and reference documents remain unread for S17 relevance.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "QMAT",
+            "parent_ids": [
+              "QMODEL",
+              "QDOC"
+            ],
+            "targets": [
+              "material:P-A",
+              "doc:references@1",
+              "S17"
+            ],
+            "text": "What does doc:references@1 report about material P-A responses, and can it constrain S17's coating?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "A document report states a claim about a subject within its scope.",
+            "id": "document_reports"
+          },
+          {
+            "description": "A product model's external coating is made of a material.",
+            "id": "has_coating_material"
+          },
+          {
+            "description": "A document report includes a scope limitation about what it does not specify.",
+            "id": "document_scope_note"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 4,
+      "turn": 4,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "A-D01-RADIAL",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "instrument:teaching_fixture",
+                "role": "instrument"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:calibration@1 revision 1 payload D01",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:calibration@1 reports radial_profile limits: contrast repeatability 1 unit, resolvable step 5 units, and boundary localized only between adjacent readings.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "A-D01-MATRESP",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "instrument:teaching_fixture",
+                "role": "instrument"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:calibration@1 revision 1 payload D01",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:calibration@1 reports material_response absolute tolerance 0.001 per channel and that additive-with-mass-fractions mixing is a mock condition, not a law of real spectroscopy.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "A-D01-UNIQ",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "instrument:teaching_fixture",
+                "role": "instrument"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:calibration@1 revision 1 payload D01",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:calibration@1 states matching responses do not establish uniqueness of composition, the reference library is incomplete, and spatial distribution of additive within the measured spot is not distinguished.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "A-D01-PULSE",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "instrument:teaching_fixture",
+                "role": "instrument"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:calibration@1 revision 1 payload D01",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:calibration@1 reports pulse_trace records only input and output on common ideal clocks at 0.001 ns resolution; the pulse path inside the sample is not observed.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Conditional instruments of this teaching fixture, whose limits are described in doc:calibration@1.",
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "instrument:teaching_fixture",
+            "identity_basis": "Document scope 'conditional instruments of this teaching fixture' in D01."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "QU-QDOC-3",
+            "question_id": "QDOC",
+            "reason": "Calibration document read; doc:references@1 still unread for S17 relevance.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "QINSTR",
+            "parent_ids": [
+              "QDOC"
+            ],
+            "targets": [
+              "doc:calibration@1",
+              "S17"
+            ],
+            "text": "Do the reported instrument limits (resolvable step 5 units, tolerance 0.001, non-unique composition) constrain how S17 observations may be interpreted?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 5,
+      "turn": 5,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "A-D02-COND",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "instrument:teaching_fixture",
+                "role": "instrument"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:references@1 revision 1 payload D02",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:references@1 reports reference conditions at 20 C on channels q1-q5 and states the set is open, not all possible materials.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "A-D02-REFS",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:additive",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:P-A",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:water",
+                "role": "reference_material"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:references@1 revision 1 payload D02",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:references@1 reports responses at 20 C: glass [0.9,0.2,0.1,0.05,0.05], additive [0.4,0.8,0.3,0.3,0.1], P-A [0.1,0.1,0.8,0.3,0.2], P-B [0.1,0.1,0.8,0.3,0.2], water [0.05,0.7,0.03,0.02,0.01], salt [0.8,0.05,0.02,0.3,0.4].",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "A-D02-PA-PB",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "material:P-A",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "reference_material"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:references@1 revision 1 payload D02",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:references@1 reports P-A and P-B have identical response [0.1,0.1,0.8,0.3,0.2], so the reference library does not distinguish them.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Quartz glass reference G in doc:references@1.",
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "material:glass",
+            "identity_basis": "Named reference material in D02 payload."
+          },
+          {
+            "description": "GeO2 oxide additive reference X in doc:references@1.",
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "material:additive",
+            "identity_basis": "Named reference material in D02 payload."
+          },
+          {
+            "description": "Polymer P-B reference in doc:references@1.",
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "material:P-B",
+            "identity_basis": "Named reference material in D02 payload."
+          },
+          {
+            "description": "Water reference W in doc:references@1.",
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "material:water",
+            "identity_basis": "Named reference material in D02 payload."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "QU-QDOC-4",
+            "question_id": "QDOC",
+            "reason": "All three catalog documents are read; none explicitly identifies S17, so relation to S17 remains open pending S17 observation.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0004",
+              "D02"
+            ],
+            "id": "QU-QMAT-2",
+            "question_id": "QMAT",
+            "reason": "Reference library read; P-A and P-B are indistinguishable, so it cannot uniquely identify S17 coating, which is still unobserved.",
+            "status": "open"
+          }
+        ],
+        "questions": [],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 6,
+      "turn": 6,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "A-O01-OUTLINE",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "overview observation O01, state-0, 20 C",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Overview O01 measures S17 external boundary radius interval 124.9-125.1 um; smaller radial inhomogeneities are not resolved in this frame.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "A-O01-V04",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "V04",
+                "role": "surrounding_object"
+              },
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "surrounds",
+            "scope": "overview observation O01, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Overview O01 shows a transparent cell V04 around the S17 section.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "A-O01-U09",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "U09",
+                "role": "surrounding_object"
+              },
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "overview observation O01, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Overview O01 shows transparent cell contents U09 touching S17.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "A-O01-CAPS",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "V04",
+                "role": "cell"
+              },
+              {
+                "entity_id": "U09",
+                "role": "contents"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "overview observation O01 capability listing, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Overview O01 reports V04 supports set_temperature at 20/40 C and U09 supports material_response observation.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Transparent cell around the S17 section, visible in overview O01; supports set_temperature 20/40 C.",
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "V04",
+            "identity_basis": "Visible object ref V04 in overview O01 payload."
+          },
+          {
+            "description": "Transparent cell contents touching S17, visible in overview O01; supports material_response observation.",
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "U09",
+            "identity_basis": "Visible object ref U09 in overview O01 payload."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "QU-QDOC-5",
+            "question_id": "QDOC",
+            "reason": "All catalog documents read and S17 now observed; no document explicitly identifies S17, so relation remains open.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "QU-QROOT-1",
+            "question_id": "QROOT",
+            "reason": "Overview gives only external boundary ~125 um; internal structure still unresolved.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "QSTRUCT",
+            "parent_ids": [
+              "QROOT"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "What is S17's internal radial structure, and how does the ~125 um external boundary relate to any coating or core?"
+          },
+          {
+            "evidence_refs": [
+              "C0005",
+              "O01"
+            ],
+            "id": "QENV",
+            "parent_ids": [
+              "QROOT"
+            ],
+            "targets": [
+              "V04",
+              "U09",
+              "S17"
+            ],
+            "text": "What are V04 and U09, and how do temperature and material_response of U09 interact with S17?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "An instrument observation record states a measured fact about a subject.",
+            "id": "observation_reports"
+          },
+          {
+            "description": "An object encloses or is situated around another object.",
+            "id": "surrounds"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 7,
+      "turn": 7,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02"
+            ],
+            "id": "A-O02-PROFILE",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "radial_profile observation O02, state-0, x_mm=0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Radial profile O02 at x=0 measures contrast 100 units from r=0 to 124.9 um, then 20 units at r=125.1 and 150 um; the boundary lies between 124.9 and 125.1 um.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02"
+            ],
+            "id": "A-O02-UNIFORM",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "radial_profile observation O02, state-0, x_mm=0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Radial profile O02 shows no resolved internal contrast step at sampled radii 0, 2, 3.9, 4.1, 20, 62.4, 62.6, 90 and 124.9 um; all sampled values are 100 units.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02"
+            ],
+            "id": "A-O02-SCOPE",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "radial_profile observation O02 field note, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Radial profile O02 was measured on one section only; axial symmetry and continuity between sections were not measured.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02",
+              "C0005",
+              "O01"
+            ],
+            "id": "A-O02-BOUNDARY",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "radial_profile O02 and overview O01, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The O02 boundary between 124.9 and 125.1 um is consistent with the O01 external boundary interval 124.9-125.1 um.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02"
+            ],
+            "id": "QU-QSTRUCT-2",
+            "question_id": "QSTRUCT",
+            "reason": "Radial profile at x=0 shows uniform contrast to 124.9 um and a drop to 20 outside; internal structure and axial variation remain unresolved.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02"
+            ],
+            "id": "QU-QDOC-6",
+            "question_id": "QDOC",
+            "reason": "Catalog documents are read; material resources have not yet been read, so their relation to S17 remains open.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02"
+            ],
+            "id": "QU-QMAT-3",
+            "question_id": "QMAT",
+            "reason": "Radial profile shows a boundary but material_response has not been measured; the reference library cannot distinguish P-A and P-B.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02"
+            ],
+            "id": "QAXIAL",
+            "parent_ids": [
+              "QSTRUCT"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "Does S17's radial profile vary with axial position x, and is the ~125 um boundary uniform along the length?"
+          },
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02",
+              "C0005",
+              "O01"
+            ],
+            "id": "QCOATING",
+            "parent_ids": [
+              "QSTRUCT",
+              "QMAT"
+            ],
+            "targets": [
+              "S17",
+              "U09"
+            ],
+            "text": "Is the contrast drop at ~125 um a coating boundary, and can material_response at U09 distinguish the coating material?"
+          },
+          {
+            "evidence_refs": [
+              "C0006",
+              "O02",
+              "C0003",
+              "D01"
+            ],
+            "id": "QINTERNAL",
+            "parent_ids": [
+              "QSTRUCT"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "Are there any internal layers below the 5-unit resolvable step that the radial_profile instrument cannot resolve?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 8,
+      "turn": 8,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0007",
+              "D-REF-3"
+            ],
+            "id": "A-DREF3-DUP",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:P-A",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "material:P-A resource revision 1 payload D-REF-3",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Reading material:P-A returns record D-REF-3, the same reference entry as D02, and its scope note states it is not a new chemical analysis of S17.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0007",
+              "D-REF-3"
+            ],
+            "id": "QU-QDOC-7",
+            "question_id": "QDOC",
+            "reason": "All catalog documents and the material:P-A resource are read; none explicitly identifies S17, so the catalog-to-S17 relation is exhausted.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "C0007",
+              "D-REF-3"
+            ],
+            "id": "QU-QMAT-4",
+            "question_id": "QMAT",
+            "reason": "material:P-A read returns only the D02 entry; the library still cannot distinguish P-A from P-B and S17's coating is unmeasured.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0006",
+              "C0007"
+            ],
+            "id": "QCOMP",
+            "parent_ids": [
+              "QSTRUCT",
+              "QCOATING"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "What does material_response at S17 radii report about internal composition or layers, and does it match any reference material?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 9,
+      "turn": 9,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0008",
+              "O04"
+            ],
+            "id": "A-O04-VALUES",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "material_response observation O04, state-0, x_mm=0, radius_um=2",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Material_response O04 at S17 x=0, radius 2 um reports channel values [0.9,0.2,0.1,0.05,0.05] on q1-q5.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0008",
+              "O04",
+              "C0004",
+              "D02"
+            ],
+            "id": "A-O04-GLASS-MATCH",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "reference_material"
+              }
+            ],
+            "relation": "response_matches_reference",
+            "scope": "comparison of O04 to doc:references@1 glass reference G, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "O04 response [0.9,0.2,0.1,0.05,0.05] at S17 x=0, radius 2 um matches material:glass reference G within reported tolerance; per D01 this match does not establish unique composition.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0008",
+              "O04"
+            ],
+            "id": "QU-QMAT-5",
+            "question_id": "QMAT",
+            "reason": "O04 at radius 2 matches glass, not P-A; P-A remains unobserved in S17, so QMAT remains open.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0008",
+              "O04"
+            ],
+            "id": "QU-QCOATING-1",
+            "question_id": "QCOATING",
+            "reason": "O04 samples only r=2 and matches glass; the ~125 um boundary region is not yet sampled.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0008",
+              "O04"
+            ],
+            "id": "QU-QCOMP-1",
+            "question_id": "QCOMP",
+            "reason": "O04 provides one radial composition point matching glass; radial variation remains unmeasured.",
+            "status": "open"
+          }
+        ],
+        "questions": [],
+        "relation_types": [
+          {
+            "description": "An observed response matches a named reference material response within stated tolerance.",
+            "id": "response_matches_reference"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 10,
+      "turn": 10,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0009",
+              "O06"
+            ],
+            "id": "A-O06-VALUES",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "material_response observation O06, state-0, x_mm=0, radius_um=90",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Material_response O06 at S17 x=0, radius 90 um reports channel values [0.9,0.2,0.1,0.05,0.05] on q1-q5.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0009",
+              "O06",
+              "C0004",
+              "D02"
+            ],
+            "id": "A-O06-GLASS-MATCH",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "reference_material"
+              }
+            ],
+            "relation": "response_matches_reference",
+            "scope": "comparison of O06 to doc:references@1 glass reference G, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "O06 response at S17 x=0, radius 90 um matches material:glass reference G within reported tolerance; per D01 this does not establish unique composition.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0009",
+              "O06",
+              "C0008",
+              "O04"
+            ],
+            "id": "A-O04-O06-SAME",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "material_response observations O04 and O06, state-0, x_mm=0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "O04 at radius 2 um and O06 at radius 90 um report identical channel values [0.9,0.2,0.1,0.05,0.05], so S17 interior composition is indistinguishable at these two radii within tolerance.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0009",
+              "O06"
+            ],
+            "id": "QU-QMAT-6",
+            "question_id": "QMAT",
+            "reason": "O06 at radius 90 also matches glass, not P-A; P-A remains unobserved in S17.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0009",
+              "O06"
+            ],
+            "id": "QU-QCOMP-2",
+            "question_id": "QCOMP",
+            "reason": "Two interior radii (2 and 90 um) both match glass, but the ~125 um boundary region and any layer between are still unsampled.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0009",
+              "O06"
+            ],
+            "id": "QU-QCOATING-2",
+            "question_id": "QCOATING",
+            "reason": "O06 samples interior at r=90, not the boundary; the contrast drop at ~125 um is still not attributed to a coating material.",
+            "status": "open"
+          }
+        ],
+        "questions": [],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 11,
+      "turn": 11,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0010",
+              "O03"
+            ],
+            "id": "A-O03-PROFILE",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "radial_profile observation O03, state-0, x_mm=500",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Radial profile O03 at x=500 measures contrast 100 units from r=0 to 124.9 um, then 20 units at r=125.1 and 150 um, with no resolved internal step at the sampled radii.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0010",
+              "O03",
+              "C0006",
+              "O02"
+            ],
+            "id": "A-O02-O03-SAME",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "radial_profile observations O02 (x=0) and O03 (x=500), state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "O02 and O03 report identical contrast values at all sampled radii, so the ~125 um boundary interval is the same at the two measured sections; only two of the 1000 mm length were sampled.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0010",
+              "O03"
+            ],
+            "id": "QU-QAXIAL-1",
+            "question_id": "QAXIAL",
+            "reason": "Two sections (x=0 and x=500) give identical profiles, but axial symmetry and continuity between sections remain unmeasured.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0009",
+              "O06",
+              "C0008",
+              "O04"
+            ],
+            "id": "QU-QMAT-7",
+            "question_id": "QMAT",
+            "reason": "Reference library cannot distinguish P-A from P-B, and material_response has sampled only interior radii (2, 90 um), not the ~125 um boundary region where a coating would sit.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0003",
+              "D01"
+            ],
+            "id": "QPULSE",
+            "parent_ids": [
+              "QSTRUCT",
+              "QINSTR"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "What do pulse_trace input/output times report for S17, and can they constrain internal path length or layer structure given that the internal path is not observed?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 12,
+      "turn": 12,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0011",
+              "O05"
+            ],
+            "id": "A-O05-VALUES",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "material_response observation O05, state-0, x_mm=0, radius_um=20",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Material_response O05 at S17 x=0, radius 20 um reports channel values [0.9,0.2,0.1,0.05,0.05] on q1-q5.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0011",
+              "O05",
+              "C0004",
+              "D02"
+            ],
+            "id": "A-O05-GLASS-MATCH",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "reference_material"
+              }
+            ],
+            "relation": "response_matches_reference",
+            "scope": "comparison of O05 to doc:references@1 glass reference G, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "O05 response at S17 x=0, radius 20 um matches material:glass reference G within reported tolerance; per D01 this does not establish unique composition.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0011",
+              "O05",
+              "C0008",
+              "O04",
+              "C0009",
+              "O06"
+            ],
+            "id": "A-O04-O05-O06-SAME",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "material_response observations O04, O05, O06, state-0, x_mm=0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "O04 (r=2), O05 (r=20) and O06 (r=90) all report identical channel values [0.9,0.2,0.1,0.05,0.05], so S17 interior is indistinguishable at these three radii within tolerance.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0011",
+              "O05"
+            ],
+            "id": "QU-QMAT-8",
+            "question_id": "QMAT",
+            "reason": "O05 at radius 20 also matches glass, not P-A; P-A remains unobserved in S17 and the library cannot separate P-A from P-B.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0011",
+              "O05"
+            ],
+            "id": "QU-QCOMP-3",
+            "question_id": "QCOMP",
+            "reason": "Three interior radii (2, 20, 90 um) all match glass; the ~125 um boundary region and any layer between remain unsampled.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0011",
+              "O05"
+            ],
+            "id": "QU-QCOATING-3",
+            "question_id": "QCOATING",
+            "reason": "O05 samples interior at r=20, not the boundary; the contrast drop at ~125 um is still not attributed to a coating material.",
+            "status": "open"
+          }
+        ],
+        "questions": [],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 13,
+      "turn": 15,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0012",
+              "O08"
+            ],
+            "id": "A-O08-TIMES",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "instrument:pulse_clock",
+                "role": "instrument"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "pulse_trace observation O08, state-0, 20 C",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "pulse_trace O08 records input times [0, 100, 200] ns and output times [5.0, 105.0, 205.0] ns at S17 ports S17:in and S17:out.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0012",
+              "O08",
+              "C0003",
+              "D01"
+            ],
+            "id": "A-O08-DELAY",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "instrument:pulse_clock",
+                "role": "instrument"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "pulse_trace observation O08, state-0, 20 C",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "O08 shows a constant 5.0 ns input-to-output delay for all three pulses, consistent with a fixed total path, but per D01 the internal path is not observed so no layer structure follows.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "ERROR-13"
+            ],
+            "id": "A-ERR13-FAIL",
+            "origin": "unresolved",
+            "participants": [
+              {
+                "entity_id": "V04",
+                "role": "target_cell"
+              }
+            ],
+            "relation": "access_failure",
+            "scope": "failed set_temperature attempt ERROR-13, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "A set_temperature attempt (ERROR-13) failed with a protocol error and empty arguments; this is an access failure, not a physical measurement or a material impossibility.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "ERROR-14"
+            ],
+            "id": "A-ERR14-FAIL",
+            "origin": "unresolved",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              }
+            ],
+            "relation": "access_failure",
+            "scope": "rejected candidate ERROR-14, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "A second attempt (ERROR-14) was rejected as a protocol error with graph_unchanged true, so the O08 pulse_trace assertions were not persisted by that attempt.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Pulse-clock instrument that produced pulse_trace record O08 for S17.",
+            "evidence_refs": [
+              "C0012",
+              "O08"
+            ],
+            "id": "instrument:pulse_clock",
+            "identity_basis": "source_ref 'instrument:pulse-clock' in O08 payload."
+          },
+          {
+            "description": "Input port of S17 named in pulse_trace O08.",
+            "evidence_refs": [
+              "C0012",
+              "O08"
+            ],
+            "id": "S17:in",
+            "identity_basis": "Port name 'S17:in' in O08 payload."
+          },
+          {
+            "description": "Output port of S17 named in pulse_trace O08.",
+            "evidence_refs": [
+              "C0012",
+              "O08"
+            ],
+            "id": "S17:out",
+            "identity_basis": "Port name 'S17:out' in O08 payload."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0012",
+              "O08"
+            ],
+            "id": "QU-QPULSE-1",
+            "question_id": "QPULSE",
+            "reason": "O08 gives only a constant 5.0 ns total delay; with the internal path unobserved it cannot resolve internal path length or layers.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "C0007",
+              "D-REF-3",
+              "C0004",
+              "D02"
+            ],
+            "id": "QU-QMAT-9",
+            "question_id": "QMAT",
+            "reason": "material_response radii available at state-0 (2, 20, 90 um) are exhausted and all match glass; reading material:P-B tests whether the library can separate P-A from P-B for any coating constraint.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "ERROR-13"
+            ],
+            "id": "QU-QENV-1",
+            "question_id": "QENV",
+            "reason": "Temperature states state-1/state-2 have not been exercised; the first set_temperature attempt failed as a protocol error, so V04/U09 behaviour under temperature remains open.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0012",
+              "O08"
+            ],
+            "id": "QPULSE-DELAY",
+            "parent_ids": [
+              "QPULSE"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "What effective path or medium does the constant 5.0 ns delay imply, given that the internal pulse path is not observed?"
+          },
+          {
+            "evidence_refs": [
+              "ERROR-13",
+              "START"
+            ],
+            "id": "QTEMP",
+            "parent_ids": [
+              "QENV",
+              "QROOT"
+            ],
+            "targets": [
+              "V04",
+              "U09",
+              "S17"
+            ],
+            "text": "What changes in S17, V04 and U09 observations at 40 C (state-1) and after return to 20 C (state-2)?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "A tool call failed due to contract or protocol limits, not a physical measurement.",
+            "id": "access_failure"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 14,
+      "turn": 16,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0013",
+              "D-REF-4"
+            ],
+            "id": "A-DREF4-DUP",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:P-B",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "material:P-B resource revision 1 payload D-REF-4",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Reading material:P-B returns record D-REF-4, the same reference entry as D02, and its scope note states it is not a new chemical analysis of S17.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0013",
+              "D-REF-4",
+              "C0007",
+              "D-REF-3",
+              "C0004",
+              "D02"
+            ],
+            "id": "A-PA-PB-NODIFF",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:P-A",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "material:P-A D-REF-3 and material:P-B D-REF-4 resource reads, state-0",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Both resource reads return identical D02 entries with response [0.1,0.1,0.8,0.3,0.2], so the reference library supplies no additional data separating P-A from P-B.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0013",
+              "D-REF-4"
+            ],
+            "id": "QU-QMAT-10",
+            "question_id": "QMAT",
+            "reason": "material:P-B read returns only the D02 entry; the library still cannot separate P-A from P-B and S17's coating remains unmeasured.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "ERROR-13",
+              "ERROR-14",
+              "START"
+            ],
+            "id": "QU-QENV-2",
+            "question_id": "QENV",
+            "reason": "Temperature states state-1/state-2 remain unexercised; the next attempt uses explicit target_ref and temperature_C to avoid the earlier protocol error.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0008",
+              "O04",
+              "C0011",
+              "O05",
+              "C0009",
+              "O06"
+            ],
+            "id": "QCOATING-BOUNDARY",
+            "parent_ids": [
+              "QCOATING",
+              "QCOMP"
+            ],
+            "targets": [
+              "S17",
+              "U09"
+            ],
+            "text": "Can material_response sample the ~125 um boundary region at all, given that the available radii are 2, 20 and 90 um?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 15,
+      "turn": 17,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0014",
+              "A01"
+            ],
+            "id": "A-C0014-TEMP",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "actuator:temperature-controller",
+                "role": "actuator"
+              },
+              {
+                "entity_id": "V04",
+                "role": "cell"
+              },
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "U09",
+                "role": "contents"
+              }
+            ],
+            "relation": "intervention_reports",
+            "scope": "intervention record A01, state-0 to state-1",
+            "state_refs": [
+              "state-0",
+              "state-1"
+            ],
+            "statement": "set_temperature C0014 changed state-0 to state-1, cell and sample sensors read 40 C, and identity of S17, V04, U09 was preserved.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Temperature controller actuator that executed set_temperature C0014 on V04.",
+            "evidence_refs": [
+              "C0014",
+              "A01"
+            ],
+            "id": "actuator:temperature-controller",
+            "identity_basis": "source_ref 'actuator:temperature-controller' in A01 payload."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0014",
+              "A01"
+            ],
+            "id": "QU-QENV-3",
+            "question_id": "QENV",
+            "reason": "state-1 reached at 40 C with identity preserved; no observations at 40 C yet.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0014",
+              "A01"
+            ],
+            "id": "QU-QTEMP-1",
+            "question_id": "QTEMP",
+            "reason": "state-1 reached; observations at 40 C and return to state-2 remain pending.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0014",
+              "A01"
+            ],
+            "id": "QMAT-TEMP",
+            "parent_ids": [
+              "QMAT"
+            ],
+            "targets": [
+              "material:P-A",
+              "S17"
+            ],
+            "text": "Does material:P-A reference response change at 40 C, and can it constrain S17's coating at state-1?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "An intervention record states a state transition and sensor readings for a target.",
+            "id": "intervention_reports"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 16,
+      "turn": 18,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0015",
+              "D-REF-3"
+            ],
+            "id": "A-C0015-DUP",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:P-A",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "material:P-A resource read C0015 at state-1 (40 C), revision 1 payload D-REF-3",
+            "state_refs": [
+              "state-1"
+            ],
+            "statement": "Reading material:P-A at state-1 (40 C) returns the same D-REF-3 entry as at state-0, with reference_conditions 20 C and additional_data null, so the resource supplies no 40 C reference data.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0015",
+              "D-REF-3"
+            ],
+            "id": "QU-QMAT-TEMP-1",
+            "question_id": "QMAT-TEMP",
+            "reason": "material:P-A read at 40 C returns the unchanged 20 C entry with no additional data, so the reference library cannot constrain S17's coating at state-1.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "C0014",
+              "A01",
+              "C0015"
+            ],
+            "id": "QU-QTEMP-2",
+            "question_id": "QTEMP",
+            "reason": "state-1 reached at 40 C; observe methods are unavailable at 40 C but pulse_trace is available, so the 40 C pulse response is the next discriminating measurement.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0012",
+              "O08",
+              "C0014",
+              "A01"
+            ],
+            "id": "QPULSE-TEMP",
+            "parent_ids": [
+              "QPULSE-DELAY",
+              "QTEMP"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "Does the constant 5.0 ns pulse_trace input-to-output delay change at 40 C (state-1)?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 17,
+      "turn": 19,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09"
+            ],
+            "id": "A-O09-TIMES",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "instrument:pulse_clock",
+                "role": "instrument"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "pulse_trace observation O09, state-1, 40 C",
+            "state_refs": [
+              "state-1"
+            ],
+            "statement": "pulse_trace O09 at state-1 (40 C) records input times [0, 100, 200] ns and output times [5.01, 105.01, 205.01] ns at S17 ports S17:in and S17:out.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09",
+              "C0012",
+              "O08",
+              "C0003",
+              "D01"
+            ],
+            "id": "A-O09-DELAY-SHIFT",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "instrument:pulse_clock",
+                "role": "instrument"
+              }
+            ],
+            "relation": "observation_reports",
+            "scope": "comparison of pulse_trace O08 (state-0, 20 C) and O09 (state-1, 40 C)",
+            "state_refs": [
+              "state-0",
+              "state-1"
+            ],
+            "statement": "The constant input-to-output delay is 5.0 ns at 20 C and 5.01 ns at 40 C; the 0.01 ns shift is ten times the 0.001 ns clock resolution, so it is a resolved change, but per D01 the internal path is unobserved and no layer structure follows.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09"
+            ],
+            "id": "QU-QPULSE-TEMP-1",
+            "question_id": "QPULSE-TEMP",
+            "reason": "O09 at 40 C gives 5.01 ns versus 5.0 ns at 20 C, a resolved 0.01 ns shift, so the delay does change with temperature.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09"
+            ],
+            "id": "QU-QTEMP-3",
+            "question_id": "QTEMP",
+            "reason": "state-1 pulse response measured; observe methods are unavailable at 40 C and return to state-2 (20 C) is still pending.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09"
+            ],
+            "id": "QU-QMAT-11",
+            "question_id": "QMAT",
+            "reason": "Reference reads P-A/P-B give no S17 coating constraint; the open reference set still contains additive, water and salt, so the library's coverage of possible coating materials is not yet exhausted.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09",
+              "C0012",
+              "O08"
+            ],
+            "id": "QPULSE-TEMP-SHIFT",
+            "parent_ids": [
+              "QPULSE-TEMP",
+              "QPULSE-DELAY"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "Does the resolved 0.01 ns delay increase at 40 C indicate a temperature-dependent path or medium, given that the internal pulse path is not observed?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 18,
+      "turn": 20,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0017",
+              "D-REF-2"
+            ],
+            "id": "A-DREF2-DUP",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:additive",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "material:additive resource read C0017 at state-1 (40 C), revision 1 payload D-REF-2",
+            "state_refs": [
+              "state-1"
+            ],
+            "statement": "Reading material:additive returns record D-REF-2, the same D02 entry with reference_conditions 20 C and additional_data null, so it supplies no 40 C data and is not a new analysis of S17.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0017",
+              "D-REF-2",
+              "C0015",
+              "D-REF-3",
+              "C0013",
+              "D-REF-4",
+              "C0004",
+              "D02"
+            ],
+            "id": "A-REF-LIB-NO-CONSTRAINT",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:P-A",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:additive",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "resource reads of material:P-A, material:P-B and material:additive, state-0 and state-1",
+            "state_refs": [
+              "state-0",
+              "state-1"
+            ],
+            "statement": "All three resource reads return only their unchanged D02 entries with no additional data, so the open reference library provides no new constraint on S17's coating material.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0017",
+              "D-REF-2"
+            ],
+            "id": "QU-QMAT-12",
+            "question_id": "QMAT",
+            "reason": "material:additive read returns only the D02 entry; the library still cannot separate P-A from P-B and S17's coating remains unmeasured.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09",
+              "C0017"
+            ],
+            "id": "QU-QTEMP-4",
+            "question_id": "QTEMP",
+            "reason": "state-1 pulse response measured and reference reads exhausted; return to 20 C (state-2) is still pending.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0016",
+              "O09",
+              "C0012",
+              "O08"
+            ],
+            "id": "QPULSE-TEMP-REVERSIBILITY",
+            "parent_ids": [
+              "QPULSE-TEMP-SHIFT",
+              "QTEMP"
+            ],
+            "targets": [
+              "S17",
+              "V04"
+            ],
+            "text": "Does the resolved 0.01 ns pulse delay shift at 40 C revert when V04 returns to 20 C (state-2), indicating a reversible temperature-dependent path?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 19,
+      "turn": 21,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0018",
+              "A02"
+            ],
+            "id": "A-C0018-TEMP",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "actuator:temperature-controller",
+                "role": "actuator"
+              },
+              {
+                "entity_id": "V04",
+                "role": "cell"
+              },
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "U09",
+                "role": "contents"
+              }
+            ],
+            "relation": "intervention_reports",
+            "scope": "intervention record A02, state-1 to state-2",
+            "state_refs": [
+              "state-1",
+              "state-2"
+            ],
+            "statement": "set_temperature C0018 changed state-1 to state-2, cell and sample sensors read 20 C, and identity of S17, V04, U09 was preserved.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0018",
+              "A02"
+            ],
+            "id": "QU-QTEMP-5",
+            "question_id": "QTEMP",
+            "reason": "state-2 (20 C) reached with identity preserved; state-2 observations have not yet been taken.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0018",
+              "A02"
+            ],
+            "id": "QU-QENV-4",
+            "question_id": "QENV",
+            "reason": "V04 returned to 20 C; U09 material_response at state-2 is available but not yet measured.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0018",
+              "A02",
+              "C0016",
+              "O09"
+            ],
+            "id": "QU-QPULSE-TEMP-REVERSIBILITY-1",
+            "question_id": "QPULSE-TEMP-REVERSIBILITY",
+            "reason": "state-2 reached, so the 40 C 5.01 ns delay can now be re-tested at 20 C; pulse_trace at state-2 not yet run.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0018",
+              "A02",
+              "C0016",
+              "O09"
+            ],
+            "id": "QU-QPULSE-TEMP-SHIFT-1",
+            "question_id": "QPULSE-TEMP-SHIFT",
+            "reason": "The 0.01 ns shift is resolved but its temperature dependence cannot be attributed to a path or medium until the state-2 pulse_trace is compared.",
+            "status": "open"
+          }
+        ],
+        "questions": [],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 20,
+      "turn": 22,
+      "delta": {
+        "assertions": [],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "EVENT-new_source"
+            ],
+            "id": "QU-QMAT-13",
+            "question_id": "QMAT",
+            "reason": "A new observation window opened and available sources may have updated; the reference library and catalog have not been re-read since revision 1, so QMAT remains open.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "EVENT-new_source",
+              "C0001",
+              "D00-A"
+            ],
+            "id": "QMAT-UPDATE",
+            "parent_ids": [
+              "QMAT"
+            ],
+            "targets": [
+              "catalog:root",
+              "doc:references@1",
+              "S17"
+            ],
+            "text": "Has catalog:root or the reference library been revised in the new source window, and does any revision now constrain S17's coating material?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 21,
+      "turn": 23,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0019",
+              "D00-B"
+            ],
+            "id": "A-CAT-REV2-LINKS",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              },
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "linked_document"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "linked_document"
+              },
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "linked_document"
+              }
+            ],
+            "relation": "catalog_links",
+            "scope": "catalog:root revision 2 payload D00-B",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "Catalog root revision 2 still lists doc:calibration@1, doc:references@1 and doc:model-M7@1 with unchanged titles.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0019",
+              "D00-B"
+            ],
+            "id": "A-CAT-REV2-BATCH",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              },
+              {
+                "entity_id": "doc:batch-S17@1",
+                "role": "linked_document"
+              }
+            ],
+            "relation": "catalog_links",
+            "scope": "catalog:root revision 2 payload D00-B",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "Catalog root revision 2 newly lists doc:batch-S17@1 titled 'Batch record of sample S17', a document absent from revision 1.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Document linked from catalog:root revision 2, titled 'Batch record of sample S17'; contents not yet read.",
+            "evidence_refs": [
+              "C0019",
+              "D00-B"
+            ],
+            "id": "doc:batch-S17@1",
+            "identity_basis": "Catalog link reference doc:batch-S17@1 in revision 2 payload D00-B."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0019",
+              "D00-B"
+            ],
+            "id": "QU-QMAT-UPDATE-1",
+            "question_id": "QMAT-UPDATE",
+            "reason": "Catalog:root was revised to revision 2 and adds a batch document, but no revision yet supplies a coating-material constraint for S17.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0019",
+              "D00-B"
+            ],
+            "id": "QU-QDOC-8",
+            "question_id": "QDOC",
+            "reason": "Catalog revision 2 exposes a new unread document doc:batch-S17@1, so the catalog-to-S17 relation is reopened.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0019",
+              "D00-B"
+            ],
+            "id": "QU-QROOT-2",
+            "question_id": "QROOT",
+            "reason": "A new source window added a batch record naming S17, so the sample's documented identity and conditions are again open.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0019",
+              "D00-B"
+            ],
+            "id": "QS17-BATCH",
+            "parent_ids": [
+              "QDOC",
+              "QROOT"
+            ],
+            "targets": [
+              "doc:batch-S17@1",
+              "S17"
+            ],
+            "text": "What does doc:batch-S17@1 report about S17's batch, serial number and actual conditions, and does it identify S17's coating material?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 22,
+      "turn": 24,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04"
+            ],
+            "id": "A-D04-PB-COATING",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:batch-S17@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject_sample"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "material"
+              },
+              {
+                "entity_id": "batch:B17",
+                "role": "batch"
+              }
+            ],
+            "relation": "document_reports",
+            "scope": "doc:batch-S17@1 revision 1 payload D04",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "doc:batch-S17@1 reports that S17 (batch B17) external coating is made of polymer P-B.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04"
+            ],
+            "id": "A-D04-VERIF",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:batch-S17@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject_sample"
+              }
+            ],
+            "relation": "document_scope_note",
+            "scope": "doc:batch-S17@1 revision 1 payload D04 verification_note",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "doc:batch-S17@1 verification note states the coating claim is a manufacturer statement, not an independent composition analysis.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0002",
+              "D03"
+            ],
+            "id": "A-D04-VS-D03-COATING",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "doc:batch-S17@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject_sample"
+              },
+              {
+                "entity_id": "material:P-A",
+                "role": "material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "material"
+              }
+            ],
+            "relation": "claims_conflict",
+            "scope": "comparison of doc:model-M7@1 typical-version claim and doc:batch-S17@1 S17 batch claim",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "doc:model-M7@1 says the typical M7 coating is P-A while doc:batch-S17@1 says S17's coating is P-B; the scopes differ (typical model vs specific sample) so this is a tension, not a proven contradiction.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Batch B17 named as S17's batch in doc:batch-S17@1.",
+            "evidence_refs": [
+              "C0020",
+              "D04"
+            ],
+            "id": "batch:B17",
+            "identity_basis": "Batch field 'B17' in D04 payload for subject 'конкретный образец S17'."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04"
+            ],
+            "id": "QU-QS17-BATCH-1",
+            "question_id": "QS17-BATCH",
+            "reason": "doc:batch-S17@1 gives batch B17 and a manufacturer claim that S17's external coating is P-B, but no serial number or independent analysis.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0019",
+              "D00-B"
+            ],
+            "id": "QU-QDOC-9",
+            "question_id": "QDOC",
+            "reason": "All catalog revision-2 documents are read and doc:batch-S17@1 explicitly names S17, so the catalog-to-S17 document relation is established.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0008",
+              "O04",
+              "C0011",
+              "O05",
+              "C0009",
+              "O06"
+            ],
+            "id": "QU-QMAT-14",
+            "question_id": "QMAT",
+            "reason": "The library cannot separate P-A from P-B, and the sampled interior radii (2, 20, 90 um) match glass, not P-B, so the reference set still does not constrain S17's coating.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0006",
+              "O02"
+            ],
+            "id": "QU-QCOATING-4",
+            "question_id": "QCOATING",
+            "reason": "A coating material P-B is now reported for S17, but material_response radii available (2, 20, 90 um) do not sample the ~125 um boundary where that coating would sit.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0002",
+              "D03"
+            ],
+            "id": "QCOATING-CONFLICT",
+            "parent_ids": [
+              "QS17-BATCH",
+              "QCOATING"
+            ],
+            "targets": [
+              "S17",
+              "material:P-A",
+              "material:P-B"
+            ],
+            "text": "Does the P-B batch claim for S17 conflict with the P-A typical-model claim, and can any observation test which material is actually at S17's ~125 um boundary?"
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0004",
+              "D02"
+            ],
+            "id": "QCOATING-PB-TEST",
+            "parent_ids": [
+              "QCOATING",
+              "QMAT"
+            ],
+            "targets": [
+              "S17",
+              "material:P-B",
+              "material:glass"
+            ],
+            "text": "Given that P-A and P-B have identical reference responses and S17's interior matches glass, can material_response at the boundary region distinguish a P-B coating from the glass-like interior?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "Two document claims about the same subject are in tension because their scopes or stated materials differ.",
+            "id": "claims_conflict"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 23,
+      "turn": 25,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0021",
+              "D00-B",
+              "C0019"
+            ],
+            "id": "A-C0021-REPEAT",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              },
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "linked_document"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "linked_document"
+              },
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "linked_document"
+              },
+              {
+                "entity_id": "doc:batch-S17@1",
+                "role": "linked_document"
+              }
+            ],
+            "relation": "catalog_links",
+            "scope": "catalog:root revision 2 payload D00-B re-read at state-2 (C0021)",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "Re-reading catalog:root at state-2 returns the same revision 2 payload D00-B as C0019, listing the same four documents, so no further catalog revision occurred in this window.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04"
+            ],
+            "id": "A-D04-NO-SERIAL",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:batch-S17@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject_sample"
+              },
+              {
+                "entity_id": "batch:B17",
+                "role": "batch"
+              }
+            ],
+            "relation": "document_scope_note",
+            "scope": "doc:batch-S17@1 revision 1 payload D04",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "doc:batch-S17@1 supplies batch B17 and a manufacturer coating claim but no serial number, no actual-condition data and no independent composition analysis.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0004",
+              "D02",
+              "C0008",
+              "O04",
+              "C0011",
+              "O05",
+              "C0009",
+              "O06"
+            ],
+            "id": "A-PB-UNSAMPLED",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "sample"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "reference_material"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "reference_material"
+              }
+            ],
+            "relation": "response_matches_reference",
+            "scope": "comparison of S17 interior material_response radii 2, 20, 90 um to P-B and glass references",
+            "state_refs": [
+              "state-2"
+            ],
+            "statement": "S17 interior responses at r=2, 20, 90 um match glass [0.9,0.2,0.1,0.05,0.05] and not P-B [0.1,0.1,0.8,0.3,0.2], so if the reported P-B coating exists it lies outside the sampled radii, near the unsampled ~125 um boundary.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0021",
+              "D00-B",
+              "C0019"
+            ],
+            "id": "QU-QMAT-UPDATE-2",
+            "question_id": "QMAT-UPDATE",
+            "reason": "Catalog revision 2 adds only doc:batch-S17@1 and the reference library is unchanged, so no catalog or reference revision supplies a new coating constraint for S17.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0002",
+              "D03"
+            ],
+            "id": "QU-QCOATING-CONFLICT-1",
+            "question_id": "QCOATING-CONFLICT",
+            "reason": "The P-A typical-model claim and the P-B batch claim remain in tension; no observation yet samples the boundary region where the coating would sit.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0008",
+              "O04",
+              "C0011",
+              "O05",
+              "C0009",
+              "O06"
+            ],
+            "id": "QU-QCOATING-PB-TEST-1",
+            "question_id": "QCOATING-PB-TEST",
+            "reason": "Available material_response radii (2, 20, 90 um) all match glass and none samples the ~125 um boundary, so the P-B claim is currently untestable with the exposed methods.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0020",
+              "D04",
+              "C0006",
+              "O02"
+            ],
+            "id": "QCOATING-PB-BOUNDARY",
+            "parent_ids": [
+              "QCOATING-PB-TEST",
+              "QCOATING-BOUNDARY"
+            ],
+            "targets": [
+              "S17",
+              "material:P-B"
+            ],
+            "text": "Is there any exposed method or radius that can sample the ~125 um boundary region to test whether a P-B coating is actually present on S17?"
+          }
+        ],
+        "relation_types": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "fixture_id": "structural-fixture-R42",
+  "memory_mode": "graph",
+  "protocol": "structural-fixture-trial-v2.2",
+  "status": "completed",
+  "system_sha256": "c94b53068077f303b8aab4db9c95a48a34c69a2c1d376379074449b945854d97",
+  "input_sha256": {
+    "public/start.json": "a9376679d28b515301bd7b59676fbc19b2593068a41e4e846b2f88ce2340cb9e",
+    "private/responses.json": "fb16e9b231c50406359ba3f64542650c1bc8a2272da49b02e9f2da7a5bd132e3"
+  },
+  "tool_calls": 21,
+  "model_calls": 25,
+  "accepted_turns": 23,
+  "rejected_turns": 2,
+  "transport_errors": 0,
+  "records_obtained": [
+    "D00-A",
+    "D03",
+    "D01",
+    "D02",
+    "O01",
+    "O02",
+    "D-REF-3",
+    "O04",
+    "O06",
+    "O03",
+    "O05",
+    "O08",
+    "D-REF-4",
+    "A01",
+    "O09",
+    "D-REF-2",
+    "A02",
+    "D00-B",
+    "D04"
+  ],
+  "tool_errors": [],
+  "entities": 21,
+  "assertions": 54,
+  "questions": 24,
+  "usage": {
+    "prompt_tokens": 604979,
+    "completion_tokens": 58234,
+    "total_tokens": 663213
+  },
+  "checkpoints": {
+    "base": {
+      "status": "reference_checked",
+      "revision": 19,
+      "tool_calls": 18,
+      "stop_reason": "tool_budget",
+      "file": "base-report.json"
+    },
+    "new_source": {
+      "status": "reference_checked",
+      "revision": 23,
+      "tool_calls": 3,
+      "stop_reason": "tool_budget",
+      "file": "new_source-report.json"
+    }
+  },
+  "checks": {
+    "fixture_hashes": true,
+    "all_tool_results_replayed": true,
+    "final_graph_replayed": true,
+    "frozen_checkpoints_replayed": true,
+    "no_private_evaluation_markers_in_actual_packets": true
+  },
+  "limits": "Protocol and replay checks only; not independent semantic evaluation."
+}

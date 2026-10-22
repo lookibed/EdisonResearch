@@ -1,0 +1,10 @@
+{
+  "fixture_id": "structural-fixture-K81",
+  "parent_fixture": "cable_v1",
+  "files_sha256": {
+    "private/expectations.json": "1a8f158d320674d8ab77de032330c40bd6c435edf369892815e9f0451796cb71",
+    "private/responses.json": "a4c417be63bd311db40119e178b4584df094416cd0cd5737578a1b2120ccadd3",
+    "public/start.json": "2c1fb70dfe908b7b913cfcda40992a408b2f2ad5d01c9fe677d3cf7a385f88f1"
+  },
+  "evaluation_access": "Runner may read public/start.json and private/responses.json only."
+}

@@ -1,0 +1,74 @@
+{
+  "fixture_id": "structural-stalker-cable-v2",
+  "memory_mode": "registry",
+  "protocol": "structural-fixture-trial-v2.2",
+  "status": "partial",
+  "system_sha256": "c94b53068077f303b8aab4db9c95a48a34c69a2c1d376379074449b945854d97",
+  "input_sha256": {
+    "public/start.json": "2259caa09e51d073ad529d8fcf2ec2667abb71455884fd8df98287319878a6cf",
+    "private/responses.json": "bbe2cc453b708c56f8bd5646e9809cf2a1dc97d8b4a00d91a4ffe642145614b4"
+  },
+  "tool_calls": 19,
+  "model_calls": 25,
+  "accepted_turns": 20,
+  "rejected_turns": 4,
+  "transport_errors": 1,
+  "records_obtained": [
+    "D00-A",
+    "D03",
+    "O01",
+    "O02",
+    "D02",
+    "O06",
+    "O04",
+    "O05",
+    "O03",
+    "D01",
+    "O07",
+    "O08",
+    "A01",
+    "O09",
+    "A02",
+    "O10",
+    "D00-B",
+    "D04"
+  ],
+  "tool_errors": [
+    {
+      "call_id": "C0009",
+      "status": "fixture_not_specified"
+    }
+  ],
+  "entities": 17,
+  "assertions": 52,
+  "questions": 24,
+  "usage": {
+    "prompt_tokens": 497808,
+    "completion_tokens": 71378,
+    "total_tokens": 569186
+  },
+  "checkpoints": {
+    "base": {
+      "status": "reference_checked",
+      "revision": 18,
+      "tool_calls": 17,
+      "stop_reason": "model_finish",
+      "file": "base-report.json"
+    },
+    "new_source": {
+      "status": "partial",
+      "revision": 20,
+      "tool_calls": 2,
+      "stop_reason": "error_budget",
+      "file": "new_source-report.json"
+    }
+  },
+  "checks": {
+    "fixture_hashes": true,
+    "all_tool_results_replayed": true,
+    "final_graph_replayed": true,
+    "frozen_checkpoints_replayed": true,
+    "no_private_evaluation_markers_in_actual_packets": true
+  },
+  "limits": "Protocol and replay checks only; not independent semantic evaluation."
+}

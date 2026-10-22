@@ -1,0 +1,10 @@
+{
+  "fixture_id": "structural-fixture-K81",
+  "authorship": "Authored before the v2 live trials.",
+  "expected_meaning": "В обоих сечениях одна разрешённая внутренняя граница в (20,62.4) um, а не две на прежних координатах; внешняя в (124.9,125.1). Три точки материала совместимы с G, несмотря на различие контраста: геометрические части и материал не тождественны. Не приписывать внутреннюю границу 4 um или полимер по привычке.",
+  "rules": [
+    "Only two sampled sections; incomplete material library.",
+    "Document reports retain their scope and can disagree with observations.",
+    "No forced ontology, node count or chemical ground-truth guess."
+  ]
+}

@@ -1,0 +1,1774 @@
+{
+  "fixture_id": "structural-fixture-R42",
+  "status": "executable_static_fixture_v2",
+  "initial_known_refs": [
+    "S17",
+    "catalog:root"
+  ],
+  "initial_state": "state-0",
+  "initial_phase": "base",
+  "phase_release": {
+    "new_source": {
+      "trigger": "Ручное событие после сохранения основного отчёта; независимо от результата.",
+      "public_event": {
+        "type": "new_observation_window",
+        "additional_tool_calls": 3,
+        "message": "Продолжите исследование. Открыто новое окно наблюдения; доступные источники могли обновиться."
+      }
+    }
+  },
+  "records": [
+    {
+      "record_id": "D00-A",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "catalog:root"
+        }
+      },
+      "when": {
+        "phases": [
+          "base"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "catalog:root"
+        ]
+      },
+      "response": {
+        "record_id": "D00-A",
+        "record_kind": "catalog",
+        "source_ref": "resource:catalog:root",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "links": [
+            {
+              "ref": "doc:calibration@1",
+              "title": "Калибровка и пределы приборов"
+            },
+            {
+              "ref": "doc:references@1",
+              "title": "Справочные отклики материалов"
+            },
+            {
+              "ref": "doc:model-M7@1",
+              "title": "Типовое описание модели M7"
+            }
+          ]
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1",
+        "doc:references@1",
+        "doc:model-M7@1"
+      ]
+    },
+    {
+      "record_id": "O01",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "overview",
+          "parameters": {}
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O01",
+        "record_kind": "observation",
+        "source_ref": "instrument:overview",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "annotation_method": "Вручную заданное описание кадра; распознавание изображений этой фикстурой не проверяется.",
+          "sample_label": "S17 / M7",
+          "length_mm": 1000,
+          "visible_objects": [
+            {
+              "ref": "V04",
+              "description": "Прозрачная ячейка вокруг участка S17."
+            },
+            {
+              "ref": "U09",
+              "description": "Прозрачное содержимое ячейки, соприкасающееся с S17."
+            }
+          ],
+          "capabilities": {
+            "V04": {
+              "set_temperature_C": [
+                20,
+                40
+              ]
+            },
+            "U09": {
+              "observe_methods": [
+                {
+                  "method": "material_response",
+                  "parameters": {}
+                }
+              ]
+            }
+          },
+          "context": {
+            "state_ref": "state-0",
+            "sample_temperature_C": 20
+          },
+          "measured_outline": {
+            "radius_interval_um": [
+              124.9,
+              125.1
+            ],
+            "scope": "Внешняя граница S17 в обзорном кадре; меньшие радиальные неоднородности здесь не разрешены."
+          }
+        }
+      },
+      "exposes_refs": [
+        "V04",
+        "U09"
+      ]
+    },
+    {
+      "record_id": "O02",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "radial_profile",
+          "parameters": {
+            "x_mm": 0
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O02",
+        "record_kind": "observation",
+        "source_ref": "instrument:radial_profile",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "r_um": [
+            0,
+            2,
+            3.9,
+            4.1,
+            20,
+            62.4,
+            62.6,
+            90,
+            124.9,
+            125.1,
+            150
+          ],
+          "contrast_units": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            20,
+            20
+          ],
+          "context": {
+            "state_ref": "state-0",
+            "x_mm": 0
+          },
+          "field_note": "Неразрушающий радиальный профиль на одном заданном сечении; осевая симметрия и непрерывность между сечениями не измерялись."
+        }
+      }
+    },
+    {
+      "record_id": "O03",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "radial_profile",
+          "parameters": {
+            "x_mm": 500
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O03",
+        "record_kind": "observation",
+        "source_ref": "instrument:radial_profile",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "r_um": [
+            0,
+            2,
+            3.9,
+            4.1,
+            20,
+            62.4,
+            62.6,
+            90,
+            124.9,
+            125.1,
+            150
+          ],
+          "contrast_units": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            20,
+            20
+          ],
+          "context": {
+            "state_ref": "state-0",
+            "x_mm": 500
+          },
+          "field_note": "Неразрушающий радиальный профиль на одном заданном сечении; осевая симметрия и непрерывность между сечениями не измерялись."
+        }
+      }
+    },
+    {
+      "record_id": "O04",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "material_response",
+          "parameters": {
+            "x_mm": 0,
+            "radius_um": 2
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O04",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.9,
+            0.2,
+            0.1,
+            0.05,
+            0.05
+          ],
+          "context": {
+            "state_ref": "state-0",
+            "x_mm": 0,
+            "radius_um": 2
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O05",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "material_response",
+          "parameters": {
+            "x_mm": 0,
+            "radius_um": 20
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O05",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.9,
+            0.2,
+            0.1,
+            0.05,
+            0.05
+          ],
+          "context": {
+            "state_ref": "state-0",
+            "x_mm": 0,
+            "radius_um": 20
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O06",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "material_response",
+          "parameters": {
+            "x_mm": 0,
+            "radius_um": 90
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O06",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.9,
+            0.2,
+            0.1,
+            0.05,
+            0.05
+          ],
+          "context": {
+            "state_ref": "state-0",
+            "x_mm": 0,
+            "radius_um": 90
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O07",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "U09",
+          "method": "material_response",
+          "parameters": {}
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "U09"
+        ]
+      },
+      "response": {
+        "record_id": "O07",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.05,
+            0.7,
+            0.03,
+            0.02,
+            0.01
+          ],
+          "context": {
+            "state_ref": "state-0"
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "D01",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "doc:calibration@1"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "doc:calibration@1"
+        ]
+      },
+      "response": {
+        "record_id": "D01",
+        "record_kind": "document_report",
+        "source_ref": "resource:doc:calibration@1",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "document_scope": "Условные приборы этой учебной фикстуры.",
+          "radial_profile": {
+            "contrast_repeatability_units": 1,
+            "resolvable_step_units": 5,
+            "statement": "Измерения относятся только к выбранным координатам; граница локализуется между соседними отсчётами."
+          },
+          "material_response": {
+            "absolute_tolerance_per_channel": 0.001,
+            "mixing_assumption": "В этом учебном приборе отклик смеси равен сумме откликов компонентов с массовыми долями; это условие макета, не закон реальной спектроскопии.",
+            "reference_library_complete": false,
+            "statement": "Совпадение откликов не устанавливает единственность состава. Пространственное распределение добавки внутри измеряемого пятна не различается."
+          },
+          "pulse_trace": {
+            "time_unit": "ns",
+            "resolution_ns": 0.001,
+            "clock": "общие идеальные часы",
+            "statement": "Записываются только вход и выход; путь импульса внутри образца не наблюдается."
+          }
+        }
+      }
+    },
+    {
+      "record_id": "D02",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "doc:references@1"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "doc:references@1"
+        ]
+      },
+      "response": {
+        "record_id": "D02",
+        "record_kind": "document_report",
+        "source_ref": "resource:doc:references@1",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "reference_conditions": {
+            "temperature_C": 20,
+            "channels": [
+              "q1",
+              "q2",
+              "q3",
+              "q4",
+              "q5"
+            ]
+          },
+          "references": [
+            {
+              "ref": "material:glass",
+              "name": "Кварцевое стекло, эталон G",
+              "response": [
+                0.9,
+                0.2,
+                0.1,
+                0.05,
+                0.05
+              ]
+            },
+            {
+              "ref": "material:additive",
+              "name": "Оксидная добавка GeO2, эталон X",
+              "response": [
+                0.4,
+                0.8,
+                0.3,
+                0.3,
+                0.1
+              ]
+            },
+            {
+              "ref": "material:P-A",
+              "name": "Полимер P-A",
+              "response": [
+                0.1,
+                0.1,
+                0.8,
+                0.3,
+                0.2
+              ]
+            },
+            {
+              "ref": "material:P-B",
+              "name": "Полимер P-B",
+              "response": [
+                0.1,
+                0.1,
+                0.8,
+                0.3,
+                0.2
+              ]
+            },
+            {
+              "ref": "material:water",
+              "name": "Вода, эталон W",
+              "response": [
+                0.05,
+                0.7,
+                0.03,
+                0.02,
+                0.01
+              ]
+            },
+            {
+              "ref": "material:salt",
+              "name": "NaCl, эталон N",
+              "response": [
+                0.8,
+                0.05,
+                0.02,
+                0.3,
+                0.4
+              ]
+            }
+          ],
+          "scope": "Это открытый набор эталонов, а не список всех возможных материалов мира."
+        }
+      },
+      "exposes_refs": [
+        "material:glass",
+        "material:additive",
+        "material:P-A",
+        "material:P-B",
+        "material:water",
+        "material:salt"
+      ]
+    },
+    {
+      "record_id": "D03",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "doc:model-M7@1"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "doc:model-M7@1"
+        ]
+      },
+      "response": {
+        "record_id": "D03",
+        "record_kind": "document_report",
+        "source_ref": "resource:doc:model-M7@1",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "document_subject": "модель изделия M7",
+          "statements": [
+            {
+              "claim": "В типовом исполнении внешнее покрытие изготовлено из P-A."
+            },
+            {
+              "claim": "В описанном примере эксплуатации изделие находится в сухом воздухе."
+            }
+          ],
+          "serial_numbers": null,
+          "batches": null,
+          "scope_note": "Номер S17 и его фактические условия в документе не указаны."
+        }
+      }
+    },
+    {
+      "record_id": "O08",
+      "request": {
+        "tool": "pulse_trace",
+        "arguments": {
+          "target_ref": "S17"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O08",
+        "record_kind": "observation",
+        "source_ref": "instrument:pulse-clock",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "input_port": "S17:in",
+          "output_port": "S17:out",
+          "input_times_ns": [
+            0,
+            100,
+            200
+          ],
+          "output_times_ns": [
+            5.0,
+            105.0,
+            205.0
+          ],
+          "context": {
+            "state_ref": "state-0",
+            "sample_temperature_C": 20,
+            "cell_temperature_C": 20
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O09",
+      "request": {
+        "tool": "pulse_trace",
+        "arguments": {
+          "target_ref": "S17"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-1"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O09",
+        "record_kind": "observation",
+        "source_ref": "instrument:pulse-clock",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "input_port": "S17:in",
+          "output_port": "S17:out",
+          "input_times_ns": [
+            0,
+            100,
+            200
+          ],
+          "output_times_ns": [
+            5.01,
+            105.01,
+            205.01
+          ],
+          "context": {
+            "state_ref": "state-1",
+            "sample_temperature_C": 40,
+            "cell_temperature_C": 40
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O10",
+      "request": {
+        "tool": "pulse_trace",
+        "arguments": {
+          "target_ref": "S17"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O10",
+        "record_kind": "observation",
+        "source_ref": "instrument:pulse-clock",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "input_port": "S17:in",
+          "output_port": "S17:out",
+          "input_times_ns": [
+            0,
+            100,
+            200
+          ],
+          "output_times_ns": [
+            5.0,
+            105.0,
+            205.0
+          ],
+          "context": {
+            "state_ref": "state-2",
+            "sample_temperature_C": 20,
+            "cell_temperature_C": 20
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "A01",
+      "request": {
+        "tool": "set_temperature",
+        "arguments": {
+          "target_ref": "V04",
+          "temperature_C": 40
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0"
+        ],
+        "known_refs": [
+          "V04"
+        ]
+      },
+      "response": {
+        "record_id": "A01",
+        "record_kind": "intervention_record",
+        "source_ref": "actuator:temperature-controller",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "previous_state": "state-0",
+          "new_state": "state-1",
+          "cell_sensor_C": 40,
+          "sample_sensor_C": 40,
+          "identity_preserved": [
+            "S17",
+            "V04",
+            "U09"
+          ],
+          "other_instrument_settings": "не менялись"
+        }
+      },
+      "transition": {
+        "state_ref": "state-1"
+      }
+    },
+    {
+      "record_id": "A02",
+      "request": {
+        "tool": "set_temperature",
+        "arguments": {
+          "target_ref": "V04",
+          "temperature_C": 20
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-1"
+        ],
+        "known_refs": [
+          "V04"
+        ]
+      },
+      "response": {
+        "record_id": "A02",
+        "record_kind": "intervention_record",
+        "source_ref": "actuator:temperature-controller",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "previous_state": "state-1",
+          "new_state": "state-2",
+          "cell_sensor_C": 20,
+          "sample_sensor_C": 20,
+          "identity_preserved": [
+            "S17",
+            "V04",
+            "U09"
+          ],
+          "other_instrument_settings": "не менялись"
+        }
+      },
+      "transition": {
+        "state_ref": "state-2"
+      }
+    },
+    {
+      "record_id": "D00-B",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "catalog:root"
+        }
+      },
+      "when": {
+        "phases": [
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "catalog:root"
+        ]
+      },
+      "response": {
+        "record_id": "D00-B",
+        "record_kind": "catalog",
+        "source_ref": "resource:catalog:root",
+        "source_revision": "2",
+        "status": "ok",
+        "payload": {
+          "links": [
+            {
+              "ref": "doc:calibration@1",
+              "title": "Калибровка и пределы приборов"
+            },
+            {
+              "ref": "doc:references@1",
+              "title": "Справочные отклики материалов"
+            },
+            {
+              "ref": "doc:model-M7@1",
+              "title": "Типовое описание модели M7"
+            },
+            {
+              "ref": "doc:batch-S17@1",
+              "title": "Запись о партии образца S17"
+            }
+          ]
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1",
+        "doc:references@1",
+        "doc:model-M7@1",
+        "doc:batch-S17@1"
+      ]
+    },
+    {
+      "record_id": "D04",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "doc:batch-S17@1"
+        }
+      },
+      "when": {
+        "phases": [
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "doc:batch-S17@1"
+        ]
+      },
+      "response": {
+        "record_id": "D04",
+        "record_kind": "document_report",
+        "source_ref": "resource:doc:batch-S17@1",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "document_subject": "конкретный образец S17",
+          "batch": "B17",
+          "statements": [
+            {
+              "claim": "Для внешнего покрытия S17 использован полимер P-B."
+            }
+          ],
+          "verification_note": "Сообщение изготовителя, не независимый анализ состава."
+        }
+      }
+    },
+    {
+      "record_id": "O01-R",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "overview",
+          "parameters": {}
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O01-R",
+        "record_kind": "observation",
+        "source_ref": "instrument:overview",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "annotation_method": "Вручную заданное описание кадра; распознавание изображений этой фикстурой не проверяется.",
+          "sample_label": "S17 / M7",
+          "length_mm": 1000,
+          "visible_objects": [
+            {
+              "ref": "V04",
+              "description": "Прозрачная ячейка вокруг участка S17."
+            },
+            {
+              "ref": "U09",
+              "description": "Прозрачное содержимое ячейки, соприкасающееся с S17."
+            }
+          ],
+          "capabilities": {
+            "V04": {
+              "set_temperature_C": [
+                20,
+                40
+              ]
+            },
+            "U09": {
+              "observe_methods": [
+                {
+                  "method": "material_response",
+                  "parameters": {}
+                }
+              ]
+            }
+          },
+          "context": {
+            "state_ref": "state-2",
+            "sample_temperature_C": 20
+          },
+          "measured_outline": {
+            "radius_interval_um": [
+              124.9,
+              125.1
+            ],
+            "scope": "Внешняя граница S17 в обзорном кадре; меньшие радиальные неоднородности здесь не разрешены."
+          }
+        }
+      },
+      "exposes_refs": [
+        "V04",
+        "U09"
+      ]
+    },
+    {
+      "record_id": "O02-R",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "radial_profile",
+          "parameters": {
+            "x_mm": 0
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O02-R",
+        "record_kind": "observation",
+        "source_ref": "instrument:radial_profile",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "r_um": [
+            0,
+            2,
+            3.9,
+            4.1,
+            20,
+            62.4,
+            62.6,
+            90,
+            124.9,
+            125.1,
+            150
+          ],
+          "contrast_units": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            20,
+            20
+          ],
+          "context": {
+            "state_ref": "state-2",
+            "x_mm": 0
+          },
+          "field_note": "Неразрушающий радиальный профиль на одном заданном сечении; осевая симметрия и непрерывность между сечениями не измерялись."
+        }
+      }
+    },
+    {
+      "record_id": "O03-R",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "radial_profile",
+          "parameters": {
+            "x_mm": 500
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O03-R",
+        "record_kind": "observation",
+        "source_ref": "instrument:radial_profile",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "r_um": [
+            0,
+            2,
+            3.9,
+            4.1,
+            20,
+            62.4,
+            62.6,
+            90,
+            124.9,
+            125.1,
+            150
+          ],
+          "contrast_units": [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            100,
+            20,
+            20
+          ],
+          "context": {
+            "state_ref": "state-2",
+            "x_mm": 500
+          },
+          "field_note": "Неразрушающий радиальный профиль на одном заданном сечении; осевая симметрия и непрерывность между сечениями не измерялись."
+        }
+      }
+    },
+    {
+      "record_id": "O04-R",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "material_response",
+          "parameters": {
+            "x_mm": 0,
+            "radius_um": 2
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O04-R",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.9,
+            0.2,
+            0.1,
+            0.05,
+            0.05
+          ],
+          "context": {
+            "state_ref": "state-2",
+            "x_mm": 0,
+            "radius_um": 2
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O05-R",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "material_response",
+          "parameters": {
+            "x_mm": 0,
+            "radius_um": 20
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O05-R",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.9,
+            0.2,
+            0.1,
+            0.05,
+            0.05
+          ],
+          "context": {
+            "state_ref": "state-2",
+            "x_mm": 0,
+            "radius_um": 20
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O06-R",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "S17",
+          "method": "material_response",
+          "parameters": {
+            "x_mm": 0,
+            "radius_um": 90
+          }
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "S17"
+        ]
+      },
+      "response": {
+        "record_id": "O06-R",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.9,
+            0.2,
+            0.1,
+            0.05,
+            0.05
+          ],
+          "context": {
+            "state_ref": "state-2",
+            "x_mm": 0,
+            "radius_um": 90
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "O07-R",
+      "request": {
+        "tool": "observe",
+        "arguments": {
+          "target_ref": "U09",
+          "method": "material_response",
+          "parameters": {}
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-2"
+        ],
+        "known_refs": [
+          "U09"
+        ]
+      },
+      "response": {
+        "record_id": "O07-R",
+        "record_kind": "observation",
+        "source_ref": "instrument:material_response",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "channels": [
+            "q1",
+            "q2",
+            "q3",
+            "q4",
+            "q5"
+          ],
+          "values": [
+            0.05,
+            0.7,
+            0.03,
+            0.02,
+            0.01
+          ],
+          "context": {
+            "state_ref": "state-2"
+          },
+          "calibration_ref": "doc:calibration@1"
+        }
+      },
+      "exposes_refs": [
+        "doc:calibration@1"
+      ]
+    },
+    {
+      "record_id": "D-REF-1",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "material:glass"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "material:glass"
+        ]
+      },
+      "response": {
+        "record_id": "D-REF-1",
+        "record_kind": "document_report",
+        "source_ref": "resource:material:glass",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "reference": {
+            "ref": "material:glass",
+            "name": "Кварцевое стекло, эталон G",
+            "response": [
+              0.9,
+              0.2,
+              0.1,
+              0.05,
+              0.05
+            ]
+          },
+          "reference_conditions": {
+            "temperature_C": 20
+          },
+          "scope": "Та же запись справочника D02; не новый химический анализ S17.",
+          "additional_data": null
+        }
+      }
+    },
+    {
+      "record_id": "D-REF-2",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "material:additive"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "material:additive"
+        ]
+      },
+      "response": {
+        "record_id": "D-REF-2",
+        "record_kind": "document_report",
+        "source_ref": "resource:material:additive",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "reference": {
+            "ref": "material:additive",
+            "name": "Оксидная добавка GeO2, эталон X",
+            "response": [
+              0.4,
+              0.8,
+              0.3,
+              0.3,
+              0.1
+            ]
+          },
+          "reference_conditions": {
+            "temperature_C": 20
+          },
+          "scope": "Та же запись справочника D02; не новый химический анализ S17.",
+          "additional_data": null
+        }
+      }
+    },
+    {
+      "record_id": "D-REF-3",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "material:P-A"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "material:P-A"
+        ]
+      },
+      "response": {
+        "record_id": "D-REF-3",
+        "record_kind": "document_report",
+        "source_ref": "resource:material:P-A",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "reference": {
+            "ref": "material:P-A",
+            "name": "Полимер P-A",
+            "response": [
+              0.1,
+              0.1,
+              0.8,
+              0.3,
+              0.2
+            ]
+          },
+          "reference_conditions": {
+            "temperature_C": 20
+          },
+          "scope": "Та же запись справочника D02; не новый химический анализ S17.",
+          "additional_data": null
+        }
+      }
+    },
+    {
+      "record_id": "D-REF-4",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "material:P-B"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "material:P-B"
+        ]
+      },
+      "response": {
+        "record_id": "D-REF-4",
+        "record_kind": "document_report",
+        "source_ref": "resource:material:P-B",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "reference": {
+            "ref": "material:P-B",
+            "name": "Полимер P-B",
+            "response": [
+              0.1,
+              0.1,
+              0.8,
+              0.3,
+              0.2
+            ]
+          },
+          "reference_conditions": {
+            "temperature_C": 20
+          },
+          "scope": "Та же запись справочника D02; не новый химический анализ S17.",
+          "additional_data": null
+        }
+      }
+    },
+    {
+      "record_id": "D-REF-5",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "material:water"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "material:water"
+        ]
+      },
+      "response": {
+        "record_id": "D-REF-5",
+        "record_kind": "document_report",
+        "source_ref": "resource:material:water",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "reference": {
+            "ref": "material:water",
+            "name": "Вода, эталон W",
+            "response": [
+              0.05,
+              0.7,
+              0.03,
+              0.02,
+              0.01
+            ]
+          },
+          "reference_conditions": {
+            "temperature_C": 20
+          },
+          "scope": "Та же запись справочника D02; не новый химический анализ S17.",
+          "additional_data": null
+        }
+      }
+    },
+    {
+      "record_id": "D-REF-6",
+      "request": {
+        "tool": "read",
+        "arguments": {
+          "resource_ref": "material:salt"
+        }
+      },
+      "when": {
+        "phases": [
+          "base",
+          "new_source"
+        ],
+        "states": [
+          "state-0",
+          "state-1",
+          "state-2"
+        ],
+        "known_refs": [
+          "material:salt"
+        ]
+      },
+      "response": {
+        "record_id": "D-REF-6",
+        "record_kind": "document_report",
+        "source_ref": "resource:material:salt",
+        "source_revision": "1",
+        "status": "ok",
+        "payload": {
+          "reference": {
+            "ref": "material:salt",
+            "name": "NaCl, эталон N",
+            "response": [
+              0.8,
+              0.05,
+              0.02,
+              0.3,
+              0.4
+            ]
+          },
+          "reference_conditions": {
+            "temperature_C": 20
+          },
+          "scope": "Та же запись справочника D02; не новый химический анализ S17.",
+          "additional_data": null
+        }
+      }
+    }
+  ]
+}

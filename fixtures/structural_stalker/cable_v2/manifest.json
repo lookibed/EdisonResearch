@@ -1,0 +1,10 @@
+{
+  "fixture_id": "structural-stalker-cable-v2",
+  "parent_fixture": "cable_v1",
+  "files_sha256": {
+    "private/expectations.json": "1deac20ad8ef0f2bacdf62aa9ad2d3d37ec3441d6420a2965769a00582fcf044",
+    "private/responses.json": "bbe2cc453b708c56f8bd5646e9809cf2a1dc97d8b4a00d91a4ffe642145614b4",
+    "public/start.json": "2259caa09e51d073ad529d8fcf2ec2667abb71455884fd8df98287319878a6cf"
+  },
+  "evaluation_access": "Runner may read public/start.json and private/responses.json only."
+}

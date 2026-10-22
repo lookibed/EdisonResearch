@@ -1,0 +1,10 @@
+{
+  "fixture_id": "structural-fixture-R42",
+  "parent_fixture": "cable_v1",
+  "files_sha256": {
+    "private/expectations.json": "df7723bea7d120ea280377470e88457fe8a9c3492312f1511919ba32af4a8221",
+    "private/responses.json": "fb16e9b231c50406359ba3f64542650c1bc8a2272da49b02e9f2da7a5bd132e3",
+    "public/start.json": "a9376679d28b515301bd7b59676fbc19b2593068a41e4e846b2f88ce2340cb9e"
+  },
+  "evaluation_access": "Runner may read public/start.json and private/responses.json only."
+}

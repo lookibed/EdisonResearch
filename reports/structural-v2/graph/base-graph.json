@@ -1,0 +1,3833 @@
+{
+  "protocol": "structural-graph-v1",
+  "revision": 12,
+  "entities": {
+    "S17": {
+      "id": "S17",
+      "description": "Лабораторный образец с внешней маркировкой M7. Внутреннее устройство не сообщается.",
+      "identity_basis": "Public resource reference; not a structural discovery.",
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    "catalog:root": {
+      "id": "catalog:root",
+      "description": "Каталог доступных документов и калибровок; содержимое может обновляться.",
+      "identity_basis": "Public resource reference; not a structural discovery.",
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    "doc:calibration@1": {
+      "description": "Catalog document 'Calibration and instrument limits'.",
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "doc:calibration@1",
+      "identity_basis": "Catalog link ref with revision tag @1."
+    },
+    "doc:references@1": {
+      "description": "Catalog document 'Reference material responses'.",
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "doc:references@1",
+      "identity_basis": "Catalog link ref with revision tag @1."
+    },
+    "doc:model-M7@1": {
+      "description": "Catalog document 'Typical description of model M7'.",
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "doc:model-M7@1",
+      "identity_basis": "Catalog link ref with revision tag @1; external marking M7 of S17."
+    },
+    "P-A": {
+      "description": "Material named as the outer coating of the typical M7 execution in doc:model-M7@1.",
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "P-A",
+      "identity_basis": "Material identifier quoted from doc:model-M7@1 claim text."
+    },
+    "env:dry-air": {
+      "description": "The 'dry air' environment appearing in the M7 usage example of doc:model-M7@1.",
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "env:dry-air",
+      "identity_basis": "Named environment in a document example; not a measured condition of S17."
+    },
+    "material:P-B": {
+      "description": "Polymer P-B, a named reference standard in doc:references@1 revision 1.",
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "material:P-B",
+      "identity_basis": "Material identifier quoted from doc:references@1; kept separate from P-A as a distinct named standard."
+    },
+    "ref:reference-set@1": {
+      "description": "The six reference response vectors at 20 C on channels q1..q5 listed in doc:references@1 revision 1.",
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "ref:reference-set@1",
+      "identity_basis": "Revision-tagged table content of doc:references@1."
+    },
+    "channel-set:q1-q5": {
+      "description": "The five response channels q1..q5 used as the reference basis at 20 C in doc:references@1 revision 1.",
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "channel-set:q1-q5",
+      "identity_basis": "Channel labels as printed in the reference document."
+    },
+    "S17:region-r2um": {
+      "description": "Hypothesized near-axis region of S17 sampled by material_response at x = 0 mm, radius 2 um; behaviour resembles quartz glass G.",
+      "evidence_refs": [
+        "O04"
+      ],
+      "id": "S17:region-r2um",
+      "identity_basis": "Probed coordinate (x = 0 mm, radius 2 um) on S17, not an independently identified part."
+    },
+    "S17:region-r90um": {
+      "description": "Hypothesized outer-coating region of S17 sampled by material_response at x = 0 mm, radius 90 um; its vector matches the P-A/P-B reference.",
+      "evidence_refs": [
+        "O06"
+      ],
+      "id": "S17:region-r90um",
+      "identity_basis": "Probed coordinate (x = 0 mm, radius 90 um) on S17, not an independently identified part."
+    },
+    "port:S17:in": {
+      "description": "Input port of S17 named in the pulse_trace response of instrument:pulse-clock.",
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "port:S17:in",
+      "identity_basis": "Port label returned in the instrument payload; not an independently imaged feature."
+    },
+    "port:S17:out": {
+      "description": "Output port of S17 named in the pulse_trace response of instrument:pulse-clock.",
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "port:S17:out",
+      "identity_basis": "Port label returned in the instrument payload; not an independently imaged feature."
+    },
+    "instrument:pulse-clock": {
+      "description": "Pulse-timing instrument (source_ref instrument:pulse-clock, revision 1) that records input and output times with a shared clock.",
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "instrument:pulse-clock",
+      "identity_basis": "Instrument source_ref and revision quoted from record O08."
+    },
+    "mix:core-G-X-96-4": {
+      "description": "Candidate composition of the S17 near-axis region: 0.96 mass fraction quartz glass G plus 0.04 mass fraction GeO2 additive X, fitted to the state-0 2 um reading.",
+      "evidence_refs": [
+        "O04",
+        "D01",
+        "D02"
+      ],
+      "id": "mix:core-G-X-96-4",
+      "identity_basis": "Hypothesized mixture fitted under the fixture's mass-fraction additive mixing rule; not an independently measured material instance."
+    },
+    "instrument:radial_profile": {
+      "description": "Radial-profile instrument (source_ref instrument:radial_profile, revision 1) reporting contrast_units along a specified sample section, with limits given in doc:calibration@1.",
+      "evidence_refs": [
+        "O02",
+        "D01"
+      ],
+      "id": "instrument:radial_profile",
+      "identity_basis": "Instrument source_ref and revision quoted from record O02."
+    },
+    "S17:region-mid-4-62um": {
+      "description": "Hypothesized middle band of S17 between the about 4 um and 62.5 um radial boundaries at x = 0 mm, contrast 160 units; not sampled by material_response.",
+      "evidence_refs": [
+        "O02"
+      ],
+      "id": "S17:region-mid-4-62um",
+      "identity_basis": "Radial interval between two observed profile boundaries on S17; not an independently identified material."
+    },
+    "S17:region-r20um": {
+      "description": "Region of S17 probed by material_response at x = 0 mm, radius 20 um, inside the 4 to 62.5 um contrast-160 band; its vector equals the quartz glass G reference.",
+      "evidence_refs": [
+        "O05"
+      ],
+      "id": "S17:region-r20um",
+      "identity_basis": "Probed coordinate (x = 0 mm, radius 20 um) on S17; not an independently identified part."
+    }
+  },
+  "relation_types": {
+    "has_part": {
+      "description": "Compositional link: a whole has an addressable part (physical or logical).",
+      "id": "has_part"
+    },
+    "documented_in": {
+      "description": "A document or catalog resource reports on an entity.",
+      "id": "documented_in"
+    },
+    "characterizes": {
+      "description": "A measurement result characterises an entity at a coordinate or parameter.",
+      "id": "characterizes"
+    },
+    "lists_document": {
+      "description": "A catalog or index resource enumerates or links a document resource.",
+      "id": "lists_document"
+    },
+    "reports": {
+      "description": "A document resource states a claim about a subject (material, environment, condition or limit).",
+      "id": "reports"
+    },
+    "resembles": {
+      "description": "A measured or reported response vector is numerically similar to another vector (similarity only, not identity of material).",
+      "id": "resembles"
+    },
+    "composed_of": {
+      "description": "Candidate compositional decomposition of a region or material into named standard components with stated fractions.",
+      "id": "composed_of"
+    }
+  },
+  "assertions": {
+    "A1": {
+      "evidence_refs": [
+        "START"
+      ],
+      "id": "A1",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        }
+      ],
+      "relation": "documented_in",
+      "scope": "Initial public specification of the fixture; internal structure not reported.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The public task describes S17 as a laboratory sample bearing external marking M7, with internal structure not specified.",
+      "supersedes": []
+    },
+    "A2": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "A2",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "catalog:root",
+          "role": "catalog"
+        },
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "linked_document"
+        },
+        {
+          "entity_id": "doc:references@1",
+          "role": "linked_document"
+        },
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "linked_document"
+        }
+      ],
+      "relation": "lists_document",
+      "scope": "Catalog revision 1 link list only; contents not yet read.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Catalog revision 1 links three documents: calibration/limits, material reference responses, and a typical M7 model description.",
+      "supersedes": []
+    },
+    "A3": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "A3",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "P-A",
+          "role": "reported_material"
+        }
+      ],
+      "relation": "reports",
+      "scope": "Typical M7 execution as described in doc:model-M7@1 revision 1; not verified on S17.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:model-M7@1 states that in the typical execution the outer coating is made of material P-A.",
+      "supersedes": []
+    },
+    "A4": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "A4",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "env:dry-air",
+          "role": "reported_environment"
+        }
+      ],
+      "relation": "reports",
+      "scope": "Service example inside the same document; exemplar only, no serial or location data.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:model-M7@1 places the described M7 in dry air in its usage example.",
+      "supersedes": []
+    },
+    "A5": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "A5",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:model-M7@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "reports",
+      "scope": "Explicit scope note of doc:model-M7@1 revision 1.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:model-M7@1 gives no part inventory, internal structure, serial number or actual conditions for S17, so its M7 claims cannot be transferred to S17 without check.",
+      "supersedes": []
+    },
+    "A6": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "A6",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "ref:reference-set@1",
+          "role": "reference_table"
+        }
+      ],
+      "relation": "reports",
+      "scope": "doc:references@1 revision 1, reference conditions 20 C; open set of standards, not a world material list.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:references@1 revision 1 reports five-channel responses (q1..q5) at 20 C for six named standards: quartz glass G, GeO2 additive X, polymer P-A, polymer P-B, water W and NaCl N.",
+      "supersedes": []
+    },
+    "A7": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "A7",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "ref:reference-set@1",
+          "role": "reference_table"
+        },
+        {
+          "entity_id": "P-A",
+          "role": "reported_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "reported_material"
+        }
+      ],
+      "relation": "reports",
+      "scope": "Vector values as printed in doc:references@1 revision 1 at 20 C.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "In doc:references@1 revision 1 the reported response vectors of P-A and P-B are identical: 0.1, 0.1, 0.8, 0.3, 0.2 on q1..q5.",
+      "supersedes": []
+    },
+    "A8": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "A8",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:references@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "reports",
+      "scope": "Stated scope of the reference table; carries no S17 data.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:references@1 revision 1 declares itself an open set of standards rather than a list of all possible materials, and contains no S17-specific data.",
+      "supersedes": []
+    },
+    "A9": {
+      "evidence_refs": [
+        "D02",
+        "D03"
+      ],
+      "id": "A9",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "P-A",
+          "role": "candidate_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "candidate_material"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "reports",
+      "scope": "Interpretation of the reference table; not an observation of S17.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Because P-A and P-B share the same reference vector, a match of S17's measured response to that vector cannot by itself identify the outer coating as P-A nor confirm the M7 claim.",
+      "supersedes": []
+    },
+    "A10": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "A10",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "channel-set:q1-q5",
+          "role": "measurement_basis"
+        },
+        {
+          "entity_id": "ref:reference-set@1",
+          "role": "reference_table"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Comparability of instrument channels with the document's reference basis; untested.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "If the instrument's material_response yields the same five-channel basis q1..q5 at 20 C, S17 responses can be compared numerically with the reference table.",
+      "supersedes": []
+    },
+    "A11": {
+      "evidence_refs": [
+        "O04"
+      ],
+      "id": "A11",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "channel-set:q1-q5",
+          "role": "measurement_basis"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Single instrument reading at x = 0 mm, radius 2 um, state-0 (20 C).",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "material_response on S17 at x = 0 mm and radius 2 um in state-0 returns q1..q5 values 0.88, 0.224, 0.108, 0.06, 0.052.",
+      "supersedes": []
+    },
+    "A12": {
+      "evidence_refs": [
+        "O04",
+        "D02"
+      ],
+      "id": "A12",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "candidate_reference"
+        }
+      ],
+      "relation": "resembles",
+      "scope": "Numerical similarity of one reading to a catalog standard; not a composition measurement and not proof of material.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The 2 um-radius S17 vector lies close to the quartz glass G reference 0.9, 0.2, 0.1, 0.05, 0.05 and far from the P-A/P-B vector, so the near-axis region behaves glass-like rather than P-A-like.",
+      "supersedes": []
+    },
+    "A13": {
+      "evidence_refs": [
+        "O04"
+      ],
+      "id": "A13",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "channel-set:q1-q5",
+          "role": "measurement_basis"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Instrument axis labels compared with the reference table labels.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The instrument reports its material_response on the same five channels q1..q5 as doc:references@1, making numerical comparison with that table legitimate for this reading.",
+      "supersedes": []
+    },
+    "A14": {
+      "evidence_refs": [
+        "O06"
+      ],
+      "id": "A14",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "channel-set:q1-q5",
+          "role": "measurement_basis"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Single instrument reading at x = 0 mm, radius 90 um, state-0 (20 C).",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "material_response on S17 at x = 0 mm and radius 90 um in state-0 returns q1..q5 values 0.1, 0.1, 0.8, 0.3, 0.2.",
+      "supersedes": []
+    },
+    "A15": {
+      "evidence_refs": [
+        "O06",
+        "D02"
+      ],
+      "id": "A15",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "P-A",
+          "role": "candidate_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "candidate_material"
+        }
+      ],
+      "relation": "resembles",
+      "scope": "Numerical equality of one reading with the P-A/P-B reference vector; degeneracy prevents unique naming.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The 90 um-radius S17 vector equals the P-A and P-B reference vector 0.1, 0.1, 0.8, 0.3, 0.2, so the outer region is P-A-like or P-B-like and consistent with, but not proof of, the M7 P-A coating claim.",
+      "supersedes": []
+    },
+    "A16": {
+      "evidence_refs": [
+        "O04",
+        "O06"
+      ],
+      "id": "A16",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "S17:region-r2um",
+          "role": "inner_probe"
+        },
+        {
+          "entity_id": "S17:region-r90um",
+          "role": "outer_probe"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "candidate_reference"
+        }
+      ],
+      "relation": "has_part",
+      "scope": "Interpretation of two radial probes at x = 0 mm in state-0; no interface directly observed.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The contrast between a glass-like 2 um core reading and a P-A/P-B-like 90 um coating reading supports a layered build with a glass-like inner region and a polymer-like outer coating.",
+      "supersedes": []
+    },
+    "A17": {
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "A17",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "instrument:pulse-clock",
+          "role": "instrument"
+        },
+        {
+          "entity_id": "port:S17:in",
+          "role": "input_interface"
+        },
+        {
+          "entity_id": "port:S17:out",
+          "role": "output_interface"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Single pulse_trace on S17 in state-0 at 20 C; one instrument, one revision, no repeats.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "pulse_trace on S17 in state-0 injected pulses at input times 0, 100, 200 ns and recorded output times 5.0, 105.0, 205.0 ns, i.e. a uniform 5 ns transit delay per pulse with no further echoes in the recorded window.",
+      "supersedes": []
+    },
+    "A18": {
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "A18",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "whole"
+        },
+        {
+          "entity_id": "port:S17:in",
+          "role": "part"
+        },
+        {
+          "entity_id": "port:S17:out",
+          "role": "part"
+        }
+      ],
+      "relation": "has_part",
+      "scope": "Interfaces named by the instrument response only; no geometric location given.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The pulse_trace response addresses S17 through two named interfaces, input port S17:in and output port S17:out.",
+      "supersedes": []
+    },
+    "A19": {
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "A19",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "instrument:pulse-clock",
+          "role": "instrument"
+        },
+        {
+          "entity_id": "S17:region-r2um",
+          "role": "inner_probe"
+        },
+        {
+          "entity_id": "S17:region-r90um",
+          "role": "outer_probe"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Interpretation of one uniform-delay trace; instrument time resolution not yet known.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "A single uniform 5 ns delay with no resolvable reflection is compatible either with a homogeneous optical path or with a layered build whose layer thicknesses are below the instrument's time resolution, so this trace does not by itself confirm the glass-core plus polymer-coating model.",
+      "supersedes": []
+    },
+    "A20": {
+      "evidence_refs": [
+        "D01"
+      ],
+      "id": "A20",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "reports",
+      "scope": "doc:calibration@1 revision 1, stated limits of the training fixture instrument only.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 revision 1 states a per-channel absolute tolerance of 0.001 for material_response, that in this training fixture a mixture response equals the mass-fraction-weighted sum of component responses, that the reference library is not complete, and that a response match establishes neither unique composition nor the spatial distribution of an additive inside the measured spot.",
+      "supersedes": []
+    },
+    "A21": {
+      "evidence_refs": [
+        "D01"
+      ],
+      "id": "A21",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "instrument:pulse-clock",
+          "role": "instrument"
+        }
+      ],
+      "relation": "reports",
+      "scope": "doc:calibration@1 revision 1 description of the pulse_trace channel.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 revision 1 gives pulse_trace a time resolution of 0.001 ns on a shared clock and states that only input and output times are recorded, so the pulse path inside the sample is not observed.",
+      "supersedes": []
+    },
+    "A22": {
+      "evidence_refs": [
+        "D01"
+      ],
+      "id": "A22",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "document"
+        },
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        }
+      ],
+      "relation": "reports",
+      "scope": "doc:calibration@1 revision 1 radial_profile limits.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "doc:calibration@1 revision 1 gives radial_profile a contrast repeatability of 1 unit and a resolvable step of 5 units, with a boundary localizable only between adjacent sample points.",
+      "supersedes": []
+    },
+    "A23": {
+      "evidence_refs": [
+        "O04",
+        "D01",
+        "D02"
+      ],
+      "id": "A23",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17:region-r2um",
+          "role": "probed_region"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "mixture_component"
+        },
+        {
+          "entity_id": "material:additive",
+          "role": "mixture_component"
+        },
+        {
+          "entity_id": "channel-set:q1-q5",
+          "role": "measurement_basis"
+        }
+      ],
+      "relation": "composed_of",
+      "scope": "Fit under the fixture's additive mixing rule at 20 C, state-0; a hypothesis, and the rule is a fixture condition, not a physical law.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The state-0 reading at x = 0 mm, radius 2 um (0.88, 0.224, 0.108, 0.06, 0.052) is reproduced within 0.001 on all five channels by a mixture of 0.96 mass fraction quartz glass G and 0.04 mass fraction GeO2 X, so the near-axis region is glass-rich with a small additive fraction rather than pure G.",
+      "supersedes": []
+    },
+    "A24": {
+      "evidence_refs": [
+        "O08",
+        "D01"
+      ],
+      "id": "A24",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "instrument:pulse-clock",
+          "role": "instrument"
+        },
+        {
+          "entity_id": "S17:region-r2um",
+          "role": "inner_probe"
+        },
+        {
+          "entity_id": "S17:region-r90um",
+          "role": "outer_probe"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Reinterpretation of the single state-0 pulse_trace in light of the instrument limit; no internal path is observed.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Because the pulse_trace channel records only input and output times, the single uniform 5 ns delay carries no information about the number, position or thickness of internal layers, so it neither confirms nor excludes the glass-core plus polymer-coating model regardless of the 0.001 ns resolution.",
+      "supersedes": [
+        "A19"
+      ]
+    },
+    "A25": {
+      "evidence_refs": [
+        "O02"
+      ],
+      "id": "A25",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "instrument:radial_profile",
+          "role": "instrument"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Single non-destructive radial_profile at one section x = 0 mm, state-0 (20 C); axial symmetry not measured.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "radial_profile on S17 at x = 0 mm in state-0 returns contrast_units 100 at r = 0, 2, 3.9 um; 160 at r = 4.1, 20, 62.4 um; 230 at r = 62.6, 90, 124.9 um; and 20 at r = 125.1 and 150 um.",
+      "supersedes": []
+    },
+    "A26": {
+      "evidence_refs": [
+        "O02",
+        "D01"
+      ],
+      "id": "A26",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "instrument:radial_profile",
+          "role": "instrument"
+        },
+        {
+          "entity_id": "doc:calibration@1",
+          "role": "calibration_document"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Step sizes compared with the 5-unit resolvable step of doc:calibration@1; boundaries localized only between adjacent sample points.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The three contrast steps of about 60, 70 and 210 units all exceed the 5-unit resolvable step, so three radial boundaries are resolved at approximately 4.0, 62.5 and 125.0 um radius, each localized only between adjacent sample points.",
+      "supersedes": []
+    },
+    "A27": {
+      "evidence_refs": [
+        "O02",
+        "O04",
+        "O06"
+      ],
+      "id": "A27",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "whole"
+        },
+        {
+          "entity_id": "S17:region-r2um",
+          "role": "core_probe"
+        },
+        {
+          "entity_id": "S17:region-mid-4-62um",
+          "role": "middle_probe"
+        },
+        {
+          "entity_id": "S17:region-r90um",
+          "role": "outer_probe"
+        }
+      ],
+      "relation": "has_part",
+      "scope": "Interpretation of one radial profile plus two material_response points at x = 0 mm in state-0; no interface directly imaged.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The profile supports a concentric build of at least three regions: a glass-like core out to about 4 um (contrast 100, matching the glass-like 2 um reading), a middle band 4 to 62.5 um (contrast 160), and an outer coating 62.5 to 125 um (contrast 230, containing the 90 um reading that matches the P-A/P-B vector), with contrast falling to 20 beyond 125 um toward the surroundings.",
+      "supersedes": []
+    },
+    "A28": {
+      "evidence_refs": [
+        "O02",
+        "O06",
+        "D02"
+      ],
+      "id": "A28",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17:region-r90um",
+          "role": "probed_region"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "candidate_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "candidate_material"
+        }
+      ],
+      "relation": "resembles",
+      "scope": "Radial extent inferred from the 62.5 and 125.0 um boundaries; P-A versus P-B remains degenerate.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The outer coating band spans roughly 62.5 to 125 um radius (thickness about 62.5 um) and its material_response matches the shared P-A/P-B vector, so the M7 outer-coating material claim is spatially consistent with this band while the composition stays ambiguous between P-A and P-B.",
+      "supersedes": []
+    },
+    "A29": {
+      "evidence_refs": [
+        "O02",
+        "D02"
+      ],
+      "id": "A29",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17:region-mid-4-62um",
+          "role": "probed_region"
+        },
+        {
+          "entity_id": "ref:reference-set@1",
+          "role": "reference_table"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Contrast 160 band has no per-channel material_response reading yet; no match is claimed.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The 4 to 62.5 um band at contrast 160 is the thickest region in the profile yet matches no listed single standard by any measured response, so its material identity remains unresolved.",
+      "supersedes": []
+    },
+    "A30": {
+      "evidence_refs": [
+        "D-REF-3"
+      ],
+      "id": "A30",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:P-A",
+          "role": "material_resource"
+        },
+        {
+          "entity_id": "ref:reference-set@1",
+          "role": "reference_table"
+        }
+      ],
+      "relation": "reports",
+      "scope": "material:P-A resource revision 1; explicitly the same reference record as D02, not a new chemical analysis of S17.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The material:P-A resource restates the 20 C reference vector of polymer P-A as 0.1, 0.1, 0.8, 0.3, 0.2 on q1..q5, identical to doc:references@1 revision 1, and supplies no new data.",
+      "supersedes": []
+    },
+    "A31": {
+      "evidence_refs": [
+        "D-REF-3",
+        "D02",
+        "O06"
+      ],
+      "id": "A31",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "material:P-A",
+          "role": "candidate_material"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "candidate_material"
+        },
+        {
+          "entity_id": "S17:region-r90um",
+          "role": "probed_region"
+        }
+      ],
+      "relation": "resembles",
+      "scope": "Interpretation of a repeated reference record; no S17-specific discriminating measurement exists yet.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Because the material:P-A resource only repeats the reference table, the 90 um outer-region match remains numerically degenerate between P-A and P-B and cannot yet be attributed to P-A alone.",
+      "supersedes": []
+    },
+    "A32": {
+      "evidence_refs": [
+        "O05"
+      ],
+      "id": "A32",
+      "origin": "observation",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "channel-set:q1-q5",
+          "role": "measurement_basis"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Single instrument reading at x = 0 mm, radius 20 um, state-0 (20 C); one point inside the 4-62.5 um band.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "material_response on S17 at x = 0 mm and radius 20 um in state-0 returns q1..q5 values 0.9, 0.2, 0.1, 0.05, 0.05.",
+      "supersedes": []
+    },
+    "A33": {
+      "evidence_refs": [
+        "O05",
+        "D02",
+        "D01"
+      ],
+      "id": "A33",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17:region-mid-4-62um",
+          "role": "probed_region"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "candidate_reference"
+        },
+        {
+          "entity_id": "material:P-A",
+          "role": "excluded_reference"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "excluded_reference"
+        }
+      ],
+      "relation": "resembles",
+      "scope": "One reading at 20 um compared with the doc:references@1 table under the 0.001 per-channel tolerance; within-spot distribution still unresolved.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The 20 um vector equals the quartz glass G reference 0.9, 0.2, 0.1, 0.05, 0.05 with zero deviation on all five channels, so the 160-unit middle band is glass-like rather than P-A/P-B-like and the coating band is therefore not the middle band.",
+      "supersedes": []
+    },
+    "A34": {
+      "evidence_refs": [
+        "O05",
+        "O04",
+        "O02",
+        "D01"
+      ],
+      "id": "A34",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17:region-r2um",
+          "role": "additive_bearing_probe"
+        },
+        {
+          "entity_id": "S17:region-mid-4-62um",
+          "role": "pure_glass_probe"
+        },
+        {
+          "entity_id": "material:additive",
+          "role": "candidate_difference"
+        },
+        {
+          "entity_id": "instrument:radial_profile",
+          "role": "contrast_instrument"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Cross-comparison of one material_response pair with one radial_profile step at x = 0 mm, state-0; mechanism of contrast not measured.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The 100-unit core (0.96 G + 0.04 X, q1 = 0.88) and the 160-unit middle band (pure G, q1 = 0.90) differ by a 60-unit contrast step that is far above the 5-unit resolvable step, while their material_response differs by only about 0.02 on q1, so radial contrast and material_response are not redundant probes and the contrast difference is not explained by the five-channel response alone.",
+      "supersedes": []
+    },
+    "A35": {
+      "evidence_refs": [
+        "O02",
+        "O05"
+      ],
+      "id": "A35",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "instrument:radial_profile",
+          "role": "contrast_instrument"
+        },
+        {
+          "entity_id": "material:additive",
+          "role": "candidate_contrast_source"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Single radial profile at one section; the compositional and structural cause of contrast_units is not stated by any read document.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "No available document states what radial_profile contrast_units measure, so a 60-unit step between a nearly identical-response core and middle band cannot yet be attributed to additive content, density or another property.",
+      "supersedes": []
+    },
+    "A36": {
+      "evidence_refs": [
+        "D-REF-2"
+      ],
+      "id": "A36",
+      "origin": "source_report",
+      "participants": [
+        {
+          "entity_id": "material:additive",
+          "role": "material_resource"
+        },
+        {
+          "entity_id": "ref:reference-set@1",
+          "role": "reference_table"
+        }
+      ],
+      "relation": "reports",
+      "scope": "material:additive resource revision 1; explicitly the same record as D02, not a new chemical analysis of S17.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The material:additive resource restates the 20 C GeO2 X reference vector 0.4, 0.8, 0.3, 0.3, 0.1 on q1..q5, identical to doc:references@1 revision 1, and supplies no additional data.",
+      "supersedes": []
+    },
+    "A37": {
+      "evidence_refs": [
+        "D-REF-2",
+        "O04",
+        "O05",
+        "D01"
+      ],
+      "id": "A37",
+      "origin": "hypothesis",
+      "participants": [
+        {
+          "entity_id": "S17:region-r2um",
+          "role": "additive_bearing_probe"
+        },
+        {
+          "entity_id": "S17:region-r20um",
+          "role": "pure_glass_probe"
+        },
+        {
+          "entity_id": "material:additive",
+          "role": "localized_component"
+        },
+        {
+          "entity_id": "material:glass",
+          "role": "matrix_component"
+        }
+      ],
+      "relation": "composed_of",
+      "scope": "Fit under the fixture's mass-fraction mixing rule at 20 C, state-0; the rule is a fixture condition and additive distribution inside a spot is not resolvable per doc:calibration@1.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "Because the 2 um probe needs an X fraction near 0.04 while the 20 um probe matches pure quartz glass G with zero deviation, the additive is most plausibly confined near the axis inside roughly the 4 um core, consistent with the 100-unit core versus 160-unit middle-band step.",
+      "supersedes": []
+    },
+    "A38": {
+      "evidence_refs": [
+        "ERROR-12",
+        "ERROR-13",
+        "O02",
+        "D02"
+      ],
+      "id": "A38",
+      "origin": "unresolved",
+      "participants": [
+        {
+          "entity_id": "S17",
+          "role": "subject"
+        },
+        {
+          "entity_id": "instrument:radial_profile",
+          "role": "instrument"
+        },
+        {
+          "entity_id": "material:P-B",
+          "role": "material_resource"
+        }
+      ],
+      "relation": "characterizes",
+      "scope": "Contract-level record of two rejected tool calls; graph unchanged, no measurements returned.",
+      "state_refs": [
+        "state-0"
+      ],
+      "statement": "The attempted radial_profile at x = 500 mm and the attempted read of material:P-B were both rejected as protocol errors with no data returned, so axial uniformity and the P-A versus P-B discrimination remain untested and both rejections are access/scheduling limits rather than physical results.",
+      "supersedes": []
+    }
+  },
+  "questions": {
+    "QROOT": {
+      "id": "QROOT",
+      "text": "Исследуйте устройство образца S17 и его окружение. Сохраняйте найденные объекты, связи, основания и открытые вопросы. Различайте наблюдения, сообщения источников и гипотезы. Порядок, число объектов и глубина разбиения не заданы.",
+      "targets": [
+        "S17"
+      ],
+      "parent_ids": [],
+      "evidence_refs": [
+        "START"
+      ]
+    },
+    "QDOC1": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "QDOC1",
+      "parent_ids": [
+        "QROOT"
+      ],
+      "targets": [
+        "doc:model-M7@1",
+        "S17"
+      ],
+      "text": "What internal structure and part inventory does doc:model-M7@1 attribute to the M7 model, and does it apply to S17?"
+    },
+    "QPA1": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "QPA1",
+      "parent_ids": [
+        "QDOC1"
+      ],
+      "targets": [
+        "doc:references@1",
+        "P-A",
+        "S17"
+      ],
+      "text": "What does doc:references@1 report about material P-A, and can those reported responses be matched against S17's outer coating?"
+    },
+    "QOBS1": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "QOBS1",
+      "parent_ids": [
+        "QROOT"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "What does an optical pulse_trace on S17 at state-0 reveal about internal layers or interfaces along the sample?"
+    },
+    "QPA2": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "QPA2",
+      "parent_ids": [
+        "QPA1"
+      ],
+      "targets": [
+        "S17",
+        "ref:reference-set@1"
+      ],
+      "text": "What response vector does S17 give under material_response at 20 C in state-0, at which radius, and which reference standard (if any) does it resemble?"
+    },
+    "QCHAN1": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "QCHAN1",
+      "parent_ids": [
+        "QPA2"
+      ],
+      "targets": [
+        "channel-set:q1-q5",
+        "S17",
+        "doc:references@1"
+      ],
+      "text": "Are the instrument's material_response axes the same q1..q5 channels as the reference table, i.e. is a direct numerical comparison legitimate?"
+    },
+    "QPA3": {
+      "evidence_refs": [
+        "O04",
+        "D02"
+      ],
+      "id": "QPA3",
+      "parent_ids": [
+        "QPA2"
+      ],
+      "targets": [
+        "S17",
+        "material:P-A",
+        "ref:reference-set@1"
+      ],
+      "text": "What does S17 give under material_response at larger radii (20 um and 90 um) in state-0, and does the outer-coating region match P-A, P-B or another standard?"
+    },
+    "QSTRUCT1": {
+      "evidence_refs": [
+        "O04"
+      ],
+      "id": "QSTRUCT1",
+      "parent_ids": [
+        "QOBS1"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "Does S17 have a layered internal structure with a glass-like core and a distinct outer coating, as a pulse_trace or radial_profile could show?"
+    },
+    "QSTRUCT2": {
+      "evidence_refs": [
+        "O04",
+        "O06"
+      ],
+      "id": "QSTRUCT2",
+      "parent_ids": [
+        "QSTRUCT1"
+      ],
+      "targets": [
+        "S17"
+      ],
+      "text": "At what radius does the glass-like inner region give way to the P-A/P-B-like outer coating along x = 0 mm, and how thick is each region?"
+    },
+    "QRES1": {
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "QRES1",
+      "parent_ids": [
+        "QOBS1"
+      ],
+      "targets": [
+        "instrument:pulse-clock",
+        "S17",
+        "doc:calibration@1"
+      ],
+      "text": "What time resolution and minimum detectable interface spacing does the pulse clock have, and can a single uniform 5 ns delay exclude or permit internal layers in S17?"
+    },
+    "QMIX1": {
+      "evidence_refs": [
+        "O04",
+        "D01",
+        "D02"
+      ],
+      "id": "QMIX1",
+      "parent_ids": [
+        "QPA2",
+        "QPA3"
+      ],
+      "targets": [
+        "S17",
+        "material:glass",
+        "material:additive",
+        "material:P-A",
+        "material:P-B"
+      ],
+      "text": "Is the near-axis region a glass G plus GeO2 X mixture near 0.96/0.04 mass fractions, and is the outer region exactly P-A/P-B within the 0.001 tolerance?"
+    },
+    "QPROF1": {
+      "evidence_refs": [
+        "D01",
+        "O04",
+        "O06"
+      ],
+      "id": "QPROF1",
+      "parent_ids": [
+        "QSTRUCT2",
+        "QRES1"
+      ],
+      "targets": [
+        "S17",
+        "doc:calibration@1"
+      ],
+      "text": "Can a radial_profile at x = 0 mm and x = 500 mm localize the core-to-coating boundary in S17 given a resolvable step of 5 units, and what boundary radius results?"
+    },
+    "QMID1": {
+      "evidence_refs": [
+        "O02",
+        "D02"
+      ],
+      "id": "QMID1",
+      "parent_ids": [
+        "QSTRUCT2",
+        "QMIX1"
+      ],
+      "targets": [
+        "S17:region-mid-4-62um",
+        "ref:reference-set@1",
+        "material:glass",
+        "material:additive"
+      ],
+      "text": "Which material or mixture gives the 160-unit contrast_units middle band at 4 to 62.5 um, and does a material_response at radius 20 um match any listed standard or a fitted mixture?"
+    },
+    "QAX1": {
+      "evidence_refs": [
+        "O02"
+      ],
+      "id": "QAX1",
+      "parent_ids": [
+        "QPROF1"
+      ],
+      "targets": [
+        "S17",
+        "instrument:radial_profile"
+      ],
+      "text": "Do radial profiles at other axial positions such as x = 500 mm reproduce the same three boundaries near 4, 62.5 and 125 um, i.e. is the layered build uniform along the axis?"
+    },
+    "QCONTRAST1": {
+      "evidence_refs": [
+        "O02",
+        "O05",
+        "D01"
+      ],
+      "id": "QCONTRAST1",
+      "parent_ids": [
+        "QMID1",
+        "QSTRUCT2"
+      ],
+      "targets": [
+        "S17",
+        "instrument:radial_profile",
+        "material:additive",
+        "material:glass"
+      ],
+      "text": "Why do the additive-bearing core (contrast 100) and the pure-glass middle band (contrast 160) differ by about 60 contrast units when their material_response differs by only about 0.02, and what does radial_profile contrast_units actually respond to?"
+    },
+    "QENV1": {
+      "evidence_refs": [
+        "O02"
+      ],
+      "id": "QENV1",
+      "parent_ids": [
+        "QROOT",
+        "QPROF1"
+      ],
+      "targets": [
+        "S17",
+        "env:dry-air",
+        "catalog:root"
+      ],
+      "text": "Is the contrast-20 region beyond about 125 um radius the surrounding medium of S17 rather than part of the sample, and can any resource name that medium for the measured condition?"
+    },
+    "QTEMP1": {
+      "evidence_refs": [
+        "START",
+        "O08",
+        "D01"
+      ],
+      "id": "QTEMP1",
+      "parent_ids": [
+        "QROOT",
+        "QOBS1"
+      ],
+      "targets": [
+        "S17",
+        "instrument:pulse-clock"
+      ],
+      "text": "What does the available pulse_trace channel report for S17 in the 40 C state (state-1), and does the transit delay or any other recorded timing differ from the 20 C state-0 trace?"
+    },
+    "QPB1": {
+      "evidence_refs": [
+        "D02",
+        "D-REF-3",
+        "ERROR-13"
+      ],
+      "id": "QPB1",
+      "parent_ids": [
+        "QDOC1",
+        "QPA1"
+      ],
+      "targets": [
+        "material:P-B",
+        "material:P-A",
+        "S17"
+      ],
+      "text": "Does the material:P-B resource contain anything beyond the D02 reference vector that discriminates P-B from P-A, and would that change the interpretation of S17's outer-region match?"
+    },
+    "QLOC1": {
+      "evidence_refs": [
+        "O04",
+        "O05",
+        "D-REF-2"
+      ],
+      "id": "QLOC1",
+      "parent_ids": [
+        "QMIX1",
+        "QMID1"
+      ],
+      "targets": [
+        "S17:region-r2um",
+        "S17:region-mid-4-62um",
+        "material:additive",
+        "material:glass"
+      ],
+      "text": "Is the near-axis additive X confined within roughly the 4 um core radius, given that the 20 um reading inside the 4 to 62.5 um band matches pure quartz glass G with zero deviation?"
+    }
+  },
+  "question_updates": {
+    "QU1": {
+      "evidence_refs": [
+        "C0001",
+        "D00-A"
+      ],
+      "id": "QU1",
+      "question_id": "QROOT",
+      "reason": "Catalog contents enumerated; document contents still unread, so the question stays open.",
+      "status": "open"
+    },
+    "QU2": {
+      "evidence_refs": [
+        "D03"
+      ],
+      "id": "QU2",
+      "question_id": "QDOC1",
+      "reason": "The M7 document supplies only outer-coating material and an example environment, with no part inventory and no S17-specific data, so its applicability to S17 remains unresolved.",
+      "status": "open"
+    },
+    "QU3": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "QU3",
+      "question_id": "QPA1",
+      "reason": "The P-A reference vector is now known, but S17's coating has not been measured and P-A/P-B degeneracy prevents unique matching, so the second half of the question stays open.",
+      "status": "open"
+    },
+    "QU4": {
+      "evidence_refs": [
+        "D02"
+      ],
+      "id": "QU4",
+      "question_id": "QOBS1",
+      "reason": "No pulse_trace has been run yet in state-0.",
+      "status": "open"
+    },
+    "QU5": {
+      "evidence_refs": [
+        "O04",
+        "D02"
+      ],
+      "id": "QU5",
+      "question_id": "QCHAN1",
+      "reason": "The instrument returned the same five channel labels q1..q5 as the reference table, so direct numerical comparison is legitimate.",
+      "status": "answered"
+    },
+    "QU6": {
+      "evidence_refs": [
+        "O04"
+      ],
+      "id": "QU6",
+      "question_id": "QPA2",
+      "reason": "Only one radius (2 um) has been probed; the outer coating region and the match question remain untested.",
+      "status": "open"
+    },
+    "QU7": {
+      "evidence_refs": [
+        "O04"
+      ],
+      "id": "QU7",
+      "question_id": "QDOC1",
+      "reason": "The document supplies no part inventory and the 2 um probe fits glass, so the layer inventory and M7 applicability to S17 are still unresolved.",
+      "status": "open"
+    },
+    "QU8": {
+      "evidence_refs": [
+        "O06",
+        "D02"
+      ],
+      "id": "QU8",
+      "question_id": "QPA3",
+      "reason": "The 90 um probe now matches the P-A/P-B vector, but the 20 um probe and the P-A versus P-B degeneracy remain unresolved.",
+      "status": "open"
+    },
+    "QU9": {
+      "evidence_refs": [
+        "O04",
+        "O06"
+      ],
+      "id": "QU9",
+      "question_id": "QSTRUCT1",
+      "reason": "Two radial points now bracket a glass-like core and polymer-like outer region, yet no interface has been directly observed.",
+      "status": "open"
+    },
+    "QU10": {
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "QU10",
+      "question_id": "QOBS1",
+      "reason": "A pulse_trace now exists and shows a single uniform 5 ns delay, but no distinct internal echoes above the recorded resolution, so the interface question stays open.",
+      "status": "open"
+    },
+    "QU11": {
+      "evidence_refs": [
+        "O08"
+      ],
+      "id": "QU11",
+      "question_id": "QSTRUCT1",
+      "reason": "The trace is consistent with both a homogeneous path and sub-resolution layers, so a layered build is neither confirmed nor excluded.",
+      "status": "open"
+    },
+    "QU12": {
+      "evidence_refs": [
+        "O08",
+        "O06"
+      ],
+      "id": "QU12",
+      "question_id": "QDOC1",
+      "reason": "doc:model-M7@1 still supplies no part inventory, and the new timing trace adds no document-level M7 structure, so S17 applicability remains unresolved.",
+      "status": "open"
+    },
+    "QU13": {
+      "evidence_refs": [
+        "O08",
+        "O06"
+      ],
+      "id": "QU13",
+      "question_id": "QSTRUCT2",
+      "reason": "No radial interface position is resolved by two point probes or by one uniform-delay trace.",
+      "status": "open"
+    },
+    "QU14": {
+      "evidence_refs": [
+        "D01",
+        "O08"
+      ],
+      "id": "QU14",
+      "question_id": "QRES1",
+      "reason": "doc:calibration@1 specifies 0.001 ns resolution but also states that only input and output are recorded, so no pulse_trace can observe internal interfaces in S17 at all.",
+      "status": "answered"
+    },
+    "QU15": {
+      "evidence_refs": [
+        "O04",
+        "D01"
+      ],
+      "id": "QU15",
+      "question_id": "QPA2",
+      "reason": "The 2 um reading matches no single listed standard within the 0.001 tolerance, so the resemblance question is now a mixture question and stays open.",
+      "status": "open"
+    },
+    "QU16": {
+      "evidence_refs": [
+        "D01",
+        "O08"
+      ],
+      "id": "QU16",
+      "question_id": "QSTRUCT1",
+      "reason": "The timing method is now known to be blind to internal interfaces, so a layered build must be tested by radial profile rather than pulse_trace.",
+      "status": "open"
+    },
+    "QU17": {
+      "evidence_refs": [
+        "O06",
+        "D01"
+      ],
+      "id": "QU17",
+      "question_id": "QPA3",
+      "reason": "The 90 um vector equals the P-A and P-B references within 0.001, but the two standards remain numerically degenerate and the 20 um probe is still unmeasured.",
+      "status": "open"
+    },
+    "QU18": {
+      "evidence_refs": [
+        "O02"
+      ],
+      "id": "QU18",
+      "question_id": "QPROF1",
+      "reason": "The x = 0 mm profile resolves three boundaries at about 4.0, 62.5 and 125.0 um, all steps far above the 5-unit resolvable step.",
+      "status": "answered"
+    },
+    "QU19": {
+      "evidence_refs": [
+        "O02",
+        "O04",
+        "O06"
+      ],
+      "id": "QU19",
+      "question_id": "QSTRUCT2",
+      "reason": "The glass-like core ends near 4 um and is followed by a 4-62.5 um band before the P-A/P-B-like 62.5-125 um coating, so the inner-to-outer transition is not a single boundary.",
+      "status": "answered"
+    },
+    "QU20": {
+      "evidence_refs": [
+        "O02",
+        "D01",
+        "D02"
+      ],
+      "id": "QU20",
+      "question_id": "QMIX1",
+      "reason": "The 160-unit middle band and the P-A/P-B degeneracy still leave the mixture decomposition unresolved.",
+      "status": "open"
+    },
+    "QU21": {
+      "evidence_refs": [
+        "O02"
+      ],
+      "id": "QU21",
+      "question_id": "QDOC1",
+      "reason": "doc:model-M7@1 still supplies no part inventory or internal structure, and the next read targets a material resource to test the coating claim.",
+      "status": "open"
+    },
+    "QU22": {
+      "evidence_refs": [
+        "D-REF-3"
+      ],
+      "id": "QU22",
+      "question_id": "QPA1",
+      "reason": "The material resource returned the same P-A vector as doc:references@1 and no additional discriminating data, so the P-A versus P-B question remains open.",
+      "status": "open"
+    },
+    "QU23": {
+      "evidence_refs": [
+        "O02",
+        "D02"
+      ],
+      "id": "QU23",
+      "question_id": "QMID1",
+      "reason": "No material_response has been taken inside the 4 to 62.5 um contrast-160 band; the 20 um probe is still pending.",
+      "status": "open"
+    },
+    "QU24": {
+      "evidence_refs": [
+        "O05",
+        "D02"
+      ],
+      "id": "QU24",
+      "question_id": "QMID1",
+      "reason": "The 20 um probe reproduces the quartz glass G reference on all five channels within the 0.001 tolerance, so the 160-unit middle band is glass-like rather than an unlisted standard or a fitted mixture.",
+      "status": "answered"
+    },
+    "QU25": {
+      "evidence_refs": [
+        "O05"
+      ],
+      "id": "QU25",
+      "question_id": "QPA3",
+      "reason": "The 20 um probe is now measured and is glass-like, so among the three planned radii only the 90 um coating remains matched to the degenerate P-A/P-B vector.",
+      "status": "open"
+    },
+    "QU26": {
+      "evidence_refs": [
+        "O05",
+        "O04",
+        "D01"
+      ],
+      "id": "QU26",
+      "question_id": "QMIX1",
+      "reason": "The core still fits 0.96 G + 0.04 X while the 20 um band fits pure G, so the additive-bearing core versus pure-glass middle band distinction remains a hypothesis.",
+      "status": "open"
+    },
+    "QU29": {
+      "evidence_refs": [
+        "ERROR-12"
+      ],
+      "id": "QU29",
+      "question_id": "QAX1",
+      "reason": "The x = 500 mm radial_profile call was rejected with no data, so axial uniformity of the three boundaries is still untested.",
+      "status": "open"
+    },
+    "QU30": {
+      "evidence_refs": [
+        "ERROR-13",
+        "D-REF-3",
+        "D02"
+      ],
+      "id": "QU30",
+      "question_id": "QPA1",
+      "reason": "The material:P-B read attempt returned no data, so the P-A versus P-B degeneracy is unchanged and the coating attribution stays unresolved.",
+      "status": "open"
+    },
+    "QU31": {
+      "evidence_refs": [
+        "D03",
+        "D01"
+      ],
+      "id": "QU31",
+      "question_id": "QDOC1",
+      "reason": "No read document supplies an M7 part inventory or internal structure, so only further instrument states or material resources can bear on the M7 layered-build claim for S17.",
+      "status": "open"
+    }
+  },
+  "states": {
+    "state-0": {
+      "evidence_refs": [
+        "START"
+      ]
+    }
+  },
+  "events": [
+    {
+      "revision": 1,
+      "turn": 1,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "START"
+            ],
+            "id": "A1",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              }
+            ],
+            "relation": "documented_in",
+            "scope": "Initial public specification of the fixture; internal structure not reported.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The public task describes S17 as a laboratory sample bearing external marking M7, with internal structure not specified.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [],
+        "questions": [],
+        "relation_types": [
+          {
+            "description": "Compositional link: a whole has an addressable part (physical or logical).",
+            "id": "has_part"
+          },
+          {
+            "description": "A document or catalog resource reports on an entity.",
+            "id": "documented_in"
+          },
+          {
+            "description": "A measurement result characterises an entity at a coordinate or parameter.",
+            "id": "characterizes"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 2,
+      "turn": 2,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "A2",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "catalog:root",
+                "role": "catalog"
+              },
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "linked_document"
+              },
+              {
+                "entity_id": "doc:references@1",
+                "role": "linked_document"
+              },
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "linked_document"
+              }
+            ],
+            "relation": "lists_document",
+            "scope": "Catalog revision 1 link list only; contents not yet read.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Catalog revision 1 links three documents: calibration/limits, material reference responses, and a typical M7 model description.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Catalog document 'Calibration and instrument limits'.",
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "doc:calibration@1",
+            "identity_basis": "Catalog link ref with revision tag @1."
+          },
+          {
+            "description": "Catalog document 'Reference material responses'.",
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "doc:references@1",
+            "identity_basis": "Catalog link ref with revision tag @1."
+          },
+          {
+            "description": "Catalog document 'Typical description of model M7'.",
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "doc:model-M7@1",
+            "identity_basis": "Catalog link ref with revision tag @1; external marking M7 of S17."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "QU1",
+            "question_id": "QROOT",
+            "reason": "Catalog contents enumerated; document contents still unread, so the question stays open.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "C0001",
+              "D00-A"
+            ],
+            "id": "QDOC1",
+            "parent_ids": [
+              "QROOT"
+            ],
+            "targets": [
+              "doc:model-M7@1",
+              "S17"
+            ],
+            "text": "What internal structure and part inventory does doc:model-M7@1 attribute to the M7 model, and does it apply to S17?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "A catalog or index resource enumerates or links a document resource.",
+            "id": "lists_document"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 3,
+      "turn": 3,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "A3",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "P-A",
+                "role": "reported_material"
+              }
+            ],
+            "relation": "reports",
+            "scope": "Typical M7 execution as described in doc:model-M7@1 revision 1; not verified on S17.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:model-M7@1 states that in the typical execution the outer coating is made of material P-A.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "A4",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "env:dry-air",
+                "role": "reported_environment"
+              }
+            ],
+            "relation": "reports",
+            "scope": "Service example inside the same document; exemplar only, no serial or location data.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:model-M7@1 places the described M7 in dry air in its usage example.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "A5",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:model-M7@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              }
+            ],
+            "relation": "reports",
+            "scope": "Explicit scope note of doc:model-M7@1 revision 1.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:model-M7@1 gives no part inventory, internal structure, serial number or actual conditions for S17, so its M7 claims cannot be transferred to S17 without check.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Material named as the outer coating of the typical M7 execution in doc:model-M7@1.",
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "P-A",
+            "identity_basis": "Material identifier quoted from doc:model-M7@1 claim text."
+          },
+          {
+            "description": "The 'dry air' environment appearing in the M7 usage example of doc:model-M7@1.",
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "env:dry-air",
+            "identity_basis": "Named environment in a document example; not a measured condition of S17."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "QU2",
+            "question_id": "QDOC1",
+            "reason": "The M7 document supplies only outer-coating material and an example environment, with no part inventory and no S17-specific data, so its applicability to S17 remains unresolved.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "QPA1",
+            "parent_ids": [
+              "QDOC1"
+            ],
+            "targets": [
+              "doc:references@1",
+              "P-A",
+              "S17"
+            ],
+            "text": "What does doc:references@1 report about material P-A, and can those reported responses be matched against S17's outer coating?"
+          },
+          {
+            "evidence_refs": [
+              "D03"
+            ],
+            "id": "QOBS1",
+            "parent_ids": [
+              "QROOT"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "What does an optical pulse_trace on S17 at state-0 reveal about internal layers or interfaces along the sample?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "A document resource states a claim about a subject (material, environment, condition or limit).",
+            "id": "reports"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 4,
+      "turn": 4,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "A6",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "ref:reference-set@1",
+                "role": "reference_table"
+              }
+            ],
+            "relation": "reports",
+            "scope": "doc:references@1 revision 1, reference conditions 20 C; open set of standards, not a world material list.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:references@1 revision 1 reports five-channel responses (q1..q5) at 20 C for six named standards: quartz glass G, GeO2 additive X, polymer P-A, polymer P-B, water W and NaCl N.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "A7",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "ref:reference-set@1",
+                "role": "reference_table"
+              },
+              {
+                "entity_id": "P-A",
+                "role": "reported_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "reported_material"
+              }
+            ],
+            "relation": "reports",
+            "scope": "Vector values as printed in doc:references@1 revision 1 at 20 C.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "In doc:references@1 revision 1 the reported response vectors of P-A and P-B are identical: 0.1, 0.1, 0.8, 0.3, 0.2 on q1..q5.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "A8",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:references@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              }
+            ],
+            "relation": "reports",
+            "scope": "Stated scope of the reference table; carries no S17 data.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:references@1 revision 1 declares itself an open set of standards rather than a list of all possible materials, and contains no S17-specific data.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D02",
+              "D03"
+            ],
+            "id": "A9",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "P-A",
+                "role": "candidate_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "candidate_material"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              }
+            ],
+            "relation": "reports",
+            "scope": "Interpretation of the reference table; not an observation of S17.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Because P-A and P-B share the same reference vector, a match of S17's measured response to that vector cannot by itself identify the outer coating as P-A nor confirm the M7 claim.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "A10",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "channel-set:q1-q5",
+                "role": "measurement_basis"
+              },
+              {
+                "entity_id": "ref:reference-set@1",
+                "role": "reference_table"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Comparability of instrument channels with the document's reference basis; untested.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "If the instrument's material_response yields the same five-channel basis q1..q5 at 20 C, S17 responses can be compared numerically with the reference table.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Polymer P-B, a named reference standard in doc:references@1 revision 1.",
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "material:P-B",
+            "identity_basis": "Material identifier quoted from doc:references@1; kept separate from P-A as a distinct named standard."
+          },
+          {
+            "description": "The six reference response vectors at 20 C on channels q1..q5 listed in doc:references@1 revision 1.",
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "ref:reference-set@1",
+            "identity_basis": "Revision-tagged table content of doc:references@1."
+          },
+          {
+            "description": "The five response channels q1..q5 used as the reference basis at 20 C in doc:references@1 revision 1.",
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "channel-set:q1-q5",
+            "identity_basis": "Channel labels as printed in the reference document."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "QU3",
+            "question_id": "QPA1",
+            "reason": "The P-A reference vector is now known, but S17's coating has not been measured and P-A/P-B degeneracy prevents unique matching, so the second half of the question stays open.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "QU4",
+            "question_id": "QOBS1",
+            "reason": "No pulse_trace has been run yet in state-0.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "QPA2",
+            "parent_ids": [
+              "QPA1"
+            ],
+            "targets": [
+              "S17",
+              "ref:reference-set@1"
+            ],
+            "text": "What response vector does S17 give under material_response at 20 C in state-0, at which radius, and which reference standard (if any) does it resemble?"
+          },
+          {
+            "evidence_refs": [
+              "D02"
+            ],
+            "id": "QCHAN1",
+            "parent_ids": [
+              "QPA2"
+            ],
+            "targets": [
+              "channel-set:q1-q5",
+              "S17",
+              "doc:references@1"
+            ],
+            "text": "Are the instrument's material_response axes the same q1..q5 channels as the reference table, i.e. is a direct numerical comparison legitimate?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 5,
+      "turn": 5,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "O04"
+            ],
+            "id": "A11",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "channel-set:q1-q5",
+                "role": "measurement_basis"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Single instrument reading at x = 0 mm, radius 2 um, state-0 (20 C).",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "material_response on S17 at x = 0 mm and radius 2 um in state-0 returns q1..q5 values 0.88, 0.224, 0.108, 0.06, 0.052.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O04",
+              "D02"
+            ],
+            "id": "A12",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "candidate_reference"
+              }
+            ],
+            "relation": "resembles",
+            "scope": "Numerical similarity of one reading to a catalog standard; not a composition measurement and not proof of material.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The 2 um-radius S17 vector lies close to the quartz glass G reference 0.9, 0.2, 0.1, 0.05, 0.05 and far from the P-A/P-B vector, so the near-axis region behaves glass-like rather than P-A-like.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O04"
+            ],
+            "id": "A13",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "channel-set:q1-q5",
+                "role": "measurement_basis"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Instrument axis labels compared with the reference table labels.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The instrument reports its material_response on the same five channels q1..q5 as doc:references@1, making numerical comparison with that table legitimate for this reading.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Hypothesized near-axis region of S17 sampled by material_response at x = 0 mm, radius 2 um; behaviour resembles quartz glass G.",
+            "evidence_refs": [
+              "O04"
+            ],
+            "id": "S17:region-r2um",
+            "identity_basis": "Probed coordinate (x = 0 mm, radius 2 um) on S17, not an independently identified part."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "O04",
+              "D02"
+            ],
+            "id": "QU5",
+            "question_id": "QCHAN1",
+            "reason": "The instrument returned the same five channel labels q1..q5 as the reference table, so direct numerical comparison is legitimate.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "O04"
+            ],
+            "id": "QU6",
+            "question_id": "QPA2",
+            "reason": "Only one radius (2 um) has been probed; the outer coating region and the match question remain untested.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O04"
+            ],
+            "id": "QU7",
+            "question_id": "QDOC1",
+            "reason": "The document supplies no part inventory and the 2 um probe fits glass, so the layer inventory and M7 applicability to S17 are still unresolved.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "O04",
+              "D02"
+            ],
+            "id": "QPA3",
+            "parent_ids": [
+              "QPA2"
+            ],
+            "targets": [
+              "S17",
+              "material:P-A",
+              "ref:reference-set@1"
+            ],
+            "text": "What does S17 give under material_response at larger radii (20 um and 90 um) in state-0, and does the outer-coating region match P-A, P-B or another standard?"
+          },
+          {
+            "evidence_refs": [
+              "O04"
+            ],
+            "id": "QSTRUCT1",
+            "parent_ids": [
+              "QOBS1"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "Does S17 have a layered internal structure with a glass-like core and a distinct outer coating, as a pulse_trace or radial_profile could show?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "A measured or reported response vector is numerically similar to another vector (similarity only, not identity of material).",
+            "id": "resembles"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 6,
+      "turn": 6,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "O06"
+            ],
+            "id": "A14",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "channel-set:q1-q5",
+                "role": "measurement_basis"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Single instrument reading at x = 0 mm, radius 90 um, state-0 (20 C).",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "material_response on S17 at x = 0 mm and radius 90 um in state-0 returns q1..q5 values 0.1, 0.1, 0.8, 0.3, 0.2.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O06",
+              "D02"
+            ],
+            "id": "A15",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "P-A",
+                "role": "candidate_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "candidate_material"
+              }
+            ],
+            "relation": "resembles",
+            "scope": "Numerical equality of one reading with the P-A/P-B reference vector; degeneracy prevents unique naming.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The 90 um-radius S17 vector equals the P-A and P-B reference vector 0.1, 0.1, 0.8, 0.3, 0.2, so the outer region is P-A-like or P-B-like and consistent with, but not proof of, the M7 P-A coating claim.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O04",
+              "O06"
+            ],
+            "id": "A16",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "S17:region-r2um",
+                "role": "inner_probe"
+              },
+              {
+                "entity_id": "S17:region-r90um",
+                "role": "outer_probe"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "candidate_reference"
+              }
+            ],
+            "relation": "has_part",
+            "scope": "Interpretation of two radial probes at x = 0 mm in state-0; no interface directly observed.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The contrast between a glass-like 2 um core reading and a P-A/P-B-like 90 um coating reading supports a layered build with a glass-like inner region and a polymer-like outer coating.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Hypothesized outer-coating region of S17 sampled by material_response at x = 0 mm, radius 90 um; its vector matches the P-A/P-B reference.",
+            "evidence_refs": [
+              "O06"
+            ],
+            "id": "S17:region-r90um",
+            "identity_basis": "Probed coordinate (x = 0 mm, radius 90 um) on S17, not an independently identified part."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "O06",
+              "D02"
+            ],
+            "id": "QU8",
+            "question_id": "QPA3",
+            "reason": "The 90 um probe now matches the P-A/P-B vector, but the 20 um probe and the P-A versus P-B degeneracy remain unresolved.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O04",
+              "O06"
+            ],
+            "id": "QU9",
+            "question_id": "QSTRUCT1",
+            "reason": "Two radial points now bracket a glass-like core and polymer-like outer region, yet no interface has been directly observed.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "O04",
+              "O06"
+            ],
+            "id": "QSTRUCT2",
+            "parent_ids": [
+              "QSTRUCT1"
+            ],
+            "targets": [
+              "S17"
+            ],
+            "text": "At what radius does the glass-like inner region give way to the P-A/P-B-like outer coating along x = 0 mm, and how thick is each region?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 7,
+      "turn": 7,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "A17",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "instrument:pulse-clock",
+                "role": "instrument"
+              },
+              {
+                "entity_id": "port:S17:in",
+                "role": "input_interface"
+              },
+              {
+                "entity_id": "port:S17:out",
+                "role": "output_interface"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Single pulse_trace on S17 in state-0 at 20 C; one instrument, one revision, no repeats.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "pulse_trace on S17 in state-0 injected pulses at input times 0, 100, 200 ns and recorded output times 5.0, 105.0, 205.0 ns, i.e. a uniform 5 ns transit delay per pulse with no further echoes in the recorded window.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "A18",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "whole"
+              },
+              {
+                "entity_id": "port:S17:in",
+                "role": "part"
+              },
+              {
+                "entity_id": "port:S17:out",
+                "role": "part"
+              }
+            ],
+            "relation": "has_part",
+            "scope": "Interfaces named by the instrument response only; no geometric location given.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The pulse_trace response addresses S17 through two named interfaces, input port S17:in and output port S17:out.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "A19",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "instrument:pulse-clock",
+                "role": "instrument"
+              },
+              {
+                "entity_id": "S17:region-r2um",
+                "role": "inner_probe"
+              },
+              {
+                "entity_id": "S17:region-r90um",
+                "role": "outer_probe"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Interpretation of one uniform-delay trace; instrument time resolution not yet known.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "A single uniform 5 ns delay with no resolvable reflection is compatible either with a homogeneous optical path or with a layered build whose layer thicknesses are below the instrument's time resolution, so this trace does not by itself confirm the glass-core plus polymer-coating model.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Input port of S17 named in the pulse_trace response of instrument:pulse-clock.",
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "port:S17:in",
+            "identity_basis": "Port label returned in the instrument payload; not an independently imaged feature."
+          },
+          {
+            "description": "Output port of S17 named in the pulse_trace response of instrument:pulse-clock.",
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "port:S17:out",
+            "identity_basis": "Port label returned in the instrument payload; not an independently imaged feature."
+          },
+          {
+            "description": "Pulse-timing instrument (source_ref instrument:pulse-clock, revision 1) that records input and output times with a shared clock.",
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "instrument:pulse-clock",
+            "identity_basis": "Instrument source_ref and revision quoted from record O08."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "QU10",
+            "question_id": "QOBS1",
+            "reason": "A pulse_trace now exists and shows a single uniform 5 ns delay, but no distinct internal echoes above the recorded resolution, so the interface question stays open.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "QU11",
+            "question_id": "QSTRUCT1",
+            "reason": "The trace is consistent with both a homogeneous path and sub-resolution layers, so a layered build is neither confirmed nor excluded.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O08",
+              "O06"
+            ],
+            "id": "QU12",
+            "question_id": "QDOC1",
+            "reason": "doc:model-M7@1 still supplies no part inventory, and the new timing trace adds no document-level M7 structure, so S17 applicability remains unresolved.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O08",
+              "O06"
+            ],
+            "id": "QU13",
+            "question_id": "QSTRUCT2",
+            "reason": "No radial interface position is resolved by two point probes or by one uniform-delay trace.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "O08"
+            ],
+            "id": "QRES1",
+            "parent_ids": [
+              "QOBS1"
+            ],
+            "targets": [
+              "instrument:pulse-clock",
+              "S17",
+              "doc:calibration@1"
+            ],
+            "text": "What time resolution and minimum detectable interface spacing does the pulse clock have, and can a single uniform 5 ns delay exclude or permit internal layers in S17?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 8,
+      "turn": 8,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "D01"
+            ],
+            "id": "A20",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              }
+            ],
+            "relation": "reports",
+            "scope": "doc:calibration@1 revision 1, stated limits of the training fixture instrument only.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:calibration@1 revision 1 states a per-channel absolute tolerance of 0.001 for material_response, that in this training fixture a mixture response equals the mass-fraction-weighted sum of component responses, that the reference library is not complete, and that a response match establishes neither unique composition nor the spatial distribution of an additive inside the measured spot.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D01"
+            ],
+            "id": "A21",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "instrument:pulse-clock",
+                "role": "instrument"
+              }
+            ],
+            "relation": "reports",
+            "scope": "doc:calibration@1 revision 1 description of the pulse_trace channel.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:calibration@1 revision 1 gives pulse_trace a time resolution of 0.001 ns on a shared clock and states that only input and output times are recorded, so the pulse path inside the sample is not observed.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D01"
+            ],
+            "id": "A22",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "document"
+              },
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              }
+            ],
+            "relation": "reports",
+            "scope": "doc:calibration@1 revision 1 radial_profile limits.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "doc:calibration@1 revision 1 gives radial_profile a contrast repeatability of 1 unit and a resolvable step of 5 units, with a boundary localizable only between adjacent sample points.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O04",
+              "D01",
+              "D02"
+            ],
+            "id": "A23",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17:region-r2um",
+                "role": "probed_region"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "mixture_component"
+              },
+              {
+                "entity_id": "material:additive",
+                "role": "mixture_component"
+              },
+              {
+                "entity_id": "channel-set:q1-q5",
+                "role": "measurement_basis"
+              }
+            ],
+            "relation": "composed_of",
+            "scope": "Fit under the fixture's additive mixing rule at 20 C, state-0; a hypothesis, and the rule is a fixture condition, not a physical law.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The state-0 reading at x = 0 mm, radius 2 um (0.88, 0.224, 0.108, 0.06, 0.052) is reproduced within 0.001 on all five channels by a mixture of 0.96 mass fraction quartz glass G and 0.04 mass fraction GeO2 X, so the near-axis region is glass-rich with a small additive fraction rather than pure G.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O08",
+              "D01"
+            ],
+            "id": "A24",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "instrument:pulse-clock",
+                "role": "instrument"
+              },
+              {
+                "entity_id": "S17:region-r2um",
+                "role": "inner_probe"
+              },
+              {
+                "entity_id": "S17:region-r90um",
+                "role": "outer_probe"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Reinterpretation of the single state-0 pulse_trace in light of the instrument limit; no internal path is observed.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Because the pulse_trace channel records only input and output times, the single uniform 5 ns delay carries no information about the number, position or thickness of internal layers, so it neither confirms nor excludes the glass-core plus polymer-coating model regardless of the 0.001 ns resolution.",
+            "supersedes": [
+              "A19"
+            ]
+          }
+        ],
+        "entities": [
+          {
+            "description": "Candidate composition of the S17 near-axis region: 0.96 mass fraction quartz glass G plus 0.04 mass fraction GeO2 additive X, fitted to the state-0 2 um reading.",
+            "evidence_refs": [
+              "O04",
+              "D01",
+              "D02"
+            ],
+            "id": "mix:core-G-X-96-4",
+            "identity_basis": "Hypothesized mixture fitted under the fixture's mass-fraction additive mixing rule; not an independently measured material instance."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "D01",
+              "O08"
+            ],
+            "id": "QU14",
+            "question_id": "QRES1",
+            "reason": "doc:calibration@1 specifies 0.001 ns resolution but also states that only input and output are recorded, so no pulse_trace can observe internal interfaces in S17 at all.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "O04",
+              "D01"
+            ],
+            "id": "QU15",
+            "question_id": "QPA2",
+            "reason": "The 2 um reading matches no single listed standard within the 0.001 tolerance, so the resemblance question is now a mixture question and stays open.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "D01",
+              "O08"
+            ],
+            "id": "QU16",
+            "question_id": "QSTRUCT1",
+            "reason": "The timing method is now known to be blind to internal interfaces, so a layered build must be tested by radial profile rather than pulse_trace.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O06",
+              "D01"
+            ],
+            "id": "QU17",
+            "question_id": "QPA3",
+            "reason": "The 90 um vector equals the P-A and P-B references within 0.001, but the two standards remain numerically degenerate and the 20 um probe is still unmeasured.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "O04",
+              "D01",
+              "D02"
+            ],
+            "id": "QMIX1",
+            "parent_ids": [
+              "QPA2",
+              "QPA3"
+            ],
+            "targets": [
+              "S17",
+              "material:glass",
+              "material:additive",
+              "material:P-A",
+              "material:P-B"
+            ],
+            "text": "Is the near-axis region a glass G plus GeO2 X mixture near 0.96/0.04 mass fractions, and is the outer region exactly P-A/P-B within the 0.001 tolerance?"
+          },
+          {
+            "evidence_refs": [
+              "D01",
+              "O04",
+              "O06"
+            ],
+            "id": "QPROF1",
+            "parent_ids": [
+              "QSTRUCT2",
+              "QRES1"
+            ],
+            "targets": [
+              "S17",
+              "doc:calibration@1"
+            ],
+            "text": "Can a radial_profile at x = 0 mm and x = 500 mm localize the core-to-coating boundary in S17 given a resolvable step of 5 units, and what boundary radius results?"
+          }
+        ],
+        "relation_types": [
+          {
+            "description": "Candidate compositional decomposition of a region or material into named standard components with stated fractions.",
+            "id": "composed_of"
+          }
+        ]
+      }
+    },
+    {
+      "revision": 9,
+      "turn": 9,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "O02"
+            ],
+            "id": "A25",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "instrument:radial_profile",
+                "role": "instrument"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Single non-destructive radial_profile at one section x = 0 mm, state-0 (20 C); axial symmetry not measured.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "radial_profile on S17 at x = 0 mm in state-0 returns contrast_units 100 at r = 0, 2, 3.9 um; 160 at r = 4.1, 20, 62.4 um; 230 at r = 62.6, 90, 124.9 um; and 20 at r = 125.1 and 150 um.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "D01"
+            ],
+            "id": "A26",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "instrument:radial_profile",
+                "role": "instrument"
+              },
+              {
+                "entity_id": "doc:calibration@1",
+                "role": "calibration_document"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Step sizes compared with the 5-unit resolvable step of doc:calibration@1; boundaries localized only between adjacent sample points.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The three contrast steps of about 60, 70 and 210 units all exceed the 5-unit resolvable step, so three radial boundaries are resolved at approximately 4.0, 62.5 and 125.0 um radius, each localized only between adjacent sample points.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "O04",
+              "O06"
+            ],
+            "id": "A27",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "whole"
+              },
+              {
+                "entity_id": "S17:region-r2um",
+                "role": "core_probe"
+              },
+              {
+                "entity_id": "S17:region-mid-4-62um",
+                "role": "middle_probe"
+              },
+              {
+                "entity_id": "S17:region-r90um",
+                "role": "outer_probe"
+              }
+            ],
+            "relation": "has_part",
+            "scope": "Interpretation of one radial profile plus two material_response points at x = 0 mm in state-0; no interface directly imaged.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The profile supports a concentric build of at least three regions: a glass-like core out to about 4 um (contrast 100, matching the glass-like 2 um reading), a middle band 4 to 62.5 um (contrast 160), and an outer coating 62.5 to 125 um (contrast 230, containing the 90 um reading that matches the P-A/P-B vector), with contrast falling to 20 beyond 125 um toward the surroundings.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "O06",
+              "D02"
+            ],
+            "id": "A28",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17:region-r90um",
+                "role": "probed_region"
+              },
+              {
+                "entity_id": "material:P-A",
+                "role": "candidate_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "candidate_material"
+              }
+            ],
+            "relation": "resembles",
+            "scope": "Radial extent inferred from the 62.5 and 125.0 um boundaries; P-A versus P-B remains degenerate.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The outer coating band spans roughly 62.5 to 125 um radius (thickness about 62.5 um) and its material_response matches the shared P-A/P-B vector, so the M7 outer-coating material claim is spatially consistent with this band while the composition stays ambiguous between P-A and P-B.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "D02"
+            ],
+            "id": "A29",
+            "origin": "unresolved",
+            "participants": [
+              {
+                "entity_id": "S17:region-mid-4-62um",
+                "role": "probed_region"
+              },
+              {
+                "entity_id": "ref:reference-set@1",
+                "role": "reference_table"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Contrast 160 band has no per-channel material_response reading yet; no match is claimed.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The 4 to 62.5 um band at contrast 160 is the thickest region in the profile yet matches no listed single standard by any measured response, so its material identity remains unresolved.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Radial-profile instrument (source_ref instrument:radial_profile, revision 1) reporting contrast_units along a specified sample section, with limits given in doc:calibration@1.",
+            "evidence_refs": [
+              "O02",
+              "D01"
+            ],
+            "id": "instrument:radial_profile",
+            "identity_basis": "Instrument source_ref and revision quoted from record O02."
+          },
+          {
+            "description": "Hypothesized middle band of S17 between the about 4 um and 62.5 um radial boundaries at x = 0 mm, contrast 160 units; not sampled by material_response.",
+            "evidence_refs": [
+              "O02"
+            ],
+            "id": "S17:region-mid-4-62um",
+            "identity_basis": "Radial interval between two observed profile boundaries on S17; not an independently identified material."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "O02"
+            ],
+            "id": "QU18",
+            "question_id": "QPROF1",
+            "reason": "The x = 0 mm profile resolves three boundaries at about 4.0, 62.5 and 125.0 um, all steps far above the 5-unit resolvable step.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "O04",
+              "O06"
+            ],
+            "id": "QU19",
+            "question_id": "QSTRUCT2",
+            "reason": "The glass-like core ends near 4 um and is followed by a 4-62.5 um band before the P-A/P-B-like 62.5-125 um coating, so the inner-to-outer transition is not a single boundary.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "D01",
+              "D02"
+            ],
+            "id": "QU20",
+            "question_id": "QMIX1",
+            "reason": "The 160-unit middle band and the P-A/P-B degeneracy still leave the mixture decomposition unresolved.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O02"
+            ],
+            "id": "QU21",
+            "question_id": "QDOC1",
+            "reason": "doc:model-M7@1 still supplies no part inventory or internal structure, and the next read targets a material resource to test the coating claim.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "O02",
+              "D02"
+            ],
+            "id": "QMID1",
+            "parent_ids": [
+              "QSTRUCT2",
+              "QMIX1"
+            ],
+            "targets": [
+              "S17:region-mid-4-62um",
+              "ref:reference-set@1",
+              "material:glass",
+              "material:additive"
+            ],
+            "text": "Which material or mixture gives the 160-unit contrast_units middle band at 4 to 62.5 um, and does a material_response at radius 20 um match any listed standard or a fitted mixture?"
+          },
+          {
+            "evidence_refs": [
+              "O02"
+            ],
+            "id": "QAX1",
+            "parent_ids": [
+              "QPROF1"
+            ],
+            "targets": [
+              "S17",
+              "instrument:radial_profile"
+            ],
+            "text": "Do radial profiles at other axial positions such as x = 500 mm reproduce the same three boundaries near 4, 62.5 and 125 um, i.e. is the layered build uniform along the axis?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 10,
+      "turn": 10,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "D-REF-3"
+            ],
+            "id": "A30",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:P-A",
+                "role": "material_resource"
+              },
+              {
+                "entity_id": "ref:reference-set@1",
+                "role": "reference_table"
+              }
+            ],
+            "relation": "reports",
+            "scope": "material:P-A resource revision 1; explicitly the same reference record as D02, not a new chemical analysis of S17.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The material:P-A resource restates the 20 C reference vector of polymer P-A as 0.1, 0.1, 0.8, 0.3, 0.2 on q1..q5, identical to doc:references@1 revision 1, and supplies no new data.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D-REF-3",
+              "D02",
+              "O06"
+            ],
+            "id": "A31",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "material:P-A",
+                "role": "candidate_material"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "candidate_material"
+              },
+              {
+                "entity_id": "S17:region-r90um",
+                "role": "probed_region"
+              }
+            ],
+            "relation": "resembles",
+            "scope": "Interpretation of a repeated reference record; no S17-specific discriminating measurement exists yet.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Because the material:P-A resource only repeats the reference table, the 90 um outer-region match remains numerically degenerate between P-A and P-B and cannot yet be attributed to P-A alone.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "D-REF-3"
+            ],
+            "id": "QU22",
+            "question_id": "QPA1",
+            "reason": "The material resource returned the same P-A vector as doc:references@1 and no additional discriminating data, so the P-A versus P-B question remains open.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "D02"
+            ],
+            "id": "QU23",
+            "question_id": "QMID1",
+            "reason": "No material_response has been taken inside the 4 to 62.5 um contrast-160 band; the 20 um probe is still pending.",
+            "status": "open"
+          }
+        ],
+        "questions": [],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 11,
+      "turn": 11,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "O05"
+            ],
+            "id": "A32",
+            "origin": "observation",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "channel-set:q1-q5",
+                "role": "measurement_basis"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Single instrument reading at x = 0 mm, radius 20 um, state-0 (20 C); one point inside the 4-62.5 um band.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "material_response on S17 at x = 0 mm and radius 20 um in state-0 returns q1..q5 values 0.9, 0.2, 0.1, 0.05, 0.05.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O05",
+              "D02",
+              "D01"
+            ],
+            "id": "A33",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17:region-mid-4-62um",
+                "role": "probed_region"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "candidate_reference"
+              },
+              {
+                "entity_id": "material:P-A",
+                "role": "excluded_reference"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "excluded_reference"
+              }
+            ],
+            "relation": "resembles",
+            "scope": "One reading at 20 um compared with the doc:references@1 table under the 0.001 per-channel tolerance; within-spot distribution still unresolved.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The 20 um vector equals the quartz glass G reference 0.9, 0.2, 0.1, 0.05, 0.05 with zero deviation on all five channels, so the 160-unit middle band is glass-like rather than P-A/P-B-like and the coating band is therefore not the middle band.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O05",
+              "O04",
+              "O02",
+              "D01"
+            ],
+            "id": "A34",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17:region-r2um",
+                "role": "additive_bearing_probe"
+              },
+              {
+                "entity_id": "S17:region-mid-4-62um",
+                "role": "pure_glass_probe"
+              },
+              {
+                "entity_id": "material:additive",
+                "role": "candidate_difference"
+              },
+              {
+                "entity_id": "instrument:radial_profile",
+                "role": "contrast_instrument"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Cross-comparison of one material_response pair with one radial_profile step at x = 0 mm, state-0; mechanism of contrast not measured.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The 100-unit core (0.96 G + 0.04 X, q1 = 0.88) and the 160-unit middle band (pure G, q1 = 0.90) differ by a 60-unit contrast step that is far above the 5-unit resolvable step, while their material_response differs by only about 0.02 on q1, so radial contrast and material_response are not redundant probes and the contrast difference is not explained by the five-channel response alone.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "O02",
+              "O05"
+            ],
+            "id": "A35",
+            "origin": "unresolved",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "instrument:radial_profile",
+                "role": "contrast_instrument"
+              },
+              {
+                "entity_id": "material:additive",
+                "role": "candidate_contrast_source"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Single radial profile at one section; the compositional and structural cause of contrast_units is not stated by any read document.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "No available document states what radial_profile contrast_units measure, so a 60-unit step between a nearly identical-response core and middle band cannot yet be attributed to additive content, density or another property.",
+            "supersedes": []
+          }
+        ],
+        "entities": [
+          {
+            "description": "Region of S17 probed by material_response at x = 0 mm, radius 20 um, inside the 4 to 62.5 um contrast-160 band; its vector equals the quartz glass G reference.",
+            "evidence_refs": [
+              "O05"
+            ],
+            "id": "S17:region-r20um",
+            "identity_basis": "Probed coordinate (x = 0 mm, radius 20 um) on S17; not an independently identified part."
+          }
+        ],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "O05",
+              "D02"
+            ],
+            "id": "QU24",
+            "question_id": "QMID1",
+            "reason": "The 20 um probe reproduces the quartz glass G reference on all five channels within the 0.001 tolerance, so the 160-unit middle band is glass-like rather than an unlisted standard or a fitted mixture.",
+            "status": "answered"
+          },
+          {
+            "evidence_refs": [
+              "O05"
+            ],
+            "id": "QU25",
+            "question_id": "QPA3",
+            "reason": "The 20 um probe is now measured and is glass-like, so among the three planned radii only the 90 um coating remains matched to the degenerate P-A/P-B vector.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "O05",
+              "O04",
+              "D01"
+            ],
+            "id": "QU26",
+            "question_id": "QMIX1",
+            "reason": "The core still fits 0.96 G + 0.04 X while the 20 um band fits pure G, so the additive-bearing core versus pure-glass middle band distinction remains a hypothesis.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "O02",
+              "O05",
+              "D01"
+            ],
+            "id": "QCONTRAST1",
+            "parent_ids": [
+              "QMID1",
+              "QSTRUCT2"
+            ],
+            "targets": [
+              "S17",
+              "instrument:radial_profile",
+              "material:additive",
+              "material:glass"
+            ],
+            "text": "Why do the additive-bearing core (contrast 100) and the pure-glass middle band (contrast 160) differ by about 60 contrast units when their material_response differs by only about 0.02, and what does radial_profile contrast_units actually respond to?"
+          },
+          {
+            "evidence_refs": [
+              "O02"
+            ],
+            "id": "QENV1",
+            "parent_ids": [
+              "QROOT",
+              "QPROF1"
+            ],
+            "targets": [
+              "S17",
+              "env:dry-air",
+              "catalog:root"
+            ],
+            "text": "Is the contrast-20 region beyond about 125 um radius the surrounding medium of S17 rather than part of the sample, and can any resource name that medium for the measured condition?"
+          }
+        ],
+        "relation_types": []
+      }
+    },
+    {
+      "revision": 12,
+      "turn": 14,
+      "delta": {
+        "assertions": [
+          {
+            "evidence_refs": [
+              "D-REF-2"
+            ],
+            "id": "A36",
+            "origin": "source_report",
+            "participants": [
+              {
+                "entity_id": "material:additive",
+                "role": "material_resource"
+              },
+              {
+                "entity_id": "ref:reference-set@1",
+                "role": "reference_table"
+              }
+            ],
+            "relation": "reports",
+            "scope": "material:additive resource revision 1; explicitly the same record as D02, not a new chemical analysis of S17.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The material:additive resource restates the 20 C GeO2 X reference vector 0.4, 0.8, 0.3, 0.3, 0.1 on q1..q5, identical to doc:references@1 revision 1, and supplies no additional data.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "D-REF-2",
+              "O04",
+              "O05",
+              "D01"
+            ],
+            "id": "A37",
+            "origin": "hypothesis",
+            "participants": [
+              {
+                "entity_id": "S17:region-r2um",
+                "role": "additive_bearing_probe"
+              },
+              {
+                "entity_id": "S17:region-r20um",
+                "role": "pure_glass_probe"
+              },
+              {
+                "entity_id": "material:additive",
+                "role": "localized_component"
+              },
+              {
+                "entity_id": "material:glass",
+                "role": "matrix_component"
+              }
+            ],
+            "relation": "composed_of",
+            "scope": "Fit under the fixture's mass-fraction mixing rule at 20 C, state-0; the rule is a fixture condition and additive distribution inside a spot is not resolvable per doc:calibration@1.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "Because the 2 um probe needs an X fraction near 0.04 while the 20 um probe matches pure quartz glass G with zero deviation, the additive is most plausibly confined near the axis inside roughly the 4 um core, consistent with the 100-unit core versus 160-unit middle-band step.",
+            "supersedes": []
+          },
+          {
+            "evidence_refs": [
+              "ERROR-12",
+              "ERROR-13",
+              "O02",
+              "D02"
+            ],
+            "id": "A38",
+            "origin": "unresolved",
+            "participants": [
+              {
+                "entity_id": "S17",
+                "role": "subject"
+              },
+              {
+                "entity_id": "instrument:radial_profile",
+                "role": "instrument"
+              },
+              {
+                "entity_id": "material:P-B",
+                "role": "material_resource"
+              }
+            ],
+            "relation": "characterizes",
+            "scope": "Contract-level record of two rejected tool calls; graph unchanged, no measurements returned.",
+            "state_refs": [
+              "state-0"
+            ],
+            "statement": "The attempted radial_profile at x = 500 mm and the attempted read of material:P-B were both rejected as protocol errors with no data returned, so axial uniformity and the P-A versus P-B discrimination remain untested and both rejections are access/scheduling limits rather than physical results.",
+            "supersedes": []
+          }
+        ],
+        "entities": [],
+        "question_updates": [
+          {
+            "evidence_refs": [
+              "ERROR-12"
+            ],
+            "id": "QU29",
+            "question_id": "QAX1",
+            "reason": "The x = 500 mm radial_profile call was rejected with no data, so axial uniformity of the three boundaries is still untested.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "ERROR-13",
+              "D-REF-3",
+              "D02"
+            ],
+            "id": "QU30",
+            "question_id": "QPA1",
+            "reason": "The material:P-B read attempt returned no data, so the P-A versus P-B degeneracy is unchanged and the coating attribution stays unresolved.",
+            "status": "open"
+          },
+          {
+            "evidence_refs": [
+              "D03",
+              "D01"
+            ],
+            "id": "QU31",
+            "question_id": "QDOC1",
+            "reason": "No read document supplies an M7 part inventory or internal structure, so only further instrument states or material resources can bear on the M7 layered-build claim for S17.",
+            "status": "open"
+          }
+        ],
+        "questions": [
+          {
+            "evidence_refs": [
+              "START",
+              "O08",
+              "D01"
+            ],
+            "id": "QTEMP1",
+            "parent_ids": [
+              "QROOT",
+              "QOBS1"
+            ],
+            "targets": [
+              "S17",
+              "instrument:pulse-clock"
+            ],
+            "text": "What does the available pulse_trace channel report for S17 in the 40 C state (state-1), and does the transit delay or any other recorded timing differ from the 20 C state-0 trace?"
+          },
+          {
+            "evidence_refs": [
+              "D02",
+              "D-REF-3",
+              "ERROR-13"
+            ],
+            "id": "QPB1",
+            "parent_ids": [
+              "QDOC1",
+              "QPA1"
+            ],
+            "targets": [
+              "material:P-B",
+              "material:P-A",
+              "S17"
+            ],
+            "text": "Does the material:P-B resource contain anything beyond the D02 reference vector that discriminates P-B from P-A, and would that change the interpretation of S17's outer-region match?"
+          },
+          {
+            "evidence_refs": [
+              "O04",
+              "O05",
+              "D-REF-2"
+            ],
+            "id": "QLOC1",
+            "parent_ids": [
+              "QMIX1",
+              "QMID1"
+            ],
+            "targets": [
+              "S17:region-r2um",
+              "S17:region-mid-4-62um",
+              "material:additive",
+              "material:glass"
+            ],
+            "text": "Is the near-axis additive X confined within roughly the 4 um core radius, given that the 20 um reading inside the 4 to 62.5 um band matches pure quartz glass G with zero deviation?"
+          }
+        ],
+        "relation_types": []
+      }
+    }
+  ]
+}
